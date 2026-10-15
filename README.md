@@ -15,7 +15,7 @@ initiatives/<iniciativa>/   # un directorio por iniciativa
 
 | Iniciativa | Estado | Documento |
 |---|---|---|
-| Reserva de turnos para peluquería (MVP) | Discovery – etapa 1 (problema y casos de uso) | [casos-de-uso.md](initiatives/turnos-peluqueria-mvp/casos-de-uso.md) |
+| Reserva de turnos para peluquería (MVP) | Discovery – etapa 1 (problema y casos de uso) | [casos-de-uso.md](initiatives/turnos-peluqueria/casos-de-uso.md) |
 
 ## Cómo se trabaja
 
