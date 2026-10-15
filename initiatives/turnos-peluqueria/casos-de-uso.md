@@ -45,6 +45,8 @@ nombre, celular y email → revisa resumen → confirma → ve la confirmación 
 - **Dado** que eligió horario, **cuando** deja vacío nombre, celular o email, o los completa con
   formato inválido (ver R10), **entonces** no puede avanzar y ve un mensaje de error junto a cada
   campo.
+- **Dado** que la clienta llega al paso de datos, **cuando** se muestra el formulario, **entonces**
+  ve arriba un aviso visible "Demo: no cargues datos reales" (R6).
 - **Dado** que completó datos válidos, **cuando** avanza, **entonces** ve un resumen (servicio,
   duración, precio, profesional o "cualquiera", día, horario, sus datos) y puede volver a editar.
 - **Dado** que revisó el resumen, **cuando** confirma y el horario sigue libre, **entonces** la
@@ -61,6 +63,10 @@ rama `design/turnos-peluqueria`, carpeta `prototypes/turnos-peluqueria/`):
   libres o en que el local está cerrado, **entonces** ve el mensaje "No hay horarios libres este
   día" y una sugerencia con el próximo día con lugar (dentro de los 14 días), que puede elegir con
   un toque.
+- **Dado** que la clienta eligió servicio y "cualquiera disponible", **cuando** elige un día sin
+  horarios libres o en que el local está cerrado, **entonces** ve el mismo mensaje y la sugerencia
+  del próximo día (dentro de los 14 días) en que al menos un profesional que hace ese servicio
+  tiene un horario libre.
 - **Dado** que no hay ningún horario libre en los próximos 14 días, **cuando** la clienta busca
   día, **entonces** ve un mensaje que lo informa y le sugiere elegir otro profesional o
   "cualquiera disponible".
@@ -70,15 +76,17 @@ rama `design/turnos-peluqueria`, carpeta `prototypes/turnos-peluqueria/`):
 
 ### CU-02 Horario tomado
 
-- **Dado** que la clienta eligió un horario, **cuando** está en el paso de datos, **entonces** el
-  horario sigue apareciendo libre para otras personas (no queda retenido para ella).
+- **Dado** que la clienta eligió un horario y está en el paso de datos, **cuando** otra persona
+  consulta los horarios de ese día, **entonces** el horario sigue apareciendo libre (no queda
+  retenido para ella).
 - **Dado** que otra persona reservó ese horario (mismo profesional, o ya no queda ningún
   profesional libre si eligió "cualquiera"), **cuando** la clienta confirma, **entonces** no se
   crea la reserva, ve el mensaje "horario tomado" y hasta 3 horarios alternativos libres.
 - **Dado** que la confirmación falló por "horario tomado", **cuando** se muestran las
   alternativas, **entonces** son los horarios libres más cercanos al
   elegido (antes o después) en el mismo día, con el mismo profesional, o con cualquier profesional
-  que haga el servicio si eligió "cualquiera disponible".
+  que haga el servicio si eligió "cualquiera disponible". Si dos horarios están a la misma
+  distancia del elegido, primero se muestra el anterior.
 - **Dado** que no hay horarios libres ese día, **cuando** ve "horario tomado", **entonces** no se
   muestran alternativas y se le ofrece elegir otro día.
 - **Dado** que dos clientas confirman a la vez el mismo profesional, día y horario, **cuando** el
@@ -116,11 +124,12 @@ rama `design/turnos-peluqueria`, carpeta `prototypes/turnos-peluqueria/`):
 - **R3** Zona horaria única del local: `America/Argentina/Buenos_Aires`.
 - **R4** Un servicio por reserva.
 - **R5** El pago se hace en el local.
-- **R6** Privacidad de la demo: se usan solo datos ficticios y la agenda sin login muestra un aviso
-  visible "Demo: no cargues datos reales". *Criterio:* ver CU-03 (aviso en la agenda). En la fase 1
+- **R6** Privacidad de la demo: se usan solo datos ficticios y se muestra un aviso visible "Demo: no
+  cargues datos reales" en la agenda sin login y en el paso de datos de la reserva.
+  *Criterio:* ver CU-01 (aviso en el paso de datos) y CU-03 (aviso en la agenda). En la fase 1
   la agenda real requiere login (CU-13).
-- **R7** Un horario solo se ofrece si el servicio completo termina antes del cierre o del inicio
-  de la pausa, y no se superpone con otro turno del profesional.
+- **R7** Un horario solo se ofrece si el servicio completo termina a más tardar en el cierre o en
+  el inicio de la pausa, y no se superpone con otro turno del profesional.
   *Criterio:* **Dado** el horario de "Tijera Fina" (pausa 14–15, cierre 19) y Ana sin turnos ese
   día, **cuando** la clienta elige Color (90 min) con Ana, **entonces** no ve 13:00 ni 13:30 ni
   18:00 ni 18:30, y sí ve 12:30 y 17:30. **Dado** que Ana ya tiene un turno de 11:00 a 11:45,
@@ -179,7 +188,9 @@ de 14:00 a 15:00. Domingo y lunes cerrado.
 
 ### Guion de demo
 
-1. Una clienta reserva un turno desde el celular (CU-01).
+1. Una clienta reserva un turno desde el celular (CU-01), con datos ficticios explícitos (p. ej.
+   "Clienta Demo", `11 0000-0000`, `demo@ejemplo.com`); en el paso de datos se ve el aviso "Demo: no
+   cargues datos reales" (R6). En toda la demo se usan solo datos ficticios.
 2. Abrir la agenda y recargar: el turno aparece, con el aviso "Demo: no cargues datos reales"
    visible (CU-03, R6).
 3. Las clientas A y B, en dos celulares, eligen el mismo profesional, día y horario. A confirma;
@@ -212,7 +223,8 @@ Emails, recordatorio, cancelación, login, bloqueos, carga manual de turnos y pa
 - **CU-16 Bloqueos** (feriados, ausencias). *Criterio:* un bloqueo oculta esos horarios; bloquear
   **no** cancela turnos existentes: el sistema los señala y el staff decide.
 - **CU-17 Carga manual de turno** por el staff (teléfono/mostrador). *Criterio:* aplica las mismas
-  reglas (R1–R5, R7) que la reserva online.
+  reglas (R1–R5, R7, R8) que la reserva online; en particular, no permite cargar un turno en un
+  horario ya pasado.
 - **CU-18 Cancelación por el staff**. *Criterio:* al cancelar, la clienta recibe un email de aviso.
 
 ## Fuera del MVP
