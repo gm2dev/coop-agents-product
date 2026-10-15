@@ -2,7 +2,7 @@
 
 - **Etapa:** Discovery, etapa 1 (problema y casos de uso)
 - **Dueño de producto:** Ezequiel Avila
-- **Estado:** borrador, ronda 4 (registra las nuevas decisiones de Ezequiel y del CPO, D-23 a D-27: sin carga manual de turnos en el panel, un único usuario admin y usuario de prueba en staging). P-8 quedó resuelta; no hay preguntas abiertas.
+- **Estado:** borrador, ronda 5 (aplica las observaciones del PO Reviewer sobre las rondas 3 y 4 y registra las decisiones del CPO D-28 y D-29: staging con datos de prueba y cambio de contraseña antes del piloto; link no copiado en reservas por teléfono). Las propuestas del PO quedaron aceptadas por el CPO; no hay preguntas abiertas.
 - **Lectores:** CDO (flujos y pantallas) y Architect (factibilidad y estimación). Este documento define **qué** y **por qué**; no decide tecnología ni componentes.
 
 ## 1. Problema
@@ -21,7 +21,7 @@ Hoy los turnos se toman por teléfono o WhatsApp. Esto genera tres problemas:
 | **Admin del local** | Dueño o encargado de la peluquería (puede ser también peluquero). | Mantener la agenda al día sin duplicados, mover o cancelar turnos y registrar quién asistió. Cuando un cliente llama para reservar, el local reserva por él desde la misma web pública que usa el cliente (D-23). |
 | **Peluquero** | Trabaja con su propia agenda. En el MVP **no usa el sistema directamente**: su agenda la gestiona el admin. | Saber qué turnos tiene y no tener turnos superpuestos. |
 
-**Usuario del panel (D-25):** el panel (la parte web con usuario y contraseña que usa el local) tiene **un único usuario admin**. No hay roles, ni varias cuentas, ni pantalla para administrar usuarios. Como hay un solo usuario, el MVP no registra qué persona movió o canceló cada turno. En el ambiente de staging ese usuario se crea con usuario `admin` y contraseña `admin` para la prueba piloto (D-26, RNF-10).
+**Usuario del panel (D-25):** el panel (la parte web con usuario y contraseña que usa el local) tiene **un único usuario admin**. No hay roles, ni varias cuentas, ni pantalla para administrar usuarios. Como hay un solo usuario, el MVP no registra qué persona movió o canceló cada turno. En el ambiente de staging (datos de prueba: demo de H1 y pruebas de Ezequiel) ese usuario se crea con usuario `admin` y contraseña `admin` (D-26, RNF-10). Antes de cargar el primer dato real de un cliente o de empezar el piloto de H2, el equipo técnico cambia esa contraseña (D-27, D-28).
 
 ## 3. Objetivo
 
@@ -55,7 +55,7 @@ Hoy los turnos se toman por teléfono o WhatsApp. Esto genera tres problemas:
 Hitos (D-8, confirmados por Ezequiel):
 
 - **Hito 1 (H1) — demo interna:** reserva + agenda con **datos de prueba, sin clientes reales**, para validar el flujo y el diseño temprano con Ezequiel y alguna peluquera. H1 no depende de nada de H2: la confirmación muestra el resumen y el link privado abre ese resumen en **solo lectura** (los botones de cambiar y cancelar llegan en H2).
-- **Hito 2 (H2) — MVP operable:** completa lo necesario para operar con clientes reales en un piloto (cambiar y cancelar desde el link con la anticipación mínima fija de 2 horas, bloqueos, mover y cancelar turnos desde el panel, y asistencia). **H1:** CU-01 a CU-05, CU-08 a CU-10, CU-12 y CU-16. **H2:** CU-06, CU-07, CU-11, CU-13, CU-14 y los criterios marcados (H2).
+- **Hito 2 (H2) — MVP operable:** completa lo necesario para operar con clientes reales en un piloto (cambiar y cancelar desde el link con la anticipación mínima fija de 2 horas, bloqueos, mover y cancelar turnos desde el panel, y asistencia). **Condición para empezar el piloto de H2:** la contraseña del admin ya no es `admin` (D-28, RNF-10). **H1:** CU-01 a CU-05, CU-08 a CU-10, CU-12 y CU-16. **H2:** CU-06, CU-07, CU-11, CU-13, CU-14 y los criterios marcados (H2).
 
 Los criterios marcados **(H2)** dentro de un CU de H1 se implementan en H2.
 
@@ -138,6 +138,8 @@ Los criterios marcados **(H2)** dentro de un CU de H1 se implementan en H2.
 - **Given** el turno se confirmó, **When** pasa cualquier tiempo, **Then** el sistema no envía email, SMS ni WhatsApp al cliente.
 
 > **Nota (D-24):** si el local reservó por un cliente que llamó (D-23), puede copiar el link privado de la confirmación y mandárselo al cliente por su cuenta (por ejemplo, por WhatsApp), fuera del sistema. El sistema no lo envía (D-1). La forma de copiar el link es la misma del criterio anterior; no hace falta una pantalla distinta.
+>
+> **Riesgo aceptado (D-29):** si el local no copia el link en la pantalla de confirmación, el cliente que reservó por teléfono se queda sin autogestión. Si necesita cambiar o cancelar, llama al local y el admin mueve o cancela el turno desde el panel (CU-13), igual que cuando un cliente pierde su link (D-2). El panel no muestra ni recupera links privados en el MVP.
 
 ### CU-06 — Cambiar el turno desde el link privado
 
@@ -147,7 +149,8 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 
 - **Given** el cliente abre su link privado de un turno futuro, **When** la página carga, **Then** ve el resumen del turno (CU-05) y las opciones "Cambiar" y "Cancelar".
 - **Given** faltan 2 horas o más para el inicio (anticipación mínima fija, RN-08), **When** el cliente elige un día y horario nuevos libres para el mismo servicio y peluquero (o "cualquiera") y confirma, **Then** el turno pasa al horario nuevo, el horario original queda libre y ve la confirmación actualizada. Si reservó con "cualquiera disponible", el peluquero del horario nuevo se asigna según RN-20.
-- **Given** el turno empieza a las 18:00, **When** el cliente intenta cambiarlo a las 16:00 del mismo día, **Then** puede hacerlo (faltan exactamente 2 horas); **When** lo intenta a las 16:01, **Then** no puede.
+- **Given** son las 16:00 y el turno empieza a las 18:00 del mismo día, **When** el cliente intenta cambiarlo, **Then** puede hacerlo (faltan exactamente 2 horas).
+- **Given** son las 16:01 y el turno empieza a las 18:00 del mismo día, **When** el cliente intenta cambiarlo, **Then** no puede hacerlo y ve el mensaje para contactar al local.
 - **Given** el cliente está eligiendo el horario nuevo, **When** navega los días, **Then** rigen la misma ventana de 30 días (RN-14) y los mismos inicios cada 15 minutos (RN-19) que al reservar.
 - **Given** el cambio se confirmó, **When** el cliente ve la confirmación, **Then** el link privado sigue siendo el mismo, ve "Agregar al calendario" para el turno nuevo y un aviso que le sugiere borrar de su calendario el evento anterior.
 - **Given** el cliente quiere otro servicio, **When** busca cómo cambiarlo, **Then** no puede hacerlo desde "Cambiar" y ve que debe cancelar y reservar de nuevo.
@@ -160,9 +163,12 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 **Como** cliente, **quiero** cancelar mi turno desde el link **para** liberar el horario si no puedo ir.
 
 - **Given** faltan 2 horas o más para el inicio (anticipación mínima fija, RN-08), **When** el cliente toca "Cancelar" y lo confirma en un segundo paso, **Then** el turno queda cancelado, el horario vuelve a estar libre y el cliente ve que la cancelación se realizó, con un aviso que le sugiere borrar el evento de su calendario.
+- **Given** son las 16:00 y el turno empieza a las 18:00 del mismo día, **When** el cliente intenta cancelarlo, **Then** puede hacerlo (faltan exactamente 2 horas).
+- **Given** son las 16:01 y el turno empieza a las 18:00 del mismo día, **When** el cliente intenta cancelarlo, **Then** no puede hacerlo y ve el mensaje para contactar al local.
 - **Given** el cliente toca "Cancelar", **When** no confirma el segundo paso, **Then** el turno sigue vigente.
 - **Given** faltan menos de 2 horas para el inicio, **When** el cliente abre el link, **Then** no puede cancelar y ve un mensaje que le indica que contacte al local, con el teléfono de contacto del local (CU-16).
-- **Given** el cliente perdió su link, **When** llama al teléfono del local, **Then** el admin puede cambiar o cancelar el turno desde el panel (CU-13).
+- **Given** el cliente perdió su link, **When** llama al teléfono del local, **Then** el admin puede mover o cancelar el turno desde el panel (CU-13).
+- **Given** el cliente reservó por teléfono y el local no le pasó el link, **When** llama al local para cambiar o cancelar, **Then** el admin mueve o cancela el turno desde el panel (CU-13, D-29).
 
 ### CU-08 — Ingresar al panel del local
 
@@ -173,7 +179,7 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 - **Given** credenciales inválidas, **When** intenta iniciar sesión, **Then** ve un mensaje de error genérico y no accede.
 - **Given** el admin está en el panel, **When** busca crear, invitar o administrar otros usuarios, **Then** esa opción no existe: el panel tiene un único usuario admin, sin roles (D-25).
 - **Given** el ambiente de staging recién preparado, **When** alguien inicia sesión con usuario `admin` y contraseña `admin`, **Then** accede al panel sin que el equipo tenga que crear el usuario a mano (D-26, RNF-10).
-- **Given** se van a cargar datos reales de clientes en un ambiente, **When** se revisa el acceso al panel antes de hacerlo, **Then** la contraseña `admin` ya fue cambiada por otra (D-27, RNF-10).
+- **Given** un ambiente con datos reales de clientes, **When** alguien intenta entrar con usuario `admin` y contraseña `admin`, **Then** no accede (D-27, D-28, RNF-10).
 - El mecanismo de autenticación y la forma de crear el usuario lo define el Architect. Referencia (§10): usuario y contraseña, sin recuperación por email; el equipo resetea la contraseña a mano.
 
 ### CU-09 — Gestionar servicios
@@ -236,7 +242,8 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 - **Given** el admin mueve un turno a otro horario (puede ser con otro peluquero), **When** guarda, **Then** el turno queda en el nuevo horario, el anterior se libera y el link privado del cliente sigue funcionando y muestra el turno actualizado con el aviso "El local cambió tu turno: ahora es…" (CU-05, D-18).
 - **Given** el admin cancela un turno, **When** confirma, **Then** el turno queda cancelado, el horario se libera y el link privado del cliente muestra que el local canceló el turno (CU-05, D-18).
 - **Given** faltan menos de 2 horas para un turno, **When** el admin lo mueve o lo cancela, **Then** puede hacerlo: la anticipación mínima rige solo para el cliente (D-7).
-- *(Propuesta PO, D-14)* **Given** el admin mueve un turno a un día posterior a hoy + 30 días, **When** guarda, **Then** puede hacerlo: la ventana de 30 días rige para las reservas y los cambios desde la web, no para mover desde el panel.
+- **Given** el admin mueve un turno a un día posterior a hoy + 30 días, **When** guarda, **Then** puede hacerlo: la ventana de 30 días rige para las reservas y los cambios desde la web, no para mover desde el panel (RN-14, D-14).
+- **Given** el admin está en el panel, **When** busca el link privado de un turno, **Then** el panel no lo muestra ni permite recuperarlo (D-29).
 - **Given** el admin mueve o cancela un turno, **When** lo hace, **Then** no se envía ninguna notificación; el panel muestra el teléfono del cliente (si lo tiene) para que el local lo contacte por su cuenta (D-1, D-3).
 
 ### CU-14 — Marcar asistencia
@@ -273,20 +280,20 @@ Este caso de uso se eliminó: la anticipación mínima para que el cliente cambi
 | RN-04 | Un horario está libre si el peluquero hace el servicio, el horario cae completo dentro de su horario semanal, no hay bloqueos del local ni del peluquero y no se superpone con otro turno vigente. |
 | RN-05 | Todos los horarios se expresan en la zona horaria del local. |
 | RN-06 | El cliente no crea cuenta. Nombre obligatorio; teléfono y email opcionales; el teléfono se recomienda (D-3). Rige igual cuando el local reserva por un cliente desde la web (D-23). |
-| RN-07 | Cada turno tiene un link privado, difícil de adivinar, que permite ver solo ese turno (H1) y cambiarlo o cancelarlo (H2). El link no cambia aunque el cliente o el admin muevan el turno, y siempre muestra el estado vigente: en H1, "Confirmado"; en H2, además, el aviso "El local cambió tu turno: ahora es…" si el admin lo movió, o que está cancelado si el admin lo canceló (D-18). |
+| RN-07 | Cada turno tiene un link privado, difícil de adivinar, que permite ver solo ese turno (H1) y cambiarlo o cancelarlo (H2). El link no cambia aunque el cliente cambie el turno o el admin lo mueva, y siempre muestra el estado vigente: en H1, "Confirmado"; en H2, además, el aviso "El local cambió tu turno: ahora es…" si el admin lo movió, o que está cancelado si el admin lo canceló (D-18). |
 | RN-08 | El cliente puede cambiar o cancelar desde el link si faltan **2 horas o más** para el inicio; con **menos de 2 horas**, no. El valor es **fijo** para todos los locales y no se configura (D-13). El admin no tiene esa restricción (D-7). |
 | RN-09 | Si al cambiar el turno el horario nuevo ya no está libre, el cliente conserva el turno original sin cambios. |
 | RN-10 | Los turnos cancelados liberan el horario y no se les puede marcar asistencia. |
 | RN-11 | Solo se puede marcar asistencia en turnos vigentes cuya hora de inicio ya pasó. |
 | RN-12 | El sistema no envía notificaciones de ningún tipo (email, SMS, WhatsApp, push). |
 | RN-13 | El precio es solo de referencia: no se cobra ni se pide seña. Es **opcional** al crear el servicio; si falta, la web muestra "Consultá el precio en el local" (D-19). |
-| RN-14 | No se puede reservar en horarios pasados. El cliente puede reservar, o cambiar su turno, desde hoy hasta **30 días corridos hacia adelante** (hoy + 30 días, inclusive) (D-14). Rige también cuando el local reserva por un cliente desde la web (D-23). *(Propuesta PO)* La ventana no limita al admin al **mover** turnos desde el panel. |
+| RN-14 | No se puede reservar en horarios pasados. El cliente puede reservar, o cambiar su turno, desde hoy hasta **30 días corridos hacia adelante** (hoy + 30 días, inclusive) (D-14). Rige también cuando el local reserva por un cliente desde la web (D-23). La ventana no limita al admin al **mover** turnos desde el panel (D-14). |
 | RN-15 | Un servicio sin peluqueros activos asignados no se ofrece al cliente. Un peluquero sin servicios asignados no aparece en la reserva. |
 | RN-16 | El admin puede **mover** turnos fuera del horario semanal o sobre un bloqueo solo después de una advertencia y su confirmación. Nunca puede superponer turnos (RN-01). Al reservar desde la web (también el local por un cliente) no hay excepciones: solo se ofrecen horarios libres (RN-04, D-23). |
 | RN-17 | Todo texto al cliente que indique contactar al local muestra el teléfono de contacto configurado (CU-16). |
 | RN-18 | Desde el link, el cliente solo cambia día y horario, con el mismo servicio y el mismo peluquero (o "cualquiera"). Para cambiar el servicio, cancela y reserva de nuevo. |
 | RN-19 | Los turnos empiezan en **intervalos de 15 minutos** (:00, :15, :30, :45), tanto los que se reservan desde la web (por el cliente o por el local) como los que mueve el admin (D-21). |
-| RN-20 | Con "cualquiera disponible", el turno se asigna, entre los peluqueros activos que hacen ese servicio y están libres en ese horario, al que tenga **menos turnos vigentes ese día** (sin contar cancelados). *(Propuesta PO)* **Desempate:** si empatan, se asigna al que fue cargado primero en el panel (orden de carga) (D-15). |
+| RN-20 | Con "cualquiera disponible", el turno se asigna, entre los peluqueros activos que hacen ese servicio y están libres en ese horario, al que tenga **menos turnos vigentes ese día** (sin contar cancelados). **Desempate:** si empatan, se asigna al que fue cargado primero en el panel (orden de carga). La misma regla se aplica cuando el cliente cambia desde el link un turno reservado con "cualquiera disponible" (D-15). |
 | RN-21 | La duración de un servicio va de **5 a 480 minutos**, en múltiplos de 5 (D-20). |
 
 ## 7. Requisitos no funcionales
@@ -302,7 +309,7 @@ Este caso de uso se eliminó: la anticipación mínima para que el cliente cambi
 | RNF-07 | **Costo:** el MVP opera con costo de infraestructura US$ 0 en Vercel Hobby (D-9, §10), incluido el piloto de H2, que se considera uso no comercial por decisión de Ezequiel (D-17). **Condición:** si el uso pasa a ser comercial, se revisa la licencia. |
 | RNF-08 | *Eliminado (D-16): el MVP no tiene métricas; la medición queda fuera de alcance.* |
 | RNF-09 | **Idioma:** interfaz en español. |
-| RNF-10 | **Ambiente de staging (prueba piloto):** en staging, el único usuario admin se crea automáticamente al preparar el ambiente, con usuario `admin` y contraseña `admin`, para que Ezequiel pueda probar (D-26). Es un requisito **solo de staging, no de producción**. Cómo se crea lo define el Architect. **Riesgo aceptado (D-27):** son credenciales conocidas, así que cualquiera con la URL puede entrar al panel; solo es aceptable con datos de prueba. Antes de usar datos reales de clientes, la contraseña se cambia. El reseteo manual de contraseña por el equipo sigue igual (CU-08, §10). |
+| RNF-10 | **Ambiente de staging (datos de prueba):** staging es el ambiente de pruebas con datos de prueba (demo de H1 y pruebas de Ezequiel). Ahí el único usuario admin se crea automáticamente al preparar el ambiente, con usuario `admin` y contraseña `admin` (D-26). Es un requisito **solo de staging, no de producción**; cómo se crea lo define el Architect. **Riesgo aceptado (D-27):** son credenciales conocidas, así que cualquiera con la URL puede entrar al panel; solo es aceptable con datos de prueba. **Cambio de contraseña (D-28):** antes de cargar el primer dato real de un cliente o de empezar el piloto de H2, en el ambiente que sea, el equipo técnico (Architect) cambia la contraseña del admin por una no conocida y se la pasa al local. No hay pantalla para hacerlo. Es condición para empezar el piloto de H2. En qué ambiente corre el piloto lo define el Architect. El reseteo manual de contraseña por el equipo sigue igual (CU-08, §10). |
 
 ## 8. Fuera de alcance del MVP
 
@@ -321,6 +328,8 @@ Este caso de uso se eliminó: la anticipación mínima para que el cliente cambi
 - **Carga manual de turnos desde el panel:** cuando un cliente llama, el local reserva desde la web pública (D-23).
 - Varios usuarios del panel, roles, pantalla para administrar usuarios y registro de qué persona movió o canceló cada turno (D-25).
 - Envío del link privado por el sistema: si el local quiere, lo manda por su cuenta (D-24, D-1).
+- Ver o recuperar links privados desde el panel: si el cliente no tiene su link, el admin mueve o cancela el turno desde el panel (D-29).
+- Pantalla para cambiar la contraseña del admin: la cambia el equipo técnico (D-28).
 
 ## 9. Decisiones
 
@@ -339,8 +348,8 @@ Este caso de uso se eliminó: la anticipación mínima para que el cliente cambi
 | D-11 | El admin puede **mover** turnos fuera del horario semanal o sobre un bloqueo con advertencia y confirmación, pero nunca superponerlos. Ajustada por D-23: ya no hay carga desde el panel, y al reservar desde la web no hay excepciones. | El local resuelve excepciones reales (un cliente que necesita otro horario) sin romper la regla de no superposición. | CPO (pedido del PO Reviewer); ajuste: Ezequiel Avila (D-23) |
 | D-12 | ~~En los turnos que carga el admin, el teléfono también es opcional.~~ **Obsoleta, reemplazada por D-23:** el panel ya no carga turnos. La recomendación del teléfono en la web y el riesgo aceptado por clientes sin teléfono siguen vigentes y pasan a D-3. | Ya no hay turnos cargados por el admin. | Ezequiel Avila |
 | D-13 | La **anticipación mínima** para que el cliente cambie o cancele es **2 horas, fija**, para siempre y sin configuración por local. Se elimina CU-15 (el ID se conserva marcado como eliminado). | Simplifica el MVP: no hace falta pantalla ni validaciones de configuración. | Ezequiel Avila (P-2) |
-| D-14 | **Ventana de reserva: 30 días hacia adelante** (hoy + 30 días corridos, inclusive) para reservar y para cambiar desde el link. *(Propuesta PO: no limita al admin al mover turnos desde el panel; sí rige cuando el local reserva por un cliente desde la web, D-23.)* | Evita reservas muy lejanas que el local no puede garantizar. | Ezequiel Avila (P-5); alcance al mover desde el panel: propuesta PO |
-| D-15 | Con **"cualquiera disponible"**, se asigna al peluquero que hace el servicio, está libre en ese horario y tiene **menos turnos vigentes ese día**. *(Propuesta PO)* **Desempate:** el que fue cargado primero en el panel. | Reparte la carga del día; el desempate por orden de carga es simple, determinístico y no requiere configuración. | Ezequiel Avila (P-7); desempate: propuesta PO |
+| D-14 | **Ventana de reserva: 30 días hacia adelante** (hoy + 30 días corridos, inclusive) para reservar y para cambiar desde el link. No limita al admin al mover turnos desde el panel; sí rige cuando el local reserva por un cliente desde la web (D-23). | Evita reservas muy lejanas que el local no puede garantizar; el admin necesita resolver excepciones del local. | Ezequiel Avila (P-5); "30 días corridos, inclusive" y que no limite al admin al mover: propuesta PO, aceptada por el CPO |
+| D-15 | Con **"cualquiera disponible"**, se asigna al peluquero que hace el servicio, está libre en ese horario y tiene **menos turnos vigentes ese día** (los cancelados no cuentan). **Desempate:** el que fue cargado primero en el panel. Si el cliente cambia desde el link un turno reservado con "cualquiera disponible", el peluquero se reasigna con la misma regla. | Reparte la carga del día; el desempate por orden de carga es simple, determinístico y no requiere configuración. | Ezequiel Avila (P-7); desempate, cancelados que no cuentan y reasignación al cambiar: propuesta PO, aceptada por el CPO |
 | D-16 | **Por ahora sin métricas.** El objetivo del MVP es cualitativo: que el cliente reserve solo y sin duplicados. Las métricas propuestas quedan fuera del MVP y se retoman más adelante; se elimina RNF-08. La regla de cero superposiciones se mantiene como regla de negocio. | Prioriza validar el flujo antes de medir. | Ezequiel Avila (P-1) |
 | D-17 | El uso actual, **incluido el piloto de H2, se considera no comercial**; se mantiene **Vercel Hobby**. La licencia se revisa solo si pasa a uso comercial. | "No es uso comercial esto por ahora." | Ezequiel Avila (P-9) |
 | D-18 | Estado en el **link privado**: en H1 solo muestra "Confirmado". En H2, si el admin movió el turno, muestra un aviso del tipo "El local cambió tu turno: ahora es…"; si lo canceló, muestra que está cancelado. | Sin notificaciones (D-1), el link es la única vía para que el cliente se entere de cambios del local. | CPO (P-D1 del diseño) |
@@ -351,8 +360,10 @@ Este caso de uso se eliminó: la anticipación mínima para que el cliente cambi
 | D-23 | **Sin carga manual de turnos en el panel.** Cuando un cliente llama, el local reserva por él desde la misma web pública (CU-01 a CU-05), con los datos del cliente. Es una reserva web normal: rigen la ventana de 30 días (RN-14), los inicios cada 15 minutos (RN-19) y solo se ofrecen horarios libres, sin excepciones fuera de horario. CU-13 pasa a ser "Mover y cancelar turnos desde el panel"; mover y cancelar se mantienen. D-12 queda obsoleta; D-7 y D-11 se ajustan a mover y cancelar. | "Que eso lo hagan desde la app la misma peluquería, total no necesita una app distinta para eso." Menos alcance y un solo flujo de reserva. | Ezequiel Avila |
 | D-24 | El local puede **copiar el link privado** de la confirmación y mandárselo al cliente **por su cuenta** (WhatsApp u otro medio), fuera del sistema. El sistema no lo envía (D-1 sigue vigente). | Le da al cliente que reservó por teléfono la misma autogestión que al resto, sin agregar notificaciones. | CPO |
 | D-25 | **Un único usuario admin** en el panel: sin roles, sin varias cuentas, sin pantalla para administrar usuarios. No se registra qué persona movió o canceló cada turno. Resuelve P-8. | "Hagamos que haya un único user admin." Es lo más simple para una prueba piloto. | Ezequiel Avila |
-| D-26 | En el **ambiente de staging**, el usuario admin se crea automáticamente al preparar el ambiente, con usuario `admin` y contraseña `admin` (RNF-10). Es requisito de staging, no de producción; cómo se hace lo define el Architect. | "Es todo una prueba piloto [...] así lo puedo probar." | Ezequiel Avila |
-| D-27 | **Riesgo aceptado:** las credenciales conocidas (`admin`/`admin`) solo son aceptables en staging con **datos de prueba**; cualquiera con la URL puede entrar al panel. **Antes de usar datos reales de clientes, la contraseña se cambia.** El reseteo manual de contraseña por el equipo sigue igual. | Habilita la prueba de Ezequiel sin exponer datos personales reales (RNF-04). | CPO |
+| D-26 | En el **ambiente de staging** (ambiente de pruebas con **datos de prueba**: demo de H1 y pruebas de Ezequiel), el usuario admin se crea automáticamente al preparar el ambiente, con usuario `admin` y contraseña `admin` (RNF-10). Es requisito de staging, no de producción; cómo se hace lo define el Architect. Staging no es el piloto de H2: en qué ambiente corre el piloto lo define el Architect (D-28). | "Es todo una prueba piloto [...] así lo puedo probar." | Ezequiel Avila; alcance de staging aclarado por el CPO (D-28) |
+| D-27 | **Riesgo aceptado:** las credenciales conocidas (`admin`/`admin`) solo son aceptables en staging con **datos de prueba**; cualquiera con la URL puede entrar al panel. Antes de cargar datos reales de clientes o de empezar el piloto de H2, la contraseña se cambia según D-28. El reseteo manual de contraseña por el equipo sigue igual. | Habilita la prueba de Ezequiel sin exponer datos personales reales (RNF-04). | CPO |
+| D-28 | **Staging = datos de prueba; cambio de contraseña antes de datos reales.** Staging es el ambiente de pruebas con datos de prueba (demo de H1 y pruebas de Ezequiel); ahí vale `admin`/`admin` (D-26). Antes de cargar el primer dato real de un cliente o de empezar el piloto de H2, sea en el ambiente que sea, el **equipo técnico (Architect)** cambia la contraseña del admin por una no conocida y se la pasa al local. No hay pantalla para hacerlo. Ese cambio es **condición para empezar el piloto de H2**. En qué ambiente corre el piloto lo define el Architect, no este documento. | Separa con claridad pruebas y piloto, y evita exponer datos reales con credenciales conocidas (RNF-04). | CPO |
+| D-29 | **Riesgo aceptado:** en una reserva por teléfono, si el local no copia el link privado en la pantalla de confirmación, el cliente se queda sin autogestión. Si necesita cambiar o cancelar, llama al local y el admin mueve o cancela desde el panel (mismo camino que cuando un cliente pierde el link, D-2). El panel **no muestra ni recupera** links privados en el MVP. Se revisa con lo que se vea en la demo. | Mantiene el MVP simple y sin nuevas pantallas; el camino alternativo ya existe (CU-13). | CPO |
 
 ## 10. Factibilidad (referencia)
 
@@ -379,5 +390,5 @@ No hay preguntas abiertas.
 | P-4 | Hitos de D-8 confirmados por Ezequiel. |
 | P-5 | Ventana de reserva de 30 días (D-14). |
 | P-7 | Peluquero con menos turnos ese día; desempate por orden de carga (D-15). |
-| P-9 | Uso no comercial, incluido el piloto; se mantiene Vercel Hobby (D-17). |
 | P-8 | Un único usuario admin, sin roles ni pantalla de usuarios (D-25). En staging se crea con usuario `admin` y contraseña `admin` (D-26), con el riesgo aceptado de D-27. |
+| P-9 | Uso no comercial, incluido el piloto; se mantiene Vercel Hobby (D-17). |
