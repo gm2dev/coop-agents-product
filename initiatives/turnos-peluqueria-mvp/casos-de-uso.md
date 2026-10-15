@@ -33,12 +33,11 @@ Hoy los turnos se toman por teléfono o WhatsApp. Esto genera tres problemas:
 | **Tasa de ausencias** | Turnos marcados "no asistió" ÷ turnos pasados marcados (asistió + no asistió), por semana. | Marca de asistencia (CU-14). |
 | **Conversión de reserva** | Reservas confirmadas ÷ reservas iniciadas (cliente que eligió un servicio), por semana. | Inicio y confirmación del flujo de reserva. |
 | **Reservas duplicadas** (guardarraíl) | Cantidad de turnos superpuestos para un mismo peluquero. Meta: **0**. | Agenda. |
-
 | **Tiempo perdido en reservas** (estimada) | Llamadas y mensajes por semana para reservar, cambiar o cancelar. Se releva con el local (conteo o estimación del personal) **antes** del piloto y **durante** el piloto, y se comparan. | Relevamiento con el local (no lo mide el sistema). |
 
 Las metas numéricas (por ejemplo, % online a los 30 días) se fijan con Ezequiel al confirmar el objetivo. Antes del piloto (H2) conviene registrar una línea de base de ausencias y de llamadas y mensajes por semana (aunque sea estimada por el local). En H1 (demo interna con datos de prueba, D-8) no se miden métricas de uso real.
 
-**Supuesto sobre los admins:** el panel lo usan uno o pocos admins (dueño o encargado). Si comparten una misma cuenta o tienen cuentas individuales es una pregunta abierta (P-8). El MVP **no tiene roles distintos**: todos los admins pueden hacer lo mismo.
+**Supuesto sobre los admins:** el panel lo usan uno o pocos admins (dueño o encargado). Propuesta del Architect (P-8): una cuenta por persona, creada a mano por el equipo, para saber quién cargó, movió o canceló cada turno. El MVP **no tiene roles distintos** (todos los admins pueden hacer lo mismo) ni pantalla para administrar usuarios. Queda abierto cuántas personas del local usan el panel.
 
 ## 4. Alcance del MVP
 
@@ -114,7 +113,7 @@ Los criterios marcados **(H2)** dentro de un CU de H1 se implementan en H2.
 - **Given** el cliente eligió "cualquiera disponible", **When** confirma, **Then** el sistema asigna un peluquero que hace ese servicio y está libre en ese horario, y la confirmación muestra cuál es. El criterio para elegir entre varios peluqueros libres se define más adelante (P-7).
 - **Given** el cliente deja el nombre vacío, **When** intenta confirmar, **Then** ve un mensaje junto al campo que indica que el nombre es obligatorio y no se crea el turno.
 - **Given** el cliente no ingresa teléfono ni email, **When** confirma con nombre válido, **Then** el turno se crea igual.
-- **Given** el cliente está en el paso de datos, **When** ve el campo teléfono, **Then** figura como opcional con un texto que recomienda dejarlo (por ejemplo, "para avisarte si hay un cambio") (D-12).
+- **Given** el cliente está en el paso de datos, **When** ve el campo teléfono, **Then** figura como opcional con un texto que recomienda dejarlo (por ejemplo, "para que el local pueda contactarte si hay un cambio") (D-12).
 - **Given** el cliente ingresa un email o teléfono con formato inválido, **When** intenta confirmar, **Then** ve un mensaje que indica qué corregir y no se crea el turno.
 - **Given** el cliente está en cualquier paso, **When** vuelve atrás, **Then** conserva lo que ya eligió en los pasos anteriores.
 
@@ -132,7 +131,7 @@ Los criterios marcados **(H2)** dentro de un CU de H1 se implementan en H2.
 
 - **Given** el turno se confirmó, **When** el cliente ve la pantalla de confirmación, **Then** ve servicio, peluquero, fecha, hora, duración, precio de referencia y nombre, dirección y teléfono de contacto del local (CU-16).
 - **Given** el turno se confirmó, **When** el cliente ve la confirmación, **Then** ve su link privado, una indicación visible de que lo guarde (porque no se enviará por ningún medio) y una forma de copiarlo.
-- **Given** el cliente abre su link privado, **When** la página carga, **Then** ve el resumen de su turno en solo lectura, con el estado vigente (si el admin lo movió, ve el turno actualizado). En H1 no hay botones de cambiar ni cancelar; llegan en H2 (CU-06, CU-07).
+- **Given** el cliente abre su link privado, **When** la página carga, **Then** ve el resumen de su turno en solo lectura, con el estado vigente. **(H2)** Si el admin lo movió o canceló desde el panel (CU-13), ve el turno actualizado. En H1 no hay botones de cambiar ni cancelar; llegan en H2 (CU-06, CU-07).
 - **Given** alguien abre un link inválido o inexistente, **When** la página carga, **Then** ve "Turno no encontrado" sin revelar datos de ningún turno.
 - **Given** el cliente toca "Agregar al calendario", **When** se completa la acción, **Then** puede guardar el evento en el calendario de su celular con fecha, hora, duración, servicio, local y el link privado en la descripción.
 - **Given** el turno se confirmó, **When** pasa cualquier tiempo, **Then** el sistema no envía email, SMS ni WhatsApp al cliente.
@@ -205,7 +204,7 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 
 **Como** admin, **quiero** ver la agenda **para** saber quién viene, con quién y cuándo.
 
-- **Given** el admin está en el panel, **When** abre la agenda del día, **Then** ve los turnos de ese día por peluquero, con hora, duración, servicio, nombre del cliente, contacto (si lo dejó), origen (web o panel) y estado.
+- **Given** el admin está en el panel, **When** abre la agenda del día, **Then** ve los turnos de ese día por peluquero, con hora, duración, servicio, nombre del cliente, contacto (si lo dejó), origen (web o, **(H2)**, panel; en H1 no hay carga manual, CU-13) y estado.
 - **Given** el admin cambia a la vista semanal, **When** se muestra, **Then** ve los turnos de los 7 días por peluquero y puede navegar a semanas anteriores y siguientes.
 - **Given** el admin filtra por peluquero, **When** aplica el filtro, **Then** solo ve los turnos de ese peluquero.
 - **Given** un cliente reservó desde la web, **When** el admin abre o actualiza la agenda, **Then** ve el turno nuevo.
@@ -216,7 +215,7 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 
 **Como** admin, **quiero** gestionar turnos a mano **para** registrar los que llegan por teléfono y atender a quien perdió su link.
 
-- **Given** un cliente llama o viene al local, **When** el admin carga un turno con servicio, peluquero, horario, nombre y teléfono, **Then** el turno queda en la agenda con origen "panel" y respeta las mismas reglas de no superposición.
+- **Given** un cliente llama o viene al local, **When** el admin carga un turno con servicio, peluquero, horario, nombre (y, si lo tiene, teléfono y email), **Then** el turno queda en la agenda con origen "panel" y respeta las mismas reglas de no superposición.
 - **Given** el admin carga un turno a mano, **When** deja vacíos el teléfono y el email, **Then** el turno se crea igual (solo el nombre es obligatorio) (D-12).
 - **Given** el admin intenta cargar o mover un turno a un horario que se superpone con otro del mismo peluquero, **When** guarda, **Then** ve el error y el turno no se crea ni se mueve. Esto no se puede forzar (RN-01).
 - **Given** el admin carga o mueve un turno a un horario fuera del horario semanal del peluquero o dentro de un bloqueo, **When** guarda, **Then** el sistema le advierte el motivo y le pide confirmación; si confirma, el turno se guarda; si no, no se guarda.
@@ -267,7 +266,6 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 | RN-06 | El cliente no crea cuenta. Nombre obligatorio; teléfono y email opcionales, tanto en la web como en los turnos que carga el admin desde el panel; el teléfono se recomienda en la web (D-12). |
 | RN-07 | Cada turno tiene un link privado, difícil de adivinar, que permite ver solo ese turno (H1) y cambiarlo o cancelarlo (H2). El link no cambia aunque el cliente o el admin muevan el turno, y siempre muestra el estado vigente. |
 | RN-08 | El cliente puede cambiar o cancelar desde el link si faltan **N horas o más** para el inicio (N = anticipación mínima configurada, 2 h por defecto, P-2); con **menos de N horas**, no. *(Propuesta D-7)* El admin no tiene esa restricción. |
-| RN-08b | Desde el link, el cliente solo cambia día y horario, con el mismo servicio y el mismo peluquero (o "cualquiera"). Para cambiar el servicio, cancela y reserva de nuevo. |
 | RN-09 | Si al cambiar el turno el horario nuevo ya no está libre, el cliente conserva el turno original sin cambios. |
 | RN-10 | Los turnos cancelados liberan el horario y no cuentan en la tasa de ausencias. |
 | RN-11 | Solo se puede marcar asistencia en turnos vigentes cuya hora de inicio ya pasó. |
@@ -277,6 +275,7 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 | RN-15 | Un servicio sin peluqueros activos asignados no se ofrece al cliente. Un peluquero sin servicios asignados no aparece en la reserva. |
 | RN-16 | El admin puede cargar o mover turnos fuera del horario semanal o sobre un bloqueo solo después de una advertencia y su confirmación. Nunca puede superponer turnos (RN-01). |
 | RN-17 | Todo texto al cliente que indique contactar al local muestra el teléfono de contacto configurado (CU-16). |
+| RN-18 | Desde el link, el cliente solo cambia día y horario, con el mismo servicio y el mismo peluquero (o "cualquiera"). Para cambiar el servicio, cancela y reserva de nuevo. |
 
 ## 7. Requisitos no funcionales
 
@@ -287,7 +286,7 @@ Alcance del cambio en el MVP: solo **día y horario**, con el **mismo servicio**
 | RNF-03 | **Integridad de la agenda:** cero turnos superpuestos para un mismo peluquero, incluso con reservas simultáneas (RN-01, RN-02). |
 | RNF-04 | **Privacidad:** los datos de clientes (nombre, teléfono, email) solo los ve el admin autenticado. El link privado no expone datos de otros turnos. Se guardan solo los datos necesarios. |
 | RNF-05 | **Seguridad del panel:** todas las pantallas y acciones del admin requieren autenticación. |
-| RNF-06 | **Rapidez percibida** *(propuesta, a validar por el Architect)*: los horarios libres se muestran en **menos de 3 s** en un celular con conexión 4G, medido desde que el cliente elige el día. Se exceptúa el primer acceso después de un rato de inactividad (arranque en frío señalado por el Architect). |
+| RNF-06 | **Rapidez percibida** *(validada por el Architect)*: los horarios libres se muestran en **menos de 3 s** en un celular con conexión 4G, medido desde que el cliente elige el día. Se exceptúa el primer acceso después de un rato de inactividad (arranque en frío señalado por el Architect). Según el Architect es factible: lo esperable es menos de 1 s, con la app y la base de datos en la misma región. |
 | RNF-07 | **Costo:** el MVP opera con costo de infraestructura US$ 0 en la etapa de validación (Vercel Hobby, D-9, §10). Antes del uso comercial se revisa la licencia. |
 | RNF-08 | **Medición:** se registran los datos necesarios para calcular las métricas de §3 (origen del turno, inicio y confirmación de reserva, asistencia). |
 | RNF-09 | **Idioma:** interfaz en español. |
@@ -342,5 +341,6 @@ Los detalles técnicos (arquitectura, autenticación del admin, manejo de concur
 | P-2 | ¿Cuál es la anticipación mínima por defecto para cambiar o cancelar? ¿Se confirma D-7 (la anticipación no rige para el admin)? | 2 h, configurable por el local; se puede si faltan N horas o más. Sí a D-7. | Ezequiel Avila | CU-06, CU-07, CU-13, CU-15, RN-08, D-7 |
 | P-4 | ¿Se confirma la definición de hitos de D-8? | Sí: **H1 = demo interna con datos de prueba** (CU-01 a CU-05, CU-08 a CU-10, CU-12 y CU-16; link en solo lectura). **H2 = MVP operable para el piloto real** (CU-06, CU-07, CU-11, CU-13, CU-14, CU-15 y los criterios marcados (H2)). | Ezequiel Avila | Plan de entrega, §5, D-8 |
 | P-5 | ¿Con cuánta anticipación máxima se puede reservar (por ejemplo, 30 días)? | 30 días. | Ezequiel Avila | CU-02, RN-14 |
-| P-7 | Con "cualquiera disponible", si hay varios peluqueros libres, ¿con qué criterio se asigna (por ejemplo, el de menos turnos en el día, rotación u orden fijo)? | Por ahora basta con que sea un peluquero que hace ese servicio y está libre; el criterio se define más adelante. | Ezequiel Avila con el CDO (diseño) | CU-03, CU-04 |
-| P-8 | ¿Cuántos admins usan el panel y si comparten una cuenta o tienen cuentas individuales? | Uno o pocos admins; el MVP no tiene roles distintos. | Architect y Ezequiel Avila | CU-08, §3 |
+| P-7 | Con "cualquiera disponible", si hay varios peluqueros libres, ¿con qué criterio se asigna (por ejemplo, el de menos turnos en el día, rotación u orden fijo)? | Por ahora basta con que sea un peluquero que hace ese servicio y está libre; el criterio se define más adelante. Según el Architect, cualquiera de las opciones (orden fijo, el que tenga menos turnos ese día o rotación) cuesta poco; la decisión es de Ezequiel y el CDO. | Ezequiel Avila con el CDO (diseño) | CU-03, CU-04 |
+| P-8 | ¿Cuántas personas del local van a usar el panel? | Propuesta del Architect: **una cuenta por persona**, sin roles distintos; las cuentas las crea el equipo a mano y el MVP no tiene pantalla para administrar usuarios. Así se sabe quién cargó, movió o canceló cada turno. Queda abierto solo cuántas personas lo usan. | Ezequiel Avila | CU-08, CU-13, §3 |
+| P-9 | Antes del piloto de H2, ¿qué licencia se usa (Vercel Pro u otra)? Hobby es solo para uso no comercial (condición de D-9). | Volver a decidir la licencia antes de empezar el piloto de H2. | Ezequiel Avila | D-9, RNF-07, §10, H2 |
