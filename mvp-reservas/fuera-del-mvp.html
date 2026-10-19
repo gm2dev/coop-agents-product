@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fuera del MVP de reservas</title>
+  <style>
+:root {
+  --fg: #1f2328; --muted: #57606a; --bg: #ffffff; --surface: #f6f8fa;
+  --border: #d0d7de; --link: #0550ae; --accent: #0969da;
+  --draft-bg: #fff8c5; --draft-fg: #6a4b00;
+  --review-bg: #ddf4ff; --review-fg: #0a3069;
+  --ok-bg: #dafbe1; --ok-fg: #116329;
+  --old-bg: #eaeef2; --old-fg: #424a53;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; color: var(--fg); background: var(--bg);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.page { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+h1, h2, h3 { line-height: 1.25; margin: 2rem 0 .75rem; }
+h1 { font-size: 2rem; margin-top: 0; }
+h2 { font-size: 1.5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.2rem; }
+p, ul, ol, table, pre, .gwt { margin: 0 0 1rem; }
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em;
+  background: var(--surface); padding: .1em .3em; border-radius: 4px; }
+header.doc { border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; padding-bottom: 1rem; }
+header.doc .meta { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 0; padding: 0;
+  list-style: none; color: var(--muted); font-size: .95rem; }
+header.doc .meta strong { color: var(--fg); }
+nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .75rem 1rem; margin-bottom: 2rem; }
+nav.toc h2 { font-size: 1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+nav.toc ol { margin: 0; padding-left: 1.25rem; }
+table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+thead th { background: var(--surface); font-weight: 600; }
+.badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .85rem;
+  font-weight: 600; border: 1px solid currentColor; white-space: nowrap; }
+.badge.borrador { background: var(--draft-bg); color: var(--draft-fg); }
+.badge.en-revision { background: var(--review-bg); color: var(--review-fg); }
+.badge.aprobado { background: var(--ok-bg); color: var(--ok-fg); }
+.badge.obsoleto { background: var(--old-bg); color: var(--old-fg); text-decoration: line-through; }
+.gwt { border-left: 4px solid var(--accent); background: var(--surface); padding: .75rem 1rem;
+  border-radius: 0 6px 6px 0; }
+.gwt p { margin: .25rem 0; }
+.gwt .k { font-weight: 700; display: inline-block; min-width: 5.5rem; }
+.note { border: 1px solid var(--border); border-radius: 6px; padding: .75rem 1rem; color: var(--muted); }
+footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+  color: var(--muted); font-size: .9rem; }
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  .page { padding: 1.25rem 1rem 3rem; }
+  h1 { font-size: 1.6rem; }
+}
+@media print {
+  body { font-size: 11pt; color: #000; }
+  .page { max-width: none; padding: 0; }
+  nav.toc { display: none; }
+  a { color: #000; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; }
+  h2, h3 { break-after: avoid; }
+  table, .gwt { break-inside: avoid; }
+}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="doc">
+    <p><a href="../index.html">Documentación de producto</a> › MVP de reservas</p>
+    <h1>Fuera del MVP de reservas: iniciativas para PRDs posteriores</h1>
+    <ul class="meta">
+      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
+      <li><strong>Dueño:</strong> PO (MVP de reservas)</li>
+      <li><strong>Decide:</strong> Fidel Cossio</li>
+      <li><strong>Relacionado:</strong> <a href="prd-mvp.html#fuera-de-alcance">PRD del MVP (Roadmap B)</a></li>
+      <li><strong>Última revisión:</strong> <time datetime="2026-10-19">2026-10-19</time></li>
+    </ul>
+  </header>
+
+  <nav class="toc" aria-label="Contenido">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#proposito">Propósito</a></li>
+      <li><a href="#recortado-roadmap-a">Recortado del Roadmap A</a>
+        <ol>
+            <li><a href="#fm-1">FM-1: Reprogramación real</a></li>
+            <li><a href="#fm-2">FM-2: Varias campañas, plantillas y segmentos</a></li>
+            <li><a href="#fm-3">FM-3: Métricas completas</a></li>
+            <li><a href="#fm-4">FM-4: Marca completa</a></li>
+            <li><a href="#fm-5">FM-5: Suscripción con cobro recurrente</a></li>
+            <li><a href="#fm-6">FM-6: Beneficios por plan con preferencia de horarios</a></li>
+            <li><a href="#fm-7">FM-7: Lista de espera básica</a></li>
+        </ol>
+      </li>
+      <li><a href="#otras-iniciativas">Otras iniciativas</a>
+        <ol>
+            <li><a href="#fm-8">FM-8: App nativa</a></li>
+            <li><a href="#fm-9">FM-9: Login con Google y Apple</a></li>
+            <li><a href="#fm-10">FM-10: Servicios simultáneos y recursos limitados</a></li>
+            <li><a href="#fm-11">FM-11: Señas y penalidades automáticas</a></li>
+            <li><a href="#fm-12">FM-12: Cobro online o seña de reservas puntuales</a></li>
+            <li><a href="#fm-13">FM-13: Gift cards, packs, promociones y cupones</a></li>
+            <li><a href="#fm-14">FM-14: Programa de puntos</a></li>
+            <li><a href="#fm-15">FM-15: Reseñas y calificaciones</a></li>
+            <li><a href="#fm-16">FM-16: Historial de la clienta</a></li>
+            <li><a href="#fm-17">FM-17: Lista de espera inteligente</a></li>
+            <li><a href="#fm-18">FM-18: Clientes sin turno (walk-in)</a></li>
+            <li><a href="#fm-19">FM-19: Un número de WhatsApp por spa</a></li>
+            <li><a href="#fm-20">FM-20: Migración asistida</a></li>
+            <li><a href="#fm-21">FM-21: Adaptación a otros rubros</a></li>
+            <li><a href="#fm-22">FM-22: Facturación ante ARCA</a></li>
+            <li><a href="#fm-23">FM-23: Escala a 100 negocios</a></li>
+        </ol>
+      </li>
+      <li><a href="#historial">Historial</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="proposito">
+      <h2>Propósito</h2>
+      <p>Fidel Cossio eligió el Roadmap B (acotado) para salir en las fiestas. Este documento guarda lo que no entra en el <a href="prd-mvp.html">MVP</a> para retomarlo en PRDs posteriores. Cada iniciativa indica descripción, valor, por qué quedó afuera, dependencias y riesgos conocidos y el disparador para retomarla. No hay estimaciones: se piden al Architect cuando se retome cada una. Los identificadores <code>fm-N</code> son estables.</p>
+    </section>
+
+    <section id="recortado-roadmap-a">
+      <h2>Recortado del Roadmap A</h2>
+      <article id="fm-1">
+        <h3>FM-1: Reprogramación real</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Mover un turno a otro horario en un paso, conservando el turno hasta confirmar el nuevo.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Evita que la clienta pierda su lugar al cancelar y volver a reservar; reduce fricción y cancelaciones definitivas.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Recortado del Roadmap A. En el MVP, reprogramar = cancelar y volver a reservar (<a href="prd-mvp.html#cu-4">CU-4</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Reglas de anticipación y política de cancelación; reserva en serie.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Primer PRD post-MVP si el POC muestra cancelaciones seguidas de nueva reserva frecuentes.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-2">
+        <h3>FM-2: Varias campañas, plantillas y segmentos</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Crear varias campañas a lo largo del año, con plantillas propias y segmentos (por servicio, frecuencia, ausencias, suscriptoras).</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Ofertas de temporada recurrentes (Día de la Madre, verano, San Valentín) para sostener la recompra.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Recortado del Roadmap A. El MVP tiene una sola campaña de Navidad (<a href="prd-mvp.html#cu-16">CU-16</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Aprobación de plantillas de marketing por Meta, costo por mensaje, límites por usuario y de clientas distintas por día; consentimiento.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Después de medir la campaña de Navidad; antes de la próxima temporada relevante.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-3">
+        <h3>FM-3: Métricas completas</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Tablero con reservas generadas por recordatorios y ofertas, ocupación de profesionales e ingresos.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Permite al negocio ver el retorno de la recompra y de las campañas, y gestionar la ocupación.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Recortado del Roadmap A. El MVP tiene turnos, % de asistencia y recompra (<a href="prd-mvp.html#cu-17">CU-17</a>), y registra el origen de las reservas.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Datos de origen registrados desde el MVP; definir ingresos sin cobro online (precio de lista vs. cobrado).</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Con 1 o 2 meses de datos del POC.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-4">
+        <h3>FM-4: Marca completa</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Personalización más allá de logo y colores: dominio o subdominio propio, tipografía, imágenes, textos de la PWA y de mensajes.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Mayor identificación del negocio frente a su clienta.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Recortado del Roadmap A. El MVP incluye solo logo y colores (<a href="prd-mvp.html#cu-10">CU-10</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Accesibilidad de las combinaciones de marca; con un solo número de WhatsApp el nombre visible es el de la plataforma (ver <a href="#fm-19">FM-19</a>).</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Cuando haya negocios pagos que lo pidan.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-5">
+        <h3>FM-5: Suscripción con cobro recurrente</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Suscripción mensual con débito automático por Mercado Pago, con webhooks, reintentos de cobro, bajas y cambios de plan.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Ingreso recurrente para el negocio y compromiso de recompra sin pagar todo por adelantado.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Recortado del Roadmap A (estaba previsto para enero). En el MVP se vende como pack prepago de pago único (<a href="prd-mvp.html#cu-22">CU-22</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Mercado Pago suscripciones, manejo de pagos fallidos, Res. 316/2018 (botón de baja), facturación ante ARCA (<a href="#fm-22">FM-22</a>).</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Enero de 2027, después de medir los packs de la Fase 2.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-6">
+        <h3>FM-6: Beneficios por plan con preferencia de horarios y reserva prioritaria</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Que las suscriptoras accedan antes a horarios o tengan horarios preferidos reservados.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Valor diferencial del plan; refuerza la “promesa de Año Nuevo” con preferencia de horarios.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>El Architect advirtió que la reserva prioritaria es costosa. En el MVP solo existe “elegir profesional” por tier (<a href="prd-mvp.html#cu-26">CU-26</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Disponibilidad y agenda; reglas de equidad con clientas no suscriptoras.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Con suscripción recurrente (<a href="#fm-5">FM-5</a>) y si los packs se venden.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-7">
+        <h3>FM-7: Lista de espera básica</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Anotarse para un día u horario lleno y recibir aviso si se libera un turno.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Recupera huecos por cancelaciones y retiene a la clienta que no consiguió turno.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Recortado del Roadmap A; depende de la misma lógica de prioridad que el Architect marcó como costosa.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Cancelaciones (<a href="prd-mvp.html#cu-4">CU-4</a>), mensajería, límites de WhatsApp.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Si el POC muestra agendas llenas y cancelaciones de último momento.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <section id="otras-iniciativas">
+      <h2>Otras iniciativas</h2>
+      <article id="fm-8">
+        <h3>FM-8: App nativa</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Apps para Android e iOS publicadas en las tiendas.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Push confiable en iOS sin depender de instalar la PWA; presencia en tiendas.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Decisión <a href="prd-mvp.html#d-5">D-5</a>: el MVP sale con PWA y WhatsApp.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Publicación en tiendas, mantenimiento de dos plataformas.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Si la tasa de instalación de la PWA o el alcance de push en iOS resultan insuficientes.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-9">
+        <h3>FM-9: Login con Google y Apple</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Ingresar con cuenta de Google o Apple además del número de WhatsApp.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Menos fricción para quien no quiere esperar un código.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>El número de WhatsApp es obligatorio siempre y alcanza para el MVP (<a href="prd-mvp.html#cu-1">CU-1</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Seguiría siendo obligatorio el número verificado; vinculación de cuentas.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Junto con la app nativa (<a href="#fm-8">FM-8</a>).</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-10">
+        <h3>FM-10: Servicios simultáneos y recursos limitados</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Servicios en paralelo (manos y pies a la vez con dos profesionales) y disponibilidad por recursos: sillones, gabinetes, lámparas.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Agenda fiel a la capacidad física del local; habilita combos simultáneos.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Decisión <a href="prd-mvp.html#d-4">D-4</a>: recursos fuera del MVP; se agrega si algún spa amigo lo necesita.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Complejiza la disponibilidad (<a href="prd-mvp.html#cu-2">CU-2</a>, ya lo más complejo de la Fase 1).</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Pedido de un spa del POC o de un negocio con recursos escasos.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-11">
+        <h3>FM-11: Señas y penalidades automáticas; bloqueo o marcado de clientas que faltan</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Cobrar seña al reservar, aplicar penalidades por cancelación tardía o ausencia y bloquear o marcar clientas con ausencias reiteradas.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Reduce ausencias y compensa al negocio.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>En el MVP la política es un texto y el negocio la aplica a mano; las ausencias se miden por clienta (<a href="prd-mvp.html#cu-12">CU-12</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Cobro online (<a href="#fm-12">FM-12</a>), Mercado Pago, defensa del consumidor.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Si el % de asistencia del POC no mejora con recordatorios.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-12">
+        <h3>FM-12: Cobro online o seña de reservas puntuales</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Pagar el turno o una seña por Mercado Pago al reservar.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Compromiso de la clienta y caja anticipada.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>En la Fase 1 se cobra en el local; en la Fase 2 solo se cobran packs.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Cuenta de Mercado Pago del spa (<a href="prd-mvp.html#d-1">D-1</a>), devoluciones, ARCA.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Después de los packs, con la conexión de Mercado Pago ya probada.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-13">
+        <h3>FM-13: Gift cards, packs, promociones y cupones</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Gift cards regalables, packs de servicios no periódicos, promociones y cupones de descuento.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Nuevas fuentes de venta y adquisición (regalos en fechas especiales).</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>El MVP tiene un descuento en la campaña de Navidad y packs prepagos periódicos.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Cobro online, reglas de vencimiento, ARCA.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Antes de una fecha de regalos (Día de la Madre).</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-14">
+        <h3>FM-14: Programa de puntos</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Acumular puntos por visitas y canjearlos.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Incentiva la recompra.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Fuera del Roadmap B por foco y fecha.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Reglas de canje, contabilización.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Si los packs y avisos no alcanzan el objetivo de recompra.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-15">
+        <h3>FM-15: Reseñas y calificaciones opcionales</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>La clienta califica el servicio o al profesional después del turno.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Feedback de calidad para el negocio.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>No aporta directamente a la recompra en el MVP.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Moderación; impacto en profesionales.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Cuando haya volumen de turnos.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-16">
+        <h3>FM-16: Historial de la clienta</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Servicios realizados, colores, alergias y fotos en la ficha.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Atención personalizada y continuidad entre profesionales.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Fuera del Roadmap B por fecha; implica datos sensibles (salud, imágenes).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Privacidad (Ley 25.326), almacenamiento de fotos, consentimiento.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>PRD posterior con validación legal.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-17">
+        <h3>FM-17: Lista de espera inteligente</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Ofrecer turnos ocupados por clientas con historial de ausencias, por la probabilidad de que se liberen.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Recupera huecos aprovechando las métricas de ausencias del MVP.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Depende de la lista de espera básica (<a href="#fm-7">FM-7</a>) y de datos de ausencias.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Equidad y comunicación con la clienta; datos suficientes.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Después de <a href="#fm-7">FM-7</a> y con meses de datos de ausencias.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-18">
+        <h3>FM-18: Clientes sin turno (walk-in)</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Registrar atenciones sin reserva previa.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Métricas completas y agenda real del día.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Fidel Cossio no respondió todavía si lo necesita.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Afecta métricas de asistencia y recompra.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Respuesta de Fidel Cossio o pedido de un spa del POC.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-19">
+        <h3>FM-19: Un número de WhatsApp por spa (Tech Provider de Meta)</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Que cada spa envíe desde su propio número y nombre visible.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Identidad del negocio y aislamiento del riesgo de bloqueo entre spas.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>En el POC hay un solo número de la plataforma con el nombre del spa en la plantilla.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Alta como Tech Provider en Meta, verificación por spa; hoy un bloqueo afecta a todos (<a href="prd-mvp.html#r-2">R-2</a>).</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Antes de escalar a decenas de negocios.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-20">
+        <h3>FM-20: Migración asistida desde otros sistemas</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Importar clientas, servicios e historial desde otras agendas para spas grandes.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Baja la barrera de entrada de negocios establecidos.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>En el MVP alcanza el CSV asistido (<a href="prd-mvp.html#cu-15">CU-15</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Formatos de cada sistema, calidad de datos.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Cuando entre un spa grande con otro sistema.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-21">
+        <h3>FM-21: Adaptación a otros rubros</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Peluquerías, barberías y peluquerías caninas: textos, plantillas y particularidades (por ejemplo, datos de la mascota).</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Amplía el mercado con el mismo producto.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>El MVP es para spas de uñas; el modelo es genérico (<a href="prd-mvp.html#rnf-multiempresa">RNF-1</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Requisitos propios de cada rubro (mascotas, recursos).</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Después del POC con spas.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-22">
+        <h3>FM-22: Facturación ante ARCA</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Emisión de comprobantes de packs, servicios y comisión de la plataforma.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Cumplimiento fiscal del negocio y de la plataforma.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Por definir (<a href="prd-mvp.html#p-1">P-1</a>); durante el POC la comisión se factura por fuera (<a href="prd-mvp.html#d-1">D-1</a>).</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Integración con ARCA, condición fiscal de cada spa.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Respuesta del Architect a <a href="prd-mvp.html#p-1">P-1</a>; antes de cobrar en escala.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article id="fm-23">
+        <h3>FM-23: Escala a 100 negocios: niveles de WhatsApp</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Descripción</th><td>Escalar los niveles de mensajería de Meta (clientas distintas por día) y la operación para 100 negocios.</td></tr>
+            <tr><th scope="row">Valor y problema que resuelve</th><td>Sostener recordatorios y campañas con 8000 clientas.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>El POC tiene volumen bajo.</td></tr>
+            <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Calidad del número, límites por nivel, costo de marketing; relación con <a href="#fm-19">FM-19</a>.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Al superar unos pocos negocios activos o acercarse al límite diario.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <section id="historial">
+      <h2>Historial</h2>
+      <ul>
+        <li><time datetime="2026-10-19">2026-10-19</time>: primera versión, con el recorte del Roadmap B decidido por Fidel Cossio.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="doc">
+    <p>Al retomar una iniciativa, se crea su PRD y se enlaza desde acá.</p>
+  </footer>
+
+</div>
+</body>
+</html>
