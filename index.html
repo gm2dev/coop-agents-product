@@ -67,6 +67,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
   h2, h3 { break-after: avoid; }
   table, .gwt { break-inside: avoid; }
 }
+
   </style>
 </head>
 <body>
@@ -74,36 +75,91 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
   <header class="doc">
     <h1>Documentación de producto</h1>
     <ul class="meta">
+      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
       <li><strong>Dueño:</strong> PO</li>
+      <li><strong>Goal:</strong> Pendiente de definir por el CPO</li>
       <li><strong>Última revisión:</strong> <time datetime="2026-10-19">2026-10-19</time></li>
     </ul>
   </header>
 
+  <nav class="toc" aria-label="Contenido">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#vision-y-goals">Visión y goals</a></li>
+      <li><a href="#productos">Productos y PRDs</a></li>
+      <li><a href="#decisiones">Decisiones de producto</a></li>
+      <li><a href="#como-ver">Cómo ver esta documentación</a></li>
+    </ol>
+  </nav>
+
   <main>
-    <section id="documentos">
-      <h2>Documentos</h2>
+    <section id="vision-y-goals">
+      <h2>Visión y goals</h2>
+      <p class="note">Todavía no hay <code>vision.html</code> ni <code>goals.html</code>. El goal del MVP está propuesto por el CPO, pendiente de aprobación escrita de Fidel Cossio, en el <a href="mvp-reservas/prd-mvp.html#goal-mvp">PRD del MVP (Goal del MVP)</a>.</p>
+    </section>
+
+    <section id="productos">
+      <h2>Productos y PRDs</h2>
       <table>
-        <thead><tr><th scope="col">Documento</th><th scope="col">Tipo</th><th scope="col">Estado</th><th scope="col">Dueño</th><th scope="col">Última revisión</th></tr></thead>
+        <thead>
+          <tr><th scope="col">Documento</th><th scope="col">Producto</th><th scope="col">Estado</th><th scope="col">Dueño</th><th scope="col">Última revisión</th></tr>
+        </thead>
         <tbody>
           <tr>
-            <td><a href="mvp-reservas/prd-mvp.html">PRD: MVP de reservas con foco en recompra (Roadmap B)</a></td>
-            <td>PRD</td>
-            <td><span class="badge borrador">borrador</span></td>
+            <td><a href="roadmap-mvp-reservas/presentacion-ejecutiva.html">Presentación ejecutiva: roadmaps A y B del MVP de reservas con recompra</a> (deck para socios)</td>
+            <td>Reservas de turnos (spas de uñas)</td>
+            <td><span class="badge aprobado">aprobado</span></td>
+            <td>Fidel Cossio</td>
+            <td><time datetime="2026-10-19">2026-10-19</time></td>
+          </tr>
+          <tr id="doc-prd-mvp">
+            <td><a href="mvp-reservas/prd-mvp.html">PRD: MVP de reservas con foco en recompra (Roadmap B)</a>, casos de uso con criterios de aceptación</td>
+            <td>Reservas de turnos (spas de uñas)</td>
+            <td><span class="badge en-revision">en revisión</span></td>
             <td>PO (MVP de reservas)</td>
             <td><time datetime="2026-10-19">2026-10-19</time></td>
           </tr>
-          <tr>
+          <tr id="doc-fuera-del-mvp">
             <td><a href="mvp-reservas/fuera-del-mvp.html">Fuera del MVP de reservas: iniciativas para PRDs posteriores</a></td>
-            <td>Backlog de iniciativas</td>
-            <td><span class="badge borrador">borrador</span></td>
+            <td>Reservas de turnos (spas de uñas)</td>
+            <td><span class="badge en-revision">en revisión</span></td>
             <td>PO (MVP de reservas)</td>
             <td><time datetime="2026-10-19">2026-10-19</time></td>
           </tr>
         </tbody>
       </table>
+      <p class="note">Las carpetas se mantienen separadas: <code>roadmap-mvp-reservas/</code> tiene la presentación ejecutiva (decisión de roadmap) y <code>mvp-reservas/</code> tiene el PRD del MVP y el documento de lo que quedó fuera.</p>
+    </section>
+
+    <section id="decisiones">
+      <h2>Decisiones de producto</h2>
+      <table>
+        <thead>
+          <tr><th scope="col">Fecha</th><th scope="col">Decisión</th><th scope="col">Estado</th></tr>
+        </thead>
+        <tbody>
+          <tr id="decision-roadmap-b">
+            <td><time datetime="2026-10-19">2026-10-19</time></td>
+            <td><a href="roadmap-mvp-reservas/presentacion-ejecutiva.html#decision-1">Roadmap B elegido (19/10/2026)</a>: Fase 1 recortada y suscripción como pack prepago. Decidió Fidel Cossio; también confirmó cobro con la cuenta de Mercado Pago de cada spa, opt-in para campañas, recordatorios configurables (24 h y 2 h), sin recursos ni app nativa y elegir profesional como beneficio por tier.</td>
+            <td><span class="badge aprobado">aprobado</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="como-ver">
+      <h2>Cómo ver esta documentación</h2>
+      <ul>
+        <li><strong>Preview por PR (Vercel):</strong> cada push a una rama o PR genera un preview; el link aparece en el check de Vercel del PR (<code>gh pr checks &lt;n&gt;</code>). <code>main</code> es producción.</li>
+        <li><strong>Localmente:</strong> cloná el repo y abrí <code>index.html</code> en el navegador; los links entre documentos son relativos y funcionan sin servidor.</li>
+        <li>En github.com los archivos <code>.html</code> se ven como código fuente, no renderizados.</li>
+      </ul>
     </section>
   </main>
 
+  <footer class="doc">
+    <p>Los issues y PRs enlazan a las secciones de los documentos con <code>#ancla</code>. Convenciones del repo: ver <code>README.md</code>.</p>
+  </footer>
 </div>
 </body>
 </html>
