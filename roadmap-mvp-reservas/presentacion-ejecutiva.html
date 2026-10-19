@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Presentación ejecutiva: roadmaps del MVP de reservas con recompra</title>
+  <style>
+:root {
+  --fg: #1f2328; --muted: #57606a; --bg: #ffffff; --surface: #f6f8fa;
+  --border: #d0d7de; --link: #0550ae; --accent: #0969da;
+  --draft-bg: #fff8c5; --draft-fg: #6a4b00;
+  --review-bg: #ddf4ff; --review-fg: #0a3069;
+  --ok-bg: #dafbe1; --ok-fg: #116329;
+  --old-bg: #eaeef2; --old-fg: #424a53;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; color: var(--fg); background: var(--bg);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.page { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+h1, h2, h3 { line-height: 1.25; margin: 2rem 0 .75rem; }
+h1 { font-size: 2rem; margin-top: 0; }
+h2 { font-size: 1.5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.2rem; }
+p, ul, ol, table, pre, .gwt { margin: 0 0 1rem; }
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em;
+  background: var(--surface); padding: .1em .3em; border-radius: 4px; }
+header.doc { border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; padding-bottom: 1rem; }
+header.doc .meta { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 0; padding: 0;
+  list-style: none; color: var(--muted); font-size: .95rem; }
+header.doc .meta strong { color: var(--fg); }
+nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .75rem 1rem; margin-bottom: 2rem; }
+nav.toc h2 { font-size: 1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+nav.toc ol { margin: 0; padding-left: 1.25rem; }
+table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+thead th { background: var(--surface); font-weight: 600; }
+.badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .85rem;
+  font-weight: 600; border: 1px solid currentColor; white-space: nowrap; }
+.badge.borrador { background: var(--draft-bg); color: var(--draft-fg); }
+.badge.en-revision { background: var(--review-bg); color: var(--review-fg); }
+.badge.aprobado { background: var(--ok-bg); color: var(--ok-fg); }
+.badge.obsoleto { background: var(--old-bg); color: var(--old-fg); text-decoration: line-through; }
+.gwt { border-left: 4px solid var(--accent); background: var(--surface); padding: .75rem 1rem;
+  border-radius: 0 6px 6px 0; }
+.gwt p { margin: .25rem 0; }
+.gwt .k { font-weight: 700; display: inline-block; min-width: 5.5rem; }
+.note { border: 1px solid var(--border); border-radius: 6px; padding: .75rem 1rem; color: var(--muted); }
+footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+  color: var(--muted); font-size: .9rem; }
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  .page { padding: 1.25rem 1rem 3rem; }
+  h1 { font-size: 1.6rem; }
+}
+@media print {
+  body { font-size: 11pt; color: #000; }
+  .page { max-width: none; padding: 0; }
+  nav.toc { display: none; }
+  a { color: #000; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; }
+  h2, h3 { break-after: avoid; }
+  table, .gwt { break-inside: avoid; }
+}
+
+/* ===== Extensión para formato deck (presentación). Se suma a la base sin modificarla. ===== */
+:root { --ink: #14213d; --brand: #0b4f6c; --brand-soft: #e6f0f4; --a: #8a5a00; --a-soft: #fdf3e1;
+  --b: #116329; --b-soft: #e5f5e9; --risk: #8c2f39; --risk-soft: #fbecee; }
+body.deck { background: #e9ecef; }
+.deck-bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem;
+  background: var(--ink); color: #fff; padding: .45rem 1rem; font-size: .9rem; }
+.deck-bar a { color: #fff; }
+.deck-bar .hint { opacity: .85; }
+.deck-bar nav { display: flex; flex-wrap: wrap; gap: .15rem .6rem; }
+.slides { padding: 1.25rem .75rem 3rem; }
+.slide { position: relative; width: min(100%, 1280px); aspect-ratio: 16 / 9; margin: 0 auto 1.5rem; background: #fff;
+  border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.08); container-type: inline-size;
+  overflow: hidden; scroll-margin-top: 3rem; }
+.slide-inner { position: absolute; inset: 0; padding: 3.4cqw 4.2cqw 4.4cqw; font-size: 1.5cqw; line-height: 1.4;
+  display: flex; flex-direction: column; gap: 1.1cqw; }
+.slide h1, .slide h2, .slide h3 { margin: 0; color: var(--ink); }
+.slide h2 { font-size: 2.6cqw; border-bottom: .25cqw solid var(--brand); padding-bottom: .5cqw; }
+.slide h3 { font-size: 1.65cqw; }
+.slide p, .slide ul, .slide ol, .slide table { margin: 0; }
+.slide ul, .slide ol { padding-left: 1.4em; }
+.slide li { margin: .15em 0; }
+.slide table { display: table; font-size: 1.3cqw; }
+.slide th, .slide td { padding: .45cqw .7cqw; }
+.slide .kicker { color: var(--brand); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 1.15cqw; }
+.slide .lead { font-size: 1.8cqw; color: var(--ink); }
+.slide .small { font-size: 1.2cqw; color: var(--muted); }
+.slide-num { position: absolute; right: 2.2cqw; bottom: 1.4cqw; font-size: 1.05cqw; color: var(--muted); }
+.slide-foot { position: absolute; left: 4.2cqw; bottom: 1.4cqw; font-size: 1.05cqw; color: var(--muted); }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2cqw; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6cqw; }
+.cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2cqw; }
+.card { border: 1px solid var(--border); border-radius: .6cqw; padding: 1cqw 1.3cqw; background: var(--surface); }
+.card h3 { margin-bottom: .4cqw; }
+.card.a { background: var(--a-soft); border-color: #e3c68f; }
+.card.b { background: var(--b-soft); border-color: #9fd3ac; }
+.card.risk { background: var(--risk-soft); border-color: #e2b3b9; }
+.card.brand { background: var(--brand-soft); border-color: #a9cad8; }
+.tag { display: inline-block; font-size: 1.05cqw; font-weight: 700; padding: .1cqw .7cqw; border-radius: 999px;
+  border: 1px solid currentColor; white-space: nowrap; }
+.tag.a { color: var(--a); background: var(--a-soft); }
+.tag.b { color: var(--b); background: var(--b-soft); }
+.tag.rec { color: #fff; background: var(--b); border-color: var(--b); }
+.meter { display: flex; align-items: center; gap: .8cqw; font-size: 1.25cqw; }
+.meter .track { flex: 0 0 12cqw; height: 1cqw; background: #dfe3e8; border-radius: 999px; overflow: hidden; }
+.meter .fill { height: 100%; background: var(--brand); }
+.callout { border-left: .45cqw solid var(--brand); background: var(--brand-soft); padding: .8cqw 1.2cqw; border-radius: 0 .5cqw .5cqw 0; }
+.callout.warn { border-left-color: var(--a); background: var(--a-soft); }
+.slide.dense .slide-inner { font-size: 1.36cqw; gap: .8cqw; padding-top: 2.8cqw; }
+.slide.dense .card { padding: .8cqw 1.1cqw; }
+.big { font-size: 3.4cqw; font-weight: 800; color: var(--brand); line-height: 1.1; }
+/* Portada */
+.cover .slide-inner { justify-content: center; background: var(--ink); color: #fff; }
+.cover h1 { color: #fff; font-size: 4.2cqw; line-height: 1.15; }
+.cover .lead { color: #dbe4ee; }
+.cover .kicker { color: #9cc7da; }
+.cover .meta { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .4cqw 2.4cqw; font-size: 1.3cqw; color: #dbe4ee; }
+.cover .meta strong { color: #fff; }
+.cover .badge { font-size: 1.1cqw; }
+.cover .slide-num, .cover .slide-foot { color: #9fb3c8; }
+/* Línea de tiempo */
+.tl { position: relative; display: grid; grid-template-columns: 17cqw 1fr; row-gap: .7cqw; font-size: 1.2cqw; }
+.tl .lbl { font-weight: 600; color: var(--ink); align-self: center; }
+.tl .lane { position: relative; height: 2.2cqw; background: var(--surface); border-radius: .3cqw; }
+.tl .months { position: relative; height: 1.8cqw; }
+.tl .months span { position: absolute; top: 0; font-weight: 700; color: var(--muted); border-left: 1px solid var(--border); padding-left: .4cqw; }
+.tl .bar { position: absolute; top: .3cqw; bottom: .3cqw; border-radius: .3cqw; color: #fff; font-size: 1.05cqw;
+  padding: 0 .5cqw; display: flex; align-items: center; white-space: nowrap; overflow: hidden; }
+.tl .bar.prd { background: #57606a; }
+.tl .bar.meta { background: #6f42c1; }
+.tl .bar.a { background: #b7791f; }
+.tl .bar.b { background: #1a7f37; }
+.tl .bar.range { background: repeating-linear-gradient(45deg, rgba(0,0,0,.08) 0 .5cqw, transparent .5cqw 1cqw); color: var(--ink); border: 1px dashed #6e7781; }
+.tl .bar.range.a { background-color: #f6e3c0; }
+.tl .bar.range.b { background-color: #cdebd5; }
+.tl .bar.later { background: #eaeef2; color: var(--ink); border: 1px dashed #8c959f; }
+.tl .marks { position: absolute; top: 0; bottom: 0; left: 17cqw; right: 0; pointer-events: none; }
+.tl .mark { position: absolute; top: 0; bottom: 0; border-left: .2cqw solid var(--risk); }
+.tl .mark.today { border-left-color: var(--ink); border-left-style: dashed; }
+.tl .mark.meta { border-left-color: #6f42c1; border-left-style: dashed; }
+.tl .mark span { position: absolute; bottom: -2.1cqw; left: -.2cqw; white-space: nowrap; font-weight: 700; font-size: 1.05cqw; color: inherit; }
+.tl .mark.left span { left: auto; right: .4cqw; }
+.tl .band { position: absolute; top: 0; bottom: 0; background: rgba(140,47,57,.08); }
+.legend { display: flex; flex-wrap: wrap; gap: .4cqw 1.6cqw; font-size: 1.1cqw; color: var(--muted); margin-top: 2.4cqw; }
+.legend i { display: inline-block; width: 1.6cqw; height: 1cqw; vertical-align: middle; margin-right: .4cqw; border-radius: .2cqw; }
+/* Modo presentación (solo con JS: tecla P) */
+body.present { background: #000; overflow: hidden; }
+body.present .deck-bar { display: none; }
+body.present .slides { padding: 0; }
+body.present .slide { display: none; position: fixed; inset: 0; margin: auto; width: min(100vw, calc(100vh * 16 / 9));
+  border: 0; box-shadow: none; }
+body.present .slide.current { display: block; }
+@media (max-width: 700px) { .deck-bar .hint { display: none; } }
+@media print {
+  @page { size: 13.333in 7.5in; margin: 0; }
+  body.deck, body.present { background: #fff; overflow: visible; }
+  .deck-bar { display: none; }
+  .slides { padding: 0; }
+  .slide, body.present .slide { display: block; position: relative; width: 13.333in; height: 7.5in; aspect-ratio: auto;
+    margin: 0; border: 0; box-shadow: none; break-after: page; page-break-after: always; break-inside: avoid; }
+  .slide:last-child { break-after: auto; page-break-after: auto; }
+  .slide h2 { break-after: auto; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a[href^="http"]::after { content: none; }
+}
+  </style>
+</head>
+<body class="deck">
+  <header class="deck-bar">
+    <a href="../index.html">Documentación de producto</a>
+    <span>›</span>
+    <strong>Roadmap MVP reservas · Presentación ejecutiva</strong>
+    <nav aria-label="Slides"><a href="#portada">1</a><a href="#problema">2</a><a href="#objetivo-y-metricas">3</a><a href="#mvp-comun">4</a><a href="#roadmap-a">5</a><a href="#roadmap-b">6</a><a href="#comparacion">7</a><a href="#linea-de-tiempo">8</a><a href="#riesgos">9</a><a href="#despues-del-mvp">10</a><a href="#decisiones">11</a><a href="#preguntas-abiertas">12</a></nav>
+    <span class="hint">← → navegar · P presentar · Ctrl+P imprimir</span>
+  </header>
+  <main class="slides">
+
+<section class="slide cover" id="portada" aria-labelledby="portada-t" data-n="1">
+  <div class="slide-inner">
+    <p class="kicker">Presentación a socios · Para decidir</p>
+    <h1 id="portada-t">Reservas de turnos con foco en recompra:<br>dos caminos para salir en las fiestas</h1>
+    <p class="lead">MVP para spas de uñas (luego peluquerías, barberías y peluquerías caninas). Dos roadmaps posibles, sus fechas, su certidumbre y lo que tenemos que decidir esta semana.</p>
+    <ul class="meta">
+      <li><strong>Presenta:</strong> Fidel Cossio</li>
+      <li><strong>Preparó:</strong> equipo de producto (PO), con estimaciones del Architect</li>
+      <li><strong>Fecha:</strong> <time datetime="2026-10-19">lunes 19/10/2026</time></li>
+      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
+    </ul>
+    <p class="small" style="color:#9fb3c8">Navegación: flechas o barra espaciadora para avanzar, tecla P para modo presentación, Ctrl+P para PDF (un slide por página).</p>
+  </div>
+  
+  <p class="slide-num">1 / 12</p>
+</section>
+<section class="slide " id="problema" aria-labelledby="problema-t" data-n="2">
+  <div class="slide-inner">
+    <p class="kicker">Problema y oportunidad</p>
+    <h2 id="problema-t">Reservar ya está resuelto. Lograr que la clienta vuelva, no.</h2>
+    <div class="cols">
+      <div class="card">
+        <h3>Lo que ya existe en el mercado</h3>
+        <ul>
+          <li>Reserva online de turnos.</li>
+          <li>Agenda para el local y para cada profesional.</li>
+        </ul>
+        <p class="small">Competir solo con esto es competir en una categoría con oferta establecida.</p>
+      </div>
+      <div class="card brand">
+        <h3>Nuestro diferencial: la recompra</h3>
+        <ul>
+          <li><strong>Recordatorios</strong> del turno, que además bajan las ausencias.</li>
+          <li><strong>&laquo;Te toca volver&raquo;</strong>: aviso cuando llega el momento del próximo servicio.</li>
+          <li><strong>Ofertas por temporada</strong>: Navidad, Black Friday.</li>
+          <li><strong>Suscripciones</strong>: &laquo;este año voy todos los meses&raquo;, con ahorro y preferencia de horarios.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <p><strong>Por qué ahora:</strong> las fiestas son la ventana natural para ofertas de Navidad y para vender la suscripción como &laquo;promesa de Año Nuevo&raquo;.</p>
+    </div>
+    <p class="small"><strong>Hipótesis a validar:</strong> que una parte importante de la facturación de un spa depende de clientas que vuelven y que hoy ese regreso queda librado a la memoria de cada una. No tenemos datos de mercado; lo vamos a medir con el historial de los spas del piloto.</p>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">2 / 12</p>
+</section>
+<section class="slide " id="objetivo-y-metricas" aria-labelledby="objetivo-y-metricas-t" data-n="3">
+  <div class="slide-inner">
+    <p class="kicker">Objetivo y cómo medimos el éxito</p>
+    <h2 id="objetivo-y-metricas-t">Una métrica principal: que la clienta vuelva a reservar</h2>
+    <div class="cols" style="grid-template-columns: 1.1fr 1fr">
+      <div>
+        <div class="card brand">
+          <p class="small">Métrica principal (propuesta)</p>
+          <p class="big">% de clientas que vuelven a reservar dentro de los 60 días</p>
+        </div>
+        <h3 style="margin-top:1.2cqw">Métricas de apoyo</h3>
+        <ul>
+          <li>Reservas originadas por recordatorios u ofertas.</li>
+          <li>% de asistencia (turnos cumplidos frente a ausencias).</li>
+          <li>Cantidad de suscriptoras.</li>
+        </ul>
+      </div>
+      <div>
+        <table>
+          <caption class="small" style="text-align:left">Escala del piloto y del primer año</caption>
+          <thead><tr><th scope="col"></th><th scope="col">Prueba de concepto</th><th scope="col">Primer año</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Negocios</th><td>3 spas amigos</td><td>100</td></tr>
+            <tr><th scope="row">Profesionales</th><td>12</td><td>400</td></tr>
+            <tr><th scope="row">Clientas</th><td>~200</td><td>8.000</td></tr>
+          </tbody>
+        </table>
+        <div class="callout warn" style="margin-top:1.2cqw">
+          <p><strong>Hoy no hay línea de base.</strong> Propuesta: pedirles a los 3 spas su historial de 2 o 3 meses para medir la recompra actual y fijar el objetivo sobre ese número (objetivo: <em>a validar</em>).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">3 / 12</p>
+</section>
+<section class="slide " id="mvp-comun" aria-labelledby="mvp-comun-t" data-n="4">
+  <div class="slide-inner">
+    <p class="kicker">Lo que comparten los dos roadmaps</p>
+    <h2 id="mvp-comun-t">El MVP: cuatro perfiles, una plataforma pensada para crecer</h2>
+    <div class="cols-4">
+      <div class="card"><h3>Clientas</h3><ul><li>Reservan.</li><li>Reciben ofertas y recordatorios.</li><li>Cancelan.</li><li>Compran la suscripción.</li></ul></div>
+      <div class="card"><h3>Profesionales</h3><ul><li>Ven su agenda.</li><li>Bloquean horarios.</li><li>Reciben recordatorios.</li></ul></div>
+      <div class="card"><h3>Administradora</h3><ul><li>Turnos y % de asistencia.</li><li>Suscriptoras.</li><li>Profesionales, clientas y servicios.</li><li>Marca del spa.</li></ul></div>
+      <div class="card"><h3>Recepción</h3><ul><li>Carga turnos en nombre de la clienta.</li></ul></div>
+    </div>
+    <div class="cols">
+      <div class="card brand">
+        <h3>Cómo se usa</h3>
+        <ul>
+          <li><strong>Clientas:</strong> entran por WhatsApp y una app web instalable (PWA). Se registran con su número de WhatsApp.</li>
+          <li><strong>Administradoras y profesionales:</strong> app web instalable (PWA).</li>
+          <li>La app nativa queda para después, por el riesgo de demoras en la revisión de las tiendas.</li>
+        </ul>
+      </div>
+      <div class="card brand">
+        <h3>Bases comunes</h3>
+        <ul>
+          <li>Precios en pesos argentinos; pago del servicio en el local.</li>
+          <li>Desde el día uno, preparado para muchos negocios y otros rubros (sin adaptarlo todavía).</li>
+          <li>Pensado para pasar de 3 a 100 negocios sin rehacerlo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">4 / 12</p>
+</section>
+<section class="slide dense" id="roadmap-a" aria-labelledby="roadmap-a-t" data-n="5">
+  <div class="slide-inner">
+    <p class="kicker"><span class="tag a">Roadmap A</span> Alcance completo y suscripción con cobro recurrente</p>
+    <h2 id="roadmap-a-t">Roadmap A: todo lo pensado para Navidad, cobro mensual para Año Nuevo</h2>
+    <div class="cols" style="grid-template-columns: 1.35fr 1fr">
+      <div class="card a">
+        <h3>Fase 1 · Navidad</h3>
+        <ul>
+          <li>Reserva de uno o varios servicios seguidos; disponibilidad por spa y por profesional; elección de profesional (si el spa la activa).</li>
+          <li>Ver, cancelar y <strong>reprogramar</strong> turnos, con la política de cancelación del spa a la vista.</li>
+          <li>Recepción carga turnos; profesional con agenda y bloqueos.</li>
+          <li>Administradora: servicios (duración y precio), profesionales, horarios, <strong>marca completa</strong>, asistencia y ausencias.</li>
+          <li>Recordatorios por WhatsApp y push; aviso &laquo;te toca volver&raquo;.</li>
+          <li><strong>Campañas de oferta con varias plantillas y segmentos.</strong></li>
+          <li>Importación de clientas por planilla (CSV), con asistencia de Fidel.</li>
+          <li><strong>Métricas completas</strong>: turnos, asistencia, recompra y reservas generadas por recordatorios y ofertas.</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.1cqw">
+        <div class="card">
+          <p><strong>Fecha estimada:</strong> 5 a 8 semanas de construcción → entre ~30/11 y ~28/12.</p>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:50%"></span></span><span>Llegar a principios de diciembre: ~50% (media-baja)</span></div>
+        </div>
+        <div class="card a">
+          <h3>Fase 2 · Año Nuevo</h3>
+          <ul>
+            <li>Suscripción mensual con <strong>cobro recurrente</strong> por Mercado Pago.</li>
+            <li>Beneficios por plan: elegir profesional, prioridad o preferencia de horarios.</li>
+            <li>Lista de espera básica; cantidad de suscriptoras para la administradora.</li>
+          </ul>
+          <p style="margin-top:.6cqw"><strong>Fecha:</strong> 2 a 3 semanas después de la Fase 1. Lo probable: mediados o fines de enero.</p>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:40%"></span></span><span>Llegar antes del 26/12: ~40% (baja-media)</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="small"><strong>Lo que complica la Fase 2:</strong> cobros rechazados, reintentos, avisos de pago y bajas; la reserva prioritaria para suscriptoras cuesta más que el cobro; pruebas entre el 20 y el 26/12 con poca gente disponible.</p>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">5 / 12</p>
+</section>
+<section class="slide " id="roadmap-b" aria-labelledby="roadmap-b-t" data-n="6">
+  <div class="slide-inner">
+    <p class="kicker"><span class="tag b">Roadmap B</span> <span class="tag rec">Recomendado</span> Fase 1 recortada y pack prepago</p>
+    <h2 id="roadmap-b-t">Roadmap B: lo esencial para Navidad, suscripción prepaga antes de fin de año</h2>
+    <div class="cols" style="grid-template-columns: 1.35fr 1fr">
+      <div class="card b">
+        <h3>Fase 1 · Navidad: lo mismo que A, con cuatro recortes</h3>
+        <table>
+          <thead><tr><th scope="col">Tema</th><th scope="col">En A</th><th scope="col">En B</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Reprogramar</th><td>Reprogramación real</td><td>Cancelar y volver a reservar</td></tr>
+            <tr><th scope="row">Campañas</th><td>Varias plantillas y segmentos</td><td>Una campaña de Navidad, una plantilla, un segmento simple</td></tr>
+            <tr><th scope="row">Métricas</th><td>Completas</td><td>Básicas: turnos, % asistencia, recompra</td></tr>
+            <tr><th scope="row">Marca</th><td>Completa</td><td>Logo y colores</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:.6cqw">Todo lo demás de la Fase 1 de A se mantiene: reserva, recordatorios, &laquo;te toca volver&raquo;, recepción, agenda, importación por CSV.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.1cqw">
+        <div class="card">
+          <p><strong>Fecha estimada:</strong> 4 a 5 semanas de construcción → fines de noviembre o principios de diciembre (~30/11 a ~7/12).</p>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:70%"></span></span><span>Certidumbre: ~70% (media)</span></div>
+        </div>
+        <div class="card b">
+          <h3>Fase 2 · Año Nuevo</h3>
+          <ul>
+            <li>Suscripción vendida como <strong>pack prepago de 3 o 12 meses</strong>, con un solo pago por Mercado Pago.</li>
+            <li>Mantiene el gancho &laquo;este año voy todos los meses&raquo;.</li>
+          </ul>
+          <p style="margin-top:.6cqw"><strong>Fecha:</strong> ~1 semana después de la Fase 1 → mediados de diciembre, antes del 26/12.</p>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:85%"></span></span><span>Certidumbre: alta</span></div>
+          <p class="small" style="margin-top:.4cqw">El cobro recurrente mensual pasa a enero.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">6 / 12</p>
+</section>
+<section class="slide " id="comparacion" aria-labelledby="comparacion-t" data-n="7">
+  <div class="slide-inner">
+    <p class="kicker">Comparación</p>
+    <h2 id="comparacion-t">A y B lado a lado</h2>
+    <table>
+      <thead><tr><th scope="col" style="width:16%"></th><th scope="col" style="width:42%"><span class="tag a">Roadmap A</span> Alcance completo</th><th scope="col"><span class="tag b">Roadmap B</span> <span class="tag rec">Recomendado</span> Recortado + prepago</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Alcance Fase 1</th><td>Completo: reprogramación real, varias campañas y segmentos, métricas y marca completas.</td><td>Esencial: los mismos perfiles y recordatorios, con cuatro recortes (reprogramar, campañas, métricas, marca).</td></tr>
+        <tr><th scope="row">Fase 1 lista</th><td>~30/11 a ~28/12 (5 a 8 semanas)</td><td>~30/11 a ~7/12 (4 a 5 semanas)</td></tr>
+        <tr><th scope="row">Suscripción</th><td>Mensual con cobro recurrente; probable mediados o fines de enero.</td><td>Pack prepago 3 o 12 meses, un solo pago; mediados de diciembre.</td></tr>
+        <tr><th scope="row">Certidumbre</th><td>Fase 1 a principios de dic.: ~50%. Fase 2 antes del 26/12: ~40%.</td><td>Fase 1: ~70%. Fase 2 antes del 26/12: alta.</td></tr>
+        <tr><th scope="row">Riesgo principal</th><td>Llegar tarde a la campaña de Navidad y perder la ventana de &laquo;promesa de Año Nuevo&raquo;.</td><td>Ofrecer menos herramientas de campaña y de reportes en la primera temporada.</td></tr>
+        <tr><th scope="row">Qué se pierde</th><td>Margen de tiempo para probar con los spas antes de las fiestas.</td><td>Reprogramación en un paso, campañas variadas, métricas detalladas, marca completa y cobro mensual automático (pasan a enero).</td></tr>
+        <tr><th scope="row">Para Navidad y Año Nuevo</th><td>Posible, con riesgo alto de no llegar.</td><td>Campaña de Navidad y pack &laquo;promesa de Año Nuevo&raquo; a la venta antes del 26/12.</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Las dos opciones comparten las mismas dependencias externas (WhatsApp y Mercado Pago, slide 9).</p>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">7 / 12</p>
+</section>
+<section class="slide " id="linea-de-tiempo" aria-labelledby="linea-de-tiempo-t" data-n="8">
+  <div class="slide-inner">
+    <p class="kicker">Línea de tiempo</p>
+    <h2 id="linea-de-tiempo-t">De octubre a enero: qué pasa y cuándo</h2>
+    <div class="tl" role="img" aria-label="Línea de tiempo de octubre 2026 a enero 2027 con PRD y diseño, verificación de Meta, Fases 1 y 2 de los roadmaps A y B, Navidad y Año Nuevo">
+      <span></span>
+      <div class="months"><span style="left:0">Octubre</span><span style="left:12.38%">Noviembre</span><span style="left:40.95%">Diciembre</span><span style="left:70.48%">Enero</span></div>
+      <span class="lbl">PRD y diseño</span>
+      <div class="lane"><span class="bar prd" style="left:0%;width:13.33%">1–2 semanas</span></div>
+      <span class="lbl">Verificación Meta (WhatsApp)</span>
+      <div class="lane"><span class="bar meta" style="left:0%;width:20.95%">Iniciar ya · límite 10/11</span></div>
+      <span class="lbl"><span class="tag a">A</span> Fase 1</span>
+      <div class="lane"><span class="bar a" style="left:13.33%;width:26.67%">Construcción</span><span class="bar range a" style="left:40%;width:26.67%">Entrega: 30/11 a 28/12</span></div>
+      <span class="lbl"><span class="tag a">A</span> Fase 2</span>
+      <div class="lane"><span class="bar range a" style="left:53.33%;width:45.67%">+2–3 semanas · probable mediados o fines de enero</span></div>
+      <span class="lbl"><span class="tag b">B</span> Fase 1</span>
+      <div class="lane"><span class="bar b" style="left:13.33%;width:26.67%">Construcción · entrega 30/11–7/12</span><span class="bar range b" style="left:40%;width:6.67%"></span></div>
+      <span class="lbl"><span class="tag b">B</span> Fase 2 (pack, mediados dic.)</span>
+      <div class="lane"><span class="bar range b" style="left:46.67%;width:13.33%">+~1 semana</span></div>
+      <span class="lbl"><span class="tag b">B</span> Cobro recurrente</span>
+      <div class="lane"><span class="bar later" style="left:70.48%;width:28.52%">Enero (después del MVP de fiestas)</span></div>
+      <div class="marks" aria-hidden="true">
+        <span class="band" style="left:59.05%;width:5.71%"></span>
+        <span class="mark today" style="left:0"><span>Hoy 19/10</span></span>
+        <span class="mark meta" style="left:20.95%;color:#6f42c1"><span>10/11 Meta aprobada (si no: plan B)</span></span>
+        <span class="mark left" style="left:63.81%;color:var(--risk)"><span>Navidad 25/12</span></span>
+        <span class="mark low" style="left:70.48%;color:var(--risk)"><span>Año Nuevo 1/1</span></span>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i style="background:#57606a"></i>Diseño y PRD</span>
+      <span><i style="background:#6f42c1"></i>Trámite externo</span>
+      <span><i style="background:#1a7f37"></i>Trabajo planificado</span>
+      <span><i style="background:#cdebd5;border:1px dashed #6e7781"></i>Ventana de entrega estimada</span>
+      <span><i style="background:rgba(140,47,57,.15)"></i>20–26/12: pruebas con poca gente disponible</span>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">8 / 12</p>
+</section>
+<section class="slide dense" id="riesgos" aria-labelledby="riesgos-t" data-n="9">
+  <div class="slide-inner">
+    <p class="kicker">Riesgos y dependencias</p>
+    <h2 id="riesgos-t">El camino crítico está afuera del código: WhatsApp y los pagos</h2>
+    <div class="cols">
+      <div style="display:flex;flex-direction:column;gap:1cqw">
+        <div class="card risk">
+          <h3>1. Verificación de WhatsApp (Meta)</h3>
+          <p>El código es rápido; el trámite es lento: verificación del negocio, número dedicado y aprobación del nombre visible. Lleva de días a 2 o 3 semanas. <strong>Fidel lo inicia esta semana.</strong></p>
+          <p><strong>Plan B</strong> si no está aprobado el 10/11: recordatorios por email y push; código de verificación por SMS.</p>
+        </div>
+        <div class="card">
+          <h3>2. Un solo número para el piloto</h3>
+          <p>Un número de la plataforma, con el nombre del spa en el mensaje. Un número por spa requiere otro registro ante Meta y queda para después.</p>
+        </div>
+        <div class="card">
+          <h3>3. Límites de envío al inicio</h3>
+          <p>Meta limita cuántas clientas distintas por día se contactan: alcanza para 200; para 8.000 hay que ir subiendo de nivel.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1cqw">
+        <div class="card risk">
+          <h3>4. Consentimiento para campañas</h3>
+          <p>Las ofertas por WhatsApp tienen costo por mensaje y requieren permiso. Si se envían a clientas importadas sin permiso, los bloqueos pueden dar de baja el canal entero, recordatorios incluidos.</p>
+          <p><strong>Propuesta:</strong> pedir permiso al reservar y una columna &laquo;dio permiso&raquo; en el CSV.</p>
+        </div>
+        <div class="card">
+          <h3>5. Push en iPhone</h3>
+          <p>Solo llega si la clienta instaló la app web (iOS 16.4 o posterior). Complementa a WhatsApp, no lo reemplaza.</p>
+        </div>
+        <div class="card">
+          <h3>6. Pagos y legales</h3>
+          <p>Definir quién recibe la plata (slide 11). Las suscripciones online necesitan un &laquo;botón de baja&raquo; visible (Res. 316/2018). Facturación ante ARCA: <em>por definir</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">9 / 12</p>
+</section>
+<section class="slide " id="despues-del-mvp" aria-labelledby="despues-del-mvp-t" data-n="10">
+  <div class="slide-inner">
+    <p class="kicker">Fuera del MVP (en ambos roadmaps)</p>
+    <h2 id="despues-del-mvp-t">Lo que queda para después, a propósito</h2>
+    <div class="cols-3">
+      <div class="card">
+        <h3>Canales y acceso</h3>
+        <ul><li>App nativa (iOS y Android).</li><li>Ingreso con Google y Apple.</li><li>Un número de WhatsApp por spa.</li></ul>
+      </div>
+      <div class="card">
+        <h3>Operación del local</h3>
+        <ul><li>Servicios simultáneos.</li><li>Control de sillones o gabinetes.</li><li>Señas y penalidades automáticas.</li><li>Lista de espera inteligente (según probabilidad de ausencia).</li></ul>
+      </div>
+      <div class="card">
+        <h3>Fidelización y clienta</h3>
+        <ul><li>Gift cards, packs, cupones y puntos.</li><li>Reseñas.</li><li>Historial de la clienta (colores, alergias, fotos).</li></ul>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card brand">
+        <h3>Otros rubros</h3>
+        <p>Peluquerías, barberías y peluquerías caninas vienen después. La base ya se construye genérica y para muchos negocios, así que sumarlos no implica rehacer.</p>
+      </div>
+      <div class="card">
+        <h3>En el Roadmap B, además</h3>
+        <p>Pasan a enero: cobro recurrente mensual, reprogramación en un paso, campañas con varias plantillas y segmentos, métricas completas y marca completa.</p>
+      </div>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">10 / 12</p>
+</section>
+<section class="slide " id="decisiones" aria-labelledby="decisiones-t" data-n="11">
+  <div class="slide-inner">
+    <p class="kicker">Lo que necesitamos de los socios</p>
+    <h2 id="decisiones-t">Cuatro decisiones para arrancar</h2>
+    <table>
+      <thead><tr><th scope="col" style="width:4%">#</th><th scope="col" style="width:24%">Decisión</th><th scope="col" style="width:36%">Recomendación</th><th scope="col">Qué implica</th></tr></thead>
+      <tbody>
+        <tr id="decision-1"><td>1</td><th scope="row">Roadmap A o B</th><td><span class="tag rec">B</span> Fase 1 recortada y pack prepago.</td><td>~70% de certidumbre para la Fase 1 y alta para tener la suscripción a la venta antes del 26/12. Lo recortado pasa a enero.</td></tr>
+        <tr id="decision-2"><td>2</td><th scope="row">Quién recibe los pagos</th><td>Cada spa conecta su cuenta de Mercado Pago y cobra directo.</td><td>Menos trámites. La comisión de la plataforma se factura por fuera durante el piloto. Alternativa: la plataforma cobra todo y le paga a cada spa (más trámites y obligaciones de facturación).</td></tr>
+        <tr id="decision-3"><td>3</td><th scope="row">Consentimiento para campañas</th><td>Pedir permiso al reservar más columna &laquo;dio permiso&raquo; en el CSV.</td><td>Protege el canal de WhatsApp (y los recordatorios). Menos alcance para la campaña de Navidad.</td></tr>
+        <tr id="decision-4"><td>4</td><th scope="row">Verificación de Meta y número dedicado</th><td>Iniciarla ya, esta semana.</td><td>Es el trámite más largo del plan. Si no está aprobada el 10/11, se activa el plan B (email, push y SMS).</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><p><strong>Recomendación del CPO y del Architect:</strong> Roadmap B. Llega a Navidad con lo que genera recompra (recordatorios, &laquo;te toca volver&raquo;, campaña de Navidad) y vende la &laquo;promesa de Año Nuevo&raquo; a tiempo.</p></div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">11 / 12</p>
+</section>
+<section class="slide " id="preguntas-abiertas" aria-labelledby="preguntas-abiertas-t" data-n="12">
+  <div class="slide-inner">
+    <p class="kicker">Preguntas abiertas y próximos pasos</p>
+    <h2 id="preguntas-abiertas-t">Lo que falta confirmar</h2>
+    <div class="cols">
+      <div>
+        <h3>Preguntas para Fidel</h3>
+        <table>
+          <thead><tr><th scope="col">Pregunta</th><th scope="col">Propuesta</th></tr></thead>
+          <tbody>
+            <tr id="pregunta-1"><td>Los recordatorios, ¿son a 30 y 10 minutos antes?</td><td>Configurables por el spa; por defecto 24 h y 2 h antes.</td></tr>
+            <tr id="pregunta-2"><td>¿Algún spa amigo necesita controlar sillones o gabinetes en el MVP?</td><td>Hoy está fuera del MVP; confirmar con los 3 spas.</td></tr>
+            <tr id="pregunta-3"><td>¿Confirmamos que se sale sin app nativa?</td><td>Sí: WhatsApp más app web instalable.</td></tr>
+            <tr id="pregunta-4"><td>¿Los 3 spas comparten su historial de 2 o 3 meses?</td><td>Sí, para tener línea de base de recompra.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Próximos pasos tras la decisión</h3>
+        <ol>
+          <li><strong>Esta semana:</strong> iniciar la verificación de Meta y conseguir el número dedicado.</li>
+          <li><strong>Esta semana:</strong> pedir el historial a los 3 spas.</li>
+          <li><strong>1 a 2 semanas:</strong> PRD y diseño del roadmap elegido; ahí se refinan las estimaciones.</li>
+          <li><strong>Entre el 26/10 y el 2/11:</strong> arranca la construcción.</li>
+          <li><strong>10/11:</strong> control de la aprobación de Meta; si no llegó, plan B.</li>
+        </ol>
+        <p class="small">Fechas y porcentajes son estimaciones gruesas del Architect al 19/10/2026; no son compromisos.</p>
+      </div>
+    </div>
+  </div>
+  <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
+  <p class="slide-num">12 / 12</p>
+</section>
+  </main>
+  <script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  function idx() {
+    var h = location.hash.slice(1), k = -1;
+    slides.forEach(function (s, n) { if (s.id === h || s.querySelector('[id="' + h + '"]')) k = n; });
+    return k;
+  }
+  function show(n, push) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, k) { s.classList.toggle('current', k === i); });
+    if (push !== false) history.replaceState(null, '', '#' + slides[i].id);
+    if (!document.body.classList.contains('present')) slides[i].scrollIntoView({ block: 'start' });
+  }
+  function nearest() {
+    var best = 0, d = Infinity;
+    slides.forEach(function (s, k) { var t = Math.abs(s.getBoundingClientRect().top); if (t < d) { d = t; best = k; } });
+    return best;
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var present = document.body.classList.contains('present');
+    var k = e.key;
+    if (!present && k !== 'p' && k !== 'P') { if (['ArrowRight','ArrowLeft','PageDown','PageUp',' '].indexOf(k) < 0) return; i = nearest(); }
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); show(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); show(i - 1); }
+    else if (k === 'Home') { e.preventDefault(); show(0); }
+    else if (k === 'End') { e.preventDefault(); show(slides.length - 1); }
+    else if (k === 'p' || k === 'P') { if (!present) i = nearest(); document.body.classList.toggle('present'); show(i); }
+    else if (k === 'Escape' && present) { document.body.classList.remove('present'); show(i); }
+  });
+  var start = idx(); if (start >= 0) i = start;
+  slides.forEach(function (s, k) { s.classList.toggle('current', k === i); });
+})();
+</script>
+</body>
+</html>

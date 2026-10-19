@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentación de producto</title>
+  <style>
+    :root {
+      --fg: #1a1a1a; --muted: #555; --bg: #ffffff; --line: #c8c8c8;
+      --soft: #f4f5f7; --accent: #0b5cad; --code: #f0f0f0;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0 auto; max-width: 900px; padding: 1.5rem 1.25rem 3rem;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem; line-height: 1.6; color: var(--fg); background: var(--bg);
+    }
+    h1, h2, h3 { line-height: 1.25; margin: 2rem 0 .75rem; }
+    h1 { font-size: 1.9rem; margin-top: .5rem; }
+    h2 { font-size: 1.4rem; padding-bottom: .3rem; border-bottom: 1px solid var(--line); }
+    h3 { font-size: 1.15rem; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: .1rem .3rem; border-radius: 3px; font-size: .92em; }
+    header.doc-header { border-bottom: 2px solid var(--fg); margin-bottom: 1.5rem; padding-bottom: 1rem; }
+    dl.meta { display: grid; grid-template-columns: max-content 1fr; gap: .25rem 1rem; margin: 0; }
+    dl.meta dt { font-weight: 600; color: var(--muted); }
+    dl.meta dd { margin: 0; }
+    nav.toc { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: .75rem 1.25rem; margin: 1.5rem 0; }
+    nav.toc h2 { font-size: 1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+    nav.toc ol { margin: 0; padding-left: 1.25rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+    caption { text-align: left; font-weight: 600; padding-bottom: .4rem; }
+    th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+    thead th { background: var(--soft); font-weight: 600; }
+    .table-wrap { overflow-x: auto; }
+    .badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .85rem; font-weight: 600; border: 1px solid currentColor; }
+    .badge-borrador    { color: #5c4500; background: #fff4cc; }
+    .badge-en-revision { color: #0a4a8a; background: #e3f0ff; }
+    .badge-aprobado    { color: #135c22; background: #e2f5e6; }
+    .badge-obsoleto    { color: #4a4a4a; background: #ececec; text-decoration: line-through; }
+    .gwt { border-left: 4px solid var(--accent); background: var(--soft); padding: .6rem 1rem; margin: .75rem 0; border-radius: 0 6px 6px 0; }
+    .gwt p { margin: .2rem 0; }
+    .gwt .k { font-weight: 700; display: inline-block; min-width: 4.5rem; }
+    .note { border: 1px solid var(--line); background: var(--soft); padding: .6rem 1rem; border-radius: 6px; }
+    footer.doc-footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    @media (max-width: 600px) {
+      body { padding: 1rem .9rem 2rem; font-size: .97rem; }
+      h1 { font-size: 1.55rem; }
+      dl.meta { grid-template-columns: 1fr; }
+      dl.meta dt { margin-top: .4rem; }
+    }
+    @media print {
+      body { max-width: none; padding: 0; font-size: 11pt; color: #000; }
+      nav.toc { display: none; }
+      a { color: #000; text-decoration: underline; }
+      h2, h3 { break-after: avoid; }
+      table, .gwt { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="doc-header">
+    <h1>Documentación de producto</h1>
+    <dl class="meta">
+      <dt>Estado</dt><dd><span class="badge badge-borrador">borrador</span></dd>
+      <dt>Dueño</dt><dd>PO</dd>
+      <dt>Goal</dt><dd>Pendiente de definir por el CPO</dd>
+      <dt>Última revisión</dt><dd>2026-10-19</dd>
+    </dl>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#vision-y-goals">Visión y goals</a></li>
+      <li><a href="#productos">Productos y PRDs</a></li>
+      <li><a href="#decisiones">Decisiones de producto</a></li>
+      <li><a href="#como-ver">Cómo ver esta documentación</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="vision-y-goals">
+      <h2>Visión y goals</h2>
+      <p class="note">Todavía no hay documentos. Cuando existan se enlazan acá: <code>vision.html</code> y <code>goals.html</code>.</p>
+    </section>
+
+    <section id="productos">
+      <h2>Productos y PRDs</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Documento</th><th scope="col">Producto</th><th scope="col">Estado</th><th scope="col">Última revisión</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="roadmap-mvp-reservas/presentacion-ejecutiva.html">Presentación ejecutiva: roadmaps A y B del MVP de reservas con recompra</a> (deck para socios)</td>
+              <td>Reservas de turnos (spas de uñas)</td>
+              <td><span class="badge badge-borrador">borrador</span></td>
+              <td><time datetime="2026-10-19">2026-10-19</time></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="decisiones">
+      <h2>Decisiones de producto</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Fecha</th><th scope="col">Decisión</th><th scope="col">Estado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="3">Sin decisiones registradas todavía.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="como-ver">
+      <h2>Cómo ver esta documentación</h2>
+      <ul>
+        <li>Localmente: cloná el repo y abrí <code>index.html</code> con doble clic en el navegador.</li>
+        <li>GitHub Pages: si alguien con permisos lo habilita en el repo, los documentos se ven renderizados en la URL de Pages.</li>
+        <li>En github.com los archivos <code>.html</code> se ven como código fuente, no renderizados.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <p>Convenciones del repo: ver <code>README.md</code>.</p>
+  </footer>
+</body>
+</html>
