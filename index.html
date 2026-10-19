@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentación de producto</title>
+  <style>
+:root {
+  --fg: #1f2328; --muted: #57606a; --bg: #ffffff; --surface: #f6f8fa;
+  --border: #d0d7de; --link: #0550ae; --accent: #0969da;
+  --draft-bg: #fff8c5; --draft-fg: #6a4b00;
+  --review-bg: #ddf4ff; --review-fg: #0a3069;
+  --ok-bg: #dafbe1; --ok-fg: #116329;
+  --old-bg: #eaeef2; --old-fg: #424a53;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; color: var(--fg); background: var(--bg);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.page { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+h1, h2, h3 { line-height: 1.25; margin: 2rem 0 .75rem; }
+h1 { font-size: 2rem; margin-top: 0; }
+h2 { font-size: 1.5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.2rem; }
+p, ul, ol, table, pre, .gwt { margin: 0 0 1rem; }
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em;
+  background: var(--surface); padding: .1em .3em; border-radius: 4px; }
+header.doc { border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; padding-bottom: 1rem; }
+header.doc .meta { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 0; padding: 0;
+  list-style: none; color: var(--muted); font-size: .95rem; }
+header.doc .meta strong { color: var(--fg); }
+nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .75rem 1rem; margin-bottom: 2rem; }
+nav.toc h2 { font-size: 1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+nav.toc ol { margin: 0; padding-left: 1.25rem; }
+table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+thead th { background: var(--surface); font-weight: 600; }
+.badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .85rem;
+  font-weight: 600; border: 1px solid currentColor; white-space: nowrap; }
+.badge.borrador { background: var(--draft-bg); color: var(--draft-fg); }
+.badge.en-revision { background: var(--review-bg); color: var(--review-fg); }
+.badge.aprobado { background: var(--ok-bg); color: var(--ok-fg); }
+.badge.obsoleto { background: var(--old-bg); color: var(--old-fg); text-decoration: line-through; }
+.gwt { border-left: 4px solid var(--accent); background: var(--surface); padding: .75rem 1rem;
+  border-radius: 0 6px 6px 0; }
+.gwt p { margin: .25rem 0; }
+.gwt .k { font-weight: 700; display: inline-block; min-width: 5.5rem; }
+.note { border: 1px solid var(--border); border-radius: 6px; padding: .75rem 1rem; color: var(--muted); }
+footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+  color: var(--muted); font-size: .9rem; }
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  .page { padding: 1.25rem 1rem 3rem; }
+  h1 { font-size: 1.6rem; }
+}
+@media print {
+  body { font-size: 11pt; color: #000; }
+  .page { max-width: none; padding: 0; }
+  nav.toc { display: none; }
+  a { color: #000; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; }
+  h2, h3 { break-after: avoid; }
+  table, .gwt { break-inside: avoid; }
+}
+
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="doc">
+    <h1>Documentación de producto</h1>
+    <ul class="meta">
+      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
+      <li><strong>Dueño:</strong> PO</li>
+      <li><strong>Goal:</strong> Pendiente de definir por el CPO</li>
+      <li><strong>Última revisión:</strong> <time datetime="2026-10-19">2026-10-19</time></li>
+    </ul>
+  </header>
+
+  <nav class="toc" aria-label="Contenido">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#vision-y-goals">Visión y goals</a></li>
+      <li><a href="#productos">Productos y PRDs</a></li>
+      <li><a href="#decisiones">Decisiones de producto</a></li>
+      <li><a href="#como-ver">Cómo ver esta documentación</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="vision-y-goals">
+      <h2>Visión y goals</h2>
+      <p class="note">Todavía no hay documentos. Cuando existan se enlazan acá: <code>vision.html</code> y <code>goals.html</code>.</p>
+    </section>
+
+    <section id="productos">
+      <h2>Productos y PRDs</h2>
+      <table>
+        <thead>
+          <tr><th scope="col">Documento</th><th scope="col">Producto</th><th scope="col">Estado</th><th scope="col">Dueño</th><th scope="col">Última revisión</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="roadmap-mvp-reservas/presentacion-ejecutiva.html">Presentación ejecutiva: roadmaps A y B del MVP de reservas con recompra</a> (deck para socios)</td>
+            <td>Reservas de turnos (spas de uñas)</td>
+            <td><span class="badge aprobado">aprobado</span></td>
+            <td>Fidel Cossio</td>
+            <td><time datetime="2026-10-19">2026-10-19</time></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="decisiones">
+      <h2>Decisiones de producto</h2>
+      <table>
+        <thead>
+          <tr><th scope="col">Fecha</th><th scope="col">Decisión</th><th scope="col">Estado</th></tr>
+        </thead>
+        <tbody>
+          <tr id="decision-roadmap-b">
+            <td><time datetime="2026-10-19">2026-10-19</time></td>
+            <td><a href="roadmap-mvp-reservas/presentacion-ejecutiva.html#decision-1">Roadmap B elegido (19/10/2026)</a>: Fase 1 recortada y suscripción como pack prepago. Decidió Fidel Cossio; también confirmó cobro con la cuenta de Mercado Pago de cada spa, opt-in para campañas, recordatorios configurables (24 h y 2 h), sin recursos ni app nativa y elegir profesional como beneficio por tier.</td>
+            <td><span class="badge aprobado">aprobado</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="como-ver">
+      <h2>Cómo ver esta documentación</h2>
+      <ul>
+        <li><strong>Preview por PR (Vercel):</strong> cada push a una rama o PR genera un preview; el link aparece en el check de Vercel del PR (<code>gh pr checks &lt;n&gt;</code>). <code>main</code> es producción.</li>
+        <li><strong>Localmente:</strong> cloná el repo y abrí <code>index.html</code> en el navegador; los links entre documentos son relativos y funcionan sin servidor.</li>
+        <li>En github.com los archivos <code>.html</code> se ven como código fuente, no renderizados.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="doc">
+    <p>Los issues y PRs enlazan a las secciones de los documentos con <code>#ancla</code>. Convenciones del repo: ver <code>README.md</code>.</p>
+  </footer>
+</div>
+</body>
+</html>
