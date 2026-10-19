@@ -75,11 +75,12 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
     <p><a href="../index.html">Documentación de producto</a> › MVP de reservas</p>
     <h1>PRD: MVP de reservas con foco en recompra (Roadmap B)</h1>
     <ul class="meta">
-      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
+      <li><strong>Estado:</strong> <span class="badge en-revision">en revisión</span></li>
       <li><strong>Dueño:</strong> PO (MVP de reservas)</li>
       <li><strong>Decide:</strong> Fidel Cossio (última palabra sobre el producto)</li>
       <li><strong>Referente:</strong> Ezequiel Avila</li>
-      <li><strong>Roadmap:</strong> B (acotado), elegido por Fidel Cossio</li>
+      <li><strong>Roadmap:</strong> B (acotado), elegido por Fidel Cossio (<a href="../roadmap-mvp-reservas/presentacion-ejecutiva.html#decision-1">decisión 1 de la presentación ejecutiva</a>)</li>
+      <li><strong>Goal:</strong> <a href="#goal-mvp">Goal del MVP</a> (propuesto por el CPO, pendiente de aprobación escrita de Fidel Cossio)</li>
       <li><strong>Fuera del MVP:</strong> <a href="fuera-del-mvp.html">iniciativas para PRDs posteriores</a></li>
       <li><strong>Última revisión:</strong> <time datetime="2026-10-19">2026-10-19</time></li>
     </ul>
@@ -91,6 +92,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       <li><a href="#responsables">Responsables y decisiones</a></li>
       <li><a href="#problema">Problema y oportunidad</a></li>
       <li><a href="#objetivos">Objetivo y métricas</a></li>
+      <li><a href="#goal-mvp">Goal del MVP (propuesto por el CPO)</a></li>
       <li><a href="#usuarios">Usuarios y perfiles</a></li>
       <li><a href="#plataforma">Plataforma y acceso</a></li>
       <li><a href="#alcance">Alcance por fase</a>
@@ -122,8 +124,8 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
     <section id="resumen">
       <h2>Resumen</h2>
       <p>SaaS de reserva de turnos, multiempresa y genérico por rubro, que empieza por spas de uñas en Argentina (precios en ARS). El diferenciador no es la agenda sino la <strong>recompra</strong>: recordatorios que reducen ausencias, el aviso de “te toca volver”, una campaña de temporada y, en la Fase 2, una suscripción vendida como pack prepago.</p>
-      <p>El MVP sigue el <strong>Roadmap B (acotado)</strong> que eligió Fidel Cossio y sale en dos fases para las fiestas: <a href="#fase-1">Fase 1, “Navidad”</a> (salida estimada entre el 30/11 y el 7/12/2026) y <a href="#fase-2">Fase 2, “Año Nuevo”</a> (antes del 26/12/2026), con la “promesa de Año Nuevo”: “este año voy todos los meses”. Lo que no entra está en <a href="fuera-del-mvp.html">Fuera del MVP</a>.</p>
-      <p>El POC se hace con 3 spas amigos (12 profesionales y unos 200 clientes). La escala esperada para el primer año es de 100 negocios, 400 profesionales y 8000 clientes.</p>
+      <p>El MVP sigue el <strong>Roadmap B (acotado)</strong> que eligió Fidel Cossio y sale en dos fases para las fiestas: <a href="#fase-1">Fase 1, “Navidad”</a> (construcción desde el 2/11/2026; salida estimada entre el 30/11 y el 7/12/2026, con ~70% de certidumbre) y <a href="#fase-2">Fase 2, “Año Nuevo”</a> (salida estimada entre el 7/12 y el 14/12/2026, con ~65% de certidumbre), con la “promesa de Año Nuevo”: “este año voy todos los meses”. El cobro recurrente de la suscripción queda para enero de 2027 (<a href="fuera-del-mvp.html#fm-5">fuera del MVP</a>). Lo que no entra está en <a href="fuera-del-mvp.html">Fuera del MVP</a>. Las fechas son estimaciones gruesas del Architect (<a href="#estimaciones">Calendario</a>).</p>
+      <p>El POC se hace con 3 spas amigos (12 profesionales y unas 200 clientas). La escala esperada para el primer año es de 100 negocios, 400 profesionales y 8000 clientas.</p>
     </section>
 
     <section id="responsables">
@@ -171,7 +173,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       <table>
         <thead><tr><th scope="col">Métrica</th><th scope="col">Tipo</th><th scope="col">Base</th><th scope="col">Objetivo</th><th scope="col">Cómo se mide</th></tr></thead>
         <tbody>
-          <tr id="m-recompra"><td>% de clientas que vuelven a reservar dentro de los 60 días</td><td>Principal</td><td>Sin base (se mide en el POC)</td><td>A fijar por Fidel Cossio con la línea de base de las primeras semanas del POC</td><td>De las clientas con un turno marcado como asistido en el período, % que tiene una nueva reserva creada para un turno dentro de los 60 días siguientes a ese turno. Por negocio y total.</td></tr>
+          <tr id="m-recompra"><td>Recompra a 60 días</td><td>Principal (<a href="#goal-mvp">Goal del MVP</a>)</td><td>Sin base (se mide en el POC)</td><td>A fijar por Fidel Cossio tras 4 semanas de línea de base desde la salida de la Fase 1</td><td><strong>% de clientas con al menos un turno atendido en el período que crean una nueva reserva dentro de los 60 días siguientes a ese turno; las reservas canceladas no cuentan, las ausencias sí.</strong> La marca de recompra se confirma al crear la reserva: cuenta la fecha de creación de la nueva reserva, no la fecha del turno reservado. “Turno atendido” = turno marcado “asistió” (<a href="#cu-12">CU-12</a>). Por negocio y total.</td></tr>
           <tr id="m-reservas-recordatorio"><td>Reservas originadas por recordatorios y por el aviso “te toca volver”</td><td>Apoyo</td><td>Sin base</td><td>A fijar tras el POC</td><td>Reservas hechas desde el enlace de un aviso, atribuidas al aviso. En la Fase 1 se registra el origen; el tablero completo está <a href="fuera-del-mvp.html#fm-3">fuera del MVP</a>.</td></tr>
           <tr id="m-reservas-oferta"><td>Reservas originadas por la campaña de Navidad</td><td>Apoyo</td><td>Sin base</td><td>A fijar tras el POC</td><td>Reservas hechas desde el enlace de la campaña o con su descuento aplicado.</td></tr>
           <tr id="m-asistencia"><td>% de asistencia</td><td>Apoyo</td><td>Sin base (opcional: historial de 2 o 3 meses)</td><td>A fijar tras el POC</td><td>Turnos marcados como asistidos / turnos que llegaron a su horario sin cancelarse (asistidos + ausentes).</td></tr>
@@ -179,6 +181,24 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         </tbody>
       </table>
       <p class="note">No se fijan objetivos numéricos sin línea de base. Los valores objetivo los define Fidel Cossio después de las primeras semanas de uso real.</p>
+    </section>
+
+    <section id="goal-mvp">
+      <h2>Goal del MVP (propuesto por el CPO, pendiente de aprobación escrita de Fidel Cossio)</h2>
+      <p class="note">No existe todavía un <code>goals.html</code> de producto. Este goal lo propone el CPO para el MVP y queda pendiente de aprobación escrita de Fidel Cossio (<a href="#p-5">P-5</a>). Cuando se apruebe, se registra donde el CPO indique.</p>
+      <p><strong>Goal:</strong> “Validar con los 3 spas del POC que la recompra se puede impulsar desde la app: medir la recompra a 60 días (<a href="#m-recompra"><code>#m-recompra</code></a>) desde la salida de la Fase 1, con objetivo numérico a fijar por Fidel tras 4 semanas de línea de base”.</p>
+      <h3 id="goal-trazabilidad">Trazabilidad de los casos de uso al goal</h3>
+      <p>Cada caso de uso impacta el goal a través de una métrica (detalle por caso en la columna “Métrica” de <a href="#priorizacion">Priorización</a>):</p>
+      <table>
+        <thead><tr><th scope="col">Métrica</th><th scope="col">Relación con el goal</th><th scope="col">Casos de uso</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#m-recompra">Recompra a 60 días</a></td><td>Es la métrica del goal: la miden <a href="#cu-17">CU-17</a> y el punto de partida es el turno atendido (<a href="#cu-12">CU-12</a>). Sin reserva no hay recompra: los casos habilitantes permiten crear la nueva reserva.</td><td>Mide: <a href="#cu-17">CU-17</a>, <a href="#cu-12">CU-12</a>. Impulsa: <a href="#cu-14">CU-14</a>, <a href="#cu-16">CU-16</a>, <a href="#cu-23">CU-23</a>. Habilita: <a href="#cu-1">CU-1</a>, <a href="#cu-2">CU-2</a>, <a href="#cu-3">CU-3</a>, <a href="#cu-4">CU-4</a>, <a href="#cu-5">CU-5</a>, <a href="#cu-6">CU-6</a>, <a href="#cu-7">CU-7</a>, <a href="#cu-8">CU-8</a>, <a href="#cu-9">CU-9</a>, <a href="#cu-10">CU-10</a>, <a href="#cu-15">CU-15</a> (línea de base).</td></tr>
+          <tr><td><a href="#m-reservas-recordatorio">Reservas por recordatorios y “te toca volver”</a></td><td>Atribuye la recompra a los avisos de la app.</td><td><a href="#cu-13">CU-13</a>, <a href="#cu-14">CU-14</a>, <a href="#cu-18">CU-18</a></td></tr>
+          <tr><td><a href="#m-reservas-oferta">Reservas por la campaña de Navidad</a></td><td>Atribuye la recompra a la campaña.</td><td><a href="#cu-16">CU-16</a>, <a href="#cu-19">CU-19</a>, <a href="#cu-15">CU-15</a> (consentimiento)</td></tr>
+          <tr><td><a href="#m-asistencia">% de asistencia</a></td><td>Menos ausencias = más turnos atendidos, que son la base de la recompra.</td><td><a href="#cu-13">CU-13</a>, <a href="#cu-11">CU-11</a>, <a href="#cu-12">CU-12</a>, <a href="#cu-17">CU-17</a>, <a href="#cu-4">CU-4</a></td></tr>
+          <tr><td><a href="#m-packs">Packs vendidos y suscriptoras activas</a></td><td>Compromiso de recompra prepago (Fase 2).</td><td><a href="#cu-20">CU-20</a>, <a href="#cu-21">CU-21</a>, <a href="#cu-22">CU-22</a>, <a href="#cu-23">CU-23</a>, <a href="#cu-24">CU-24</a>, <a href="#cu-25">CU-25</a>, <a href="#cu-26">CU-26</a></td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="usuarios">
@@ -213,7 +233,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
 
       <section id="fase-1">
         <h3>Fase 1: “Navidad”</h3>
-        <p>Construcción estimada de 4 a 5 semanas; salida entre fines de noviembre y principios de diciembre de 2026 (aprox. 30/11 al 7/12), con certidumbre de ~70% (estimación gruesa del Architect, ver <a href="#estimaciones">Calendario</a>).</p>
+        <p>Construcción estimada de 4 a 5 semanas a partir del 2/11/2026; salida entre el 30/11 y el 7/12/2026, con certidumbre de ~70% (estimación gruesa del Architect, ver <a href="#estimaciones">Calendario</a>).</p>
         <table>
           <thead><tr><th scope="col">Perfil o área</th><th scope="col">Incluido</th><th scope="col">Casos</th></tr></thead>
           <tbody>
@@ -231,12 +251,12 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
 
       <section id="fase-2">
         <h3>Fase 2: “Año Nuevo”</h3>
-        <p>Aprox. 1 semana después de la Fase 1, antes del 26/12/2026, con certidumbre alta (estimación gruesa del Architect).</p>
+        <p>Salida estimada entre el 7/12 y el 14/12/2026, con certidumbre de ~65% (estimación gruesa vigente del Architect, ver <a href="#estimaciones">Calendario</a>). El cobro recurrente queda para enero de 2027 (<a href="fuera-del-mvp.html#fm-5">fuera del MVP</a>).</p>
         <table>
           <thead><tr><th scope="col">Perfil o área</th><th scope="col">Incluido</th><th scope="col">Casos</th></tr></thead>
           <tbody>
-            <tr><td>Administradora</td><td>Conectar la cuenta de Mercado Pago del spa; definir packs (servicios incluidos, cantidad por período, precio, vigencia de 3 o 12 meses); ver cantidad de suscriptoras (packs activos); habilitar “elegir profesional” solo para suscriptoras de un tier.</td><td><a href="#cu-20">CU-20</a>, <a href="#cu-21">CU-21</a>, <a href="#cu-24">CU-24</a>, <a href="#cu-26">CU-26</a></td></tr>
-            <tr><td>Clienta</td><td>Comprar un pack prepago de 3 o 12 meses con un pago único por Mercado Pago Checkout Pro (“este año voy todos los meses”, con ahorro); ver su pack y lo que le queda; reservar usando el pack; botón de arrepentimiento o baja visible.</td><td><a href="#cu-22">CU-22</a>, <a href="#cu-23">CU-23</a>, <a href="#cu-25">CU-25</a></td></tr>
+            <tr><td>Administradora</td><td>Conectar la cuenta de Mercado Pago del spa; definir packs (servicios incluidos, cantidad por período, precio, vigencia de 3 o 12 meses); ver cantidad de suscriptoras (packs activos); configurar “elegir profesional” para todas, desactivado o solo para suscriptoras de un tier (Should).</td><td><a href="#cu-20">CU-20</a>, <a href="#cu-21">CU-21</a>, <a href="#cu-24">CU-24</a>, <a href="#cu-26">CU-26</a></td></tr>
+            <tr><td>Clienta</td><td>Comprar un pack prepago de 3 o 12 meses con un pago único por Mercado Pago Checkout Pro (“este año voy todos los meses”, con ahorro); ver su pack y lo que le queda; reservar usando el pack; botón de arrepentimiento visible (Res. 424/2020) y baja (Res. 316/2018).</td><td><a href="#cu-22">CU-22</a>, <a href="#cu-23">CU-23</a>, <a href="#cu-25">CU-25</a></td></tr>
           </tbody>
         </table>
         <p class="note">La preferencia de horarios para suscriptoras y la lista de espera <strong>no</strong> entran en el Roadmap B: el Architect advirtió que la reserva prioritaria es costosa. Están en <a href="fuera-del-mvp.html#fm-6">beneficios por plan</a> y <a href="fuera-del-mvp.html#fm-7">lista de espera</a>.</p>
@@ -247,7 +267,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <p>Detalle completo (valor, por qué quedó afuera, dependencias, riesgos y disparador para retomarlo) en <a href="fuera-del-mvp.html">Fuera del MVP</a>. Resumen:</p>
         <ul>
           <li>Recortado del Roadmap A: <a href="fuera-del-mvp.html#fm-1">reprogramación real</a>, <a href="fuera-del-mvp.html#fm-2">varias campañas, plantillas y segmentos</a>, <a href="fuera-del-mvp.html#fm-3">métricas completas</a>, <a href="fuera-del-mvp.html#fm-4">marca completa</a>, <a href="fuera-del-mvp.html#fm-5">suscripción con cobro recurrente</a>, <a href="fuera-del-mvp.html#fm-6">beneficios por plan con preferencia de horarios</a>, <a href="fuera-del-mvp.html#fm-7">lista de espera básica</a>.</li>
-          <li>Otros: <a href="fuera-del-mvp.html#fm-8">app nativa</a>, <a href="fuera-del-mvp.html#fm-9">login con Google y Apple</a>, <a href="fuera-del-mvp.html#fm-10">servicios simultáneos y recursos limitados</a>, <a href="fuera-del-mvp.html#fm-11">señas y penalidades automáticas</a>, <a href="fuera-del-mvp.html#fm-12">cobro online de reservas puntuales</a>, <a href="fuera-del-mvp.html#fm-13">gift cards, promociones y cupones</a>, <a href="fuera-del-mvp.html#fm-14">programa de puntos</a>, <a href="fuera-del-mvp.html#fm-15">reseñas</a>, <a href="fuera-del-mvp.html#fm-16">historial de la clienta</a>, <a href="fuera-del-mvp.html#fm-17">lista de espera inteligente</a>, <a href="fuera-del-mvp.html#fm-18">clientes sin turno</a>, <a href="fuera-del-mvp.html#fm-19">un número de WhatsApp por spa</a>, <a href="fuera-del-mvp.html#fm-20">migración asistida</a>, <a href="fuera-del-mvp.html#fm-21">otros rubros</a>, <a href="fuera-del-mvp.html#fm-22">facturación ante ARCA</a>, <a href="fuera-del-mvp.html#fm-23">escala a 100 negocios</a>.</li>
+          <li>Otros: <a href="fuera-del-mvp.html#fm-8">app nativa</a>, <a href="fuera-del-mvp.html#fm-9">login con Google y Apple</a>, <a href="fuera-del-mvp.html#fm-10">servicios simultáneos y recursos limitados</a>, <a href="fuera-del-mvp.html#fm-11">señas y penalidades automáticas</a>, <a href="fuera-del-mvp.html#fm-12">cobro online de reservas puntuales</a>, <a href="fuera-del-mvp.html#fm-13">gift cards, packs no periódicos, promociones y cupones</a>, <a href="fuera-del-mvp.html#fm-14">programa de puntos</a>, <a href="fuera-del-mvp.html#fm-15">reseñas</a>, <a href="fuera-del-mvp.html#fm-16">historial de la clienta</a>, <a href="fuera-del-mvp.html#fm-17">lista de espera inteligente</a>, <a href="fuera-del-mvp.html#fm-18">clientas sin turno</a>, <a href="fuera-del-mvp.html#fm-19">un número de WhatsApp por spa</a>, <a href="fuera-del-mvp.html#fm-20">migración asistida</a>, <a href="fuera-del-mvp.html#fm-21">otros rubros</a>, <a href="fuera-del-mvp.html#fm-22">facturación ante ARCA</a>, <a href="fuera-del-mvp.html#fm-23">escala a 100 negocios</a>.</li>
         </ul>
       </section>
     </section>
@@ -258,36 +278,36 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
 
       <section id="priorizacion">
         <h3>Priorización</h3>
-        <p>MoSCoW dentro de cada fase, contra el objetivo de recompra y la fecha de las fiestas. <strong>Must</strong>: sin esto no hay salida de la fase. <strong>Should</strong>: importante; si la fecha corre riesgo, se puede simplificar. <strong>Could</strong>: opcional.</p>
+        <p>MoSCoW dentro de cada fase, contra el <a href="#goal-mvp">goal del MVP</a> (recompra) y la fecha de las fiestas. La columna “Métrica que impacta” traza cada caso al goal (<a href="#goal-trazabilidad">trazabilidad</a>). <strong>Must</strong>: sin esto no hay salida de la fase. <strong>Should</strong>: importante; si la fecha corre riesgo, se puede simplificar. <strong>Could</strong>: opcional.</p>
         <table>
-          <thead><tr><th scope="col">Orden</th><th scope="col">Caso</th><th scope="col">Fase</th><th scope="col">Prioridad</th><th scope="col">Perfil</th></tr></thead>
+          <thead><tr><th scope="col">Orden</th><th scope="col">Caso</th><th scope="col">Fase</th><th scope="col">Prioridad</th><th scope="col">Perfil</th><th scope="col">Métrica que impacta</th><th scope="col">Por qué (cambios de prioridad)</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td><a href="#cu-7">CU-7 Configurar servicios y compatibilidad en serie</a></td><td>1</td><td>Must</td><td>Administradora</td></tr>
-            <tr><td>2</td><td><a href="#cu-8">CU-8 Configurar profesionales y sus servicios</a></td><td>1</td><td>Must</td><td>Administradora</td></tr>
-            <tr><td>3</td><td><a href="#cu-9">CU-9 Definir disponibilidad y reglas de anticipación</a></td><td>1</td><td>Must</td><td>Administradora, profesional</td></tr>
-            <tr><td>4</td><td><a href="#cu-1">CU-1 Registrarse e ingresar con WhatsApp</a></td><td>1</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>5</td><td><a href="#cu-2">CU-2 Reservar uno o varios servicios en serie</a></td><td>1</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>6</td><td><a href="#cu-5">CU-5 Cargar un turno en nombre de una clienta</a></td><td>1</td><td>Must</td><td>Recepción</td></tr>
-            <tr><td>7</td><td><a href="#cu-4">CU-4 Ver y cancelar mis turnos</a></td><td>1</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>8</td><td><a href="#cu-6">CU-6 Ver mi agenda y bloquear horarios</a></td><td>1</td><td>Must</td><td>Profesional</td></tr>
-            <tr><td>9</td><td><a href="#cu-13">CU-13 Recibir recordatorios del turno</a></td><td>1</td><td>Must</td><td>Clienta, profesional</td></tr>
-            <tr><td>10</td><td><a href="#cu-15">CU-15 Alta del negocio e importación de clientas por CSV</a></td><td>1</td><td>Must</td><td>Operador</td></tr>
-            <tr><td>11</td><td><a href="#cu-11">CU-11 Gestionar clientas</a></td><td>1</td><td>Must</td><td>Administradora, recepción</td></tr>
-            <tr><td>12</td><td><a href="#cu-12">CU-12 Marcar asistencia y ausencia</a></td><td>1</td><td>Must</td><td>Administradora, recepción, profesional</td></tr>
-            <tr><td>13</td><td><a href="#cu-19">CU-19 Dar y retirar el consentimiento de marketing</a></td><td>1</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>14</td><td><a href="#cu-14">CU-14 Recibir el aviso “te toca volver”</a></td><td>1</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>15</td><td><a href="#cu-16">CU-16 Enviar la campaña de Navidad</a></td><td>1</td><td>Must</td><td>Administradora</td></tr>
-            <tr><td>16</td><td><a href="#cu-3">CU-3 Elegir profesional al reservar</a></td><td>1</td><td>Should</td><td>Clienta, administradora</td></tr>
-            <tr><td>17</td><td><a href="#cu-17">CU-17 Ver métricas básicas</a></td><td>1</td><td>Should</td><td>Administradora</td></tr>
-            <tr><td>18</td><td><a href="#cu-18">CU-18 Instalar la PWA y activar push</a></td><td>1</td><td>Should</td><td>Clienta</td></tr>
-            <tr><td>19</td><td><a href="#cu-10">CU-10 Configurar la marca (logo y colores)</a></td><td>1</td><td>Should</td><td>Administradora</td></tr>
-            <tr><td>20</td><td><a href="#cu-20">CU-20 Conectar la cuenta de Mercado Pago del spa</a></td><td>2</td><td>Must</td><td>Administradora</td></tr>
-            <tr><td>21</td><td><a href="#cu-21">CU-21 Definir packs prepagos</a></td><td>2</td><td>Must</td><td>Administradora</td></tr>
-            <tr><td>22</td><td><a href="#cu-22">CU-22 Comprar un pack prepago</a></td><td>2</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>23</td><td><a href="#cu-23">CU-23 Ver mi pack y reservar con él</a></td><td>2</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>24</td><td><a href="#cu-25">CU-25 Arrepentirme o dar de baja el pack</a></td><td>2</td><td>Must</td><td>Clienta</td></tr>
-            <tr><td>25</td><td><a href="#cu-24">CU-24 Ver suscriptoras activas</a></td><td>2</td><td>Should</td><td>Administradora</td></tr>
-            <tr><td>26</td><td><a href="#cu-26">CU-26 Elegir profesional solo para suscriptoras (por tier)</a></td><td>2</td><td>Could</td><td>Administradora, clienta</td></tr>
+            <tr><td>1</td><td><a href="#cu-7">CU-7 Configurar servicios y compatibilidad en serie</a></td><td>1</td><td>Must</td><td>Administradora</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>2</td><td><a href="#cu-8">CU-8 Configurar profesionales y sus servicios</a></td><td>1</td><td>Must</td><td>Administradora</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>3</td><td><a href="#cu-9">CU-9 Definir disponibilidad y reglas de anticipación</a></td><td>1</td><td>Must</td><td>Administradora, profesional</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>4</td><td><a href="#cu-1">CU-1 Registrarse e ingresar con WhatsApp</a></td><td>1</td><td>Must</td><td>Clienta</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>5</td><td><a href="#cu-2">CU-2 Reservar uno o varios servicios en serie</a></td><td>1</td><td>Must</td><td>Clienta</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>6</td><td><a href="#cu-5">CU-5 Cargar un turno en nombre de una clienta</a></td><td>1</td><td>Must</td><td>Recepción</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>7</td><td><a href="#cu-4">CU-4 Ver y cancelar mis turnos</a></td><td>1</td><td>Must</td><td>Clienta</td><td><a href="#m-asistencia"><code>#m-asistencia</code></a>, <a href="#m-recompra"><code>#m-recompra</code></a></td><td>—</td></tr>
+            <tr><td>8</td><td><a href="#cu-6">CU-6 Ver mi agenda y bloquear horarios</a></td><td>1</td><td>Must</td><td>Profesional</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>9</td><td><a href="#cu-13">CU-13 Recibir recordatorios del turno</a></td><td>1</td><td>Must</td><td>Clienta, profesional</td><td><a href="#m-asistencia"><code>#m-asistencia</code></a>, <a href="#m-reservas-recordatorio"><code>#m-reservas-recordatorio</code></a></td><td>—</td></tr>
+            <tr><td>10</td><td><a href="#cu-15">CU-15 Alta del negocio e importación de clientas por CSV</a></td><td>1</td><td>Must</td><td>Operador</td><td><a href="#m-recompra"><code>#m-recompra</code></a>, <a href="#m-reservas-oferta"><code>#m-reservas-oferta</code></a> (línea de base y consentimiento)</td><td>—</td></tr>
+            <tr><td>11</td><td><a href="#cu-11">CU-11 Gestionar clientas</a></td><td>1</td><td>Must</td><td>Administradora, recepción</td><td><a href="#m-asistencia"><code>#m-asistencia</code></a></td><td>—</td></tr>
+            <tr><td>12</td><td><a href="#cu-12">CU-12 Marcar asistencia y ausencia</a></td><td>1</td><td>Must</td><td>Administradora, recepción, profesional</td><td><a href="#m-asistencia"><code>#m-asistencia</code></a>, <a href="#m-recompra"><code>#m-recompra</code></a> (turno atendido)</td><td>—</td></tr>
+            <tr><td>13</td><td><a href="#cu-19">CU-19 Dar y retirar el consentimiento de marketing</a></td><td>1</td><td>Must</td><td>Clienta</td><td><a href="#m-reservas-oferta"><code>#m-reservas-oferta</code></a></td><td>—</td></tr>
+            <tr><td>14</td><td><a href="#cu-14">CU-14 Recibir el aviso “te toca volver”</a></td><td>1</td><td>Must</td><td>Clienta</td><td><a href="#m-recompra"><code>#m-recompra</code></a>, <a href="#m-reservas-recordatorio"><code>#m-reservas-recordatorio</code></a></td><td>—</td></tr>
+            <tr><td>15</td><td><a href="#cu-16">CU-16 Enviar la campaña de Navidad</a></td><td>1</td><td>Must</td><td>Administradora</td><td><a href="#m-reservas-oferta"><code>#m-reservas-oferta</code></a>, <a href="#m-recompra"><code>#m-recompra</code></a></td><td>—</td></tr>
+            <tr><td>16</td><td><a href="#cu-17">CU-17 Ver métricas básicas</a></td><td>1</td><td>Must</td><td>Administradora</td><td><a href="#m-recompra"><code>#m-recompra</code></a>, <a href="#m-asistencia"><code>#m-asistencia</code></a> (las mide)</td><td>Sube de Should a Must (decisión del CPO): mide la métrica principal del goal y el encargo la pide.</td></tr>
+            <tr><td>17</td><td><a href="#cu-3">CU-3 Elegir profesional al reservar</a></td><td>1</td><td>Should</td><td>Clienta, administradora</td><td><a href="#m-recompra"><code>#m-recompra</code></a></td><td>—</td></tr>
+            <tr><td>18</td><td><a href="#cu-18">CU-18 Instalar la PWA y activar push</a></td><td>1</td><td>Should</td><td>Clienta</td><td><a href="#m-reservas-recordatorio"><code>#m-reservas-recordatorio</code></a></td><td>—</td></tr>
+            <tr><td>19</td><td><a href="#cu-10">CU-10 Configurar la marca (logo y colores)</a></td><td>1</td><td>Should</td><td>Administradora</td><td><a href="#m-recompra"><code>#m-recompra</code></a> (habilita)</td><td>—</td></tr>
+            <tr><td>20</td><td><a href="#cu-20">CU-20 Conectar la cuenta de Mercado Pago del spa</a></td><td>2</td><td>Must</td><td>Administradora</td><td><a href="#m-packs"><code>#m-packs</code></a></td><td>—</td></tr>
+            <tr><td>21</td><td><a href="#cu-21">CU-21 Definir packs prepagos</a></td><td>2</td><td>Must</td><td>Administradora</td><td><a href="#m-packs"><code>#m-packs</code></a></td><td>—</td></tr>
+            <tr><td>22</td><td><a href="#cu-22">CU-22 Comprar un pack prepago</a></td><td>2</td><td>Must</td><td>Clienta</td><td><a href="#m-packs"><code>#m-packs</code></a></td><td>—</td></tr>
+            <tr><td>23</td><td><a href="#cu-23">CU-23 Ver mi pack y reservar con él</a></td><td>2</td><td>Must</td><td>Clienta</td><td><a href="#m-packs"><code>#m-packs</code></a>, <a href="#m-recompra"><code>#m-recompra</code></a></td><td>—</td></tr>
+            <tr><td>24</td><td><a href="#cu-25">CU-25 Arrepentirme o dar de baja el pack</a></td><td>2</td><td>Must</td><td>Clienta</td><td><a href="#m-packs"><code>#m-packs</code></a></td><td>Requisito legal (Res. 424/2020 y Res. 316/2018).</td></tr>
+            <tr><td>25</td><td><a href="#cu-24">CU-24 Ver suscriptoras activas</a></td><td>2</td><td>Must</td><td>Administradora</td><td><a href="#m-packs"><code>#m-packs</code></a> (la mide)</td><td>Sube de Should a Must (decisión del CPO): mide la métrica de packs y suscriptoras y el encargo la pide.</td></tr>
+            <tr><td>26</td><td><a href="#cu-26">CU-26 Elegir profesional solo para suscriptoras (por tier)</a></td><td>2</td><td>Should</td><td>Administradora, clienta</td><td><a href="#m-packs"><code>#m-packs</code></a></td><td>Sube de Could a Should (decisión del CPO): Fidel Cossio confirmó que el negocio <em>puede</em> ofrecerlo (<a href="#d-6">D-6</a>), no que sea imprescindible para salir.</td></tr>
           </tbody>
         </table>
       </section>
@@ -690,7 +710,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <p><strong>Prioridad:</strong> Must · <strong>Fase:</strong> <a href="#fase-1">Fase 1</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
         <p><strong>Reglas de negocio:</strong></p>
         <ul>
-          <li>Un turno puede marcarse como “asistió” o “ausente” desde su hora de inicio. Se puede corregir la marca el mismo día.</li>
+          <li>Un turno puede marcarse como “asistió” o “ausente” desde su hora de inicio. Se puede corregir la marca solo el mismo día (hasta las 23:59, hora de Argentina); desde el día siguiente la marca queda fija.</li>
           <li>Cada ausencia suma en las métricas de la clienta (<a href="#cu-11">CU-11</a>) y del negocio (<a href="#cu-17">CU-17</a>).</li>
           <li>Los turnos sin marcar quedan visibles como “sin marcar” para completar después.</li>
           <li>Un turno asistido es el punto de partida del aviso “te toca volver” (<a href="#cu-14">CU-14</a>) y de la métrica de recompra.</li>
@@ -716,6 +736,13 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <p><span class="k">Cuando</span> la administradora lo cambia a “asistió”</p>
           <p><span class="k">Entonces</span> la ficha de la clienta ya no cuenta esa ausencia y cuenta una asistencia</p>
         </div>
+        <div class="gwt" id="cu-12-ca-4">
+          <p><strong>CA-4: corrección al día siguiente</strong></p>
+          <p><span class="k">Dado</span> un turno del 05/12 marcado “ausente” el mismo 05/12</p>
+          <p><span class="k">Cuando</span> el 06/12 la administradora intenta cambiarlo a “asistió”</p>
+          <p><span class="k">Entonces</span> no puede modificar la marca y ve que las marcas solo se corrigen el mismo día del turno</p>
+          <p><span class="k">Y</span> la ficha de la clienta sigue contando esa ausencia</p>
+        </div>
         <p><strong>Fuera de alcance:</strong> señas, penalidades y bloqueo de clientas (<a href="fuera-del-mvp.html#fm-11">fuera del MVP</a>).</p>
       </article>
       <article id="cu-13">
@@ -733,12 +760,19 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <li>Son mensajes de tipo utility (no requieren consentimiento de marketing). Plan B si WhatsApp no está aprobado: email y push (<a href="#r-1">R-1</a>).</li>
         </ul>
         <p><strong>Criterios de aceptación:</strong></p>
-        <div class="gwt" id="cu-13-ca-1">
-          <p><strong>CA-1: recordatorios por defecto</strong></p>
+                <div class="gwt" id="cu-13-ca-1">
+          <p><strong>CA-1: recordatorio de 24 h por defecto</strong></p>
           <p><span class="k">Dado</span> un negocio con la configuración por defecto</p>
           <p><span class="k">Y</span> una clienta con canal WhatsApp y turno el 10/12 a las 15:00</p>
-          <p><span class="k">Cuando</span> llega el 09/12 a las 15:00 y luego el 10/12 a las 13:00</p>
-          <p><span class="k">Entonces</span> recibe un recordatorio por WhatsApp en cada momento, con nombre del spa, servicio, hora y enlace para cancelar</p>
+          <p><span class="k">Cuando</span> llega el 09/12 a las 15:00</p>
+          <p><span class="k">Entonces</span> recibe un recordatorio por WhatsApp con nombre del spa, servicio, hora y enlace para cancelar</p>
+        </div>
+        <div class="gwt" id="cu-13-ca-7">
+          <p><strong>CA-7: recordatorio de 2 h por defecto</strong></p>
+          <p><span class="k">Dado</span> un negocio con la configuración por defecto</p>
+          <p><span class="k">Y</span> una clienta con canal WhatsApp y turno el 10/12 a las 15:00</p>
+          <p><span class="k">Cuando</span> llega el 10/12 a las 13:00</p>
+          <p><span class="k">Entonces</span> recibe un segundo recordatorio por WhatsApp con nombre del spa, servicio, hora y enlace para cancelar</p>
         </div>
         <div class="gwt" id="cu-13-ca-2">
           <p><strong>CA-2: recordatorio configurado por el negocio</strong></p>
@@ -866,7 +900,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <li>Hay <strong>una</strong> campaña por negocio: una plantilla de WhatsApp de marketing aprobada por Meta, con un descuento porcentual o fijo sobre el precio de uno o más servicios y una vigencia.</li>
           <li>Segmento simple: todas las clientas con consentimiento, o las que no reservan desde hace N días (con consentimiento).</li>
           <li>Solo se envía a clientas con consentimiento de marketing (decisión <a href="#d-2">D-2</a>). Las demás quedan excluidas aunque estén en el segmento.</li>
-          <li>Antes de enviar, la administradora ve cuántas clientas la recibirán y el costo estimado por mensaje si corresponde (<a href="#r-3">R-3</a>).</li>
+          <li>Antes de enviar, la administradora ve la cantidad de destinatarias (solo clientas del segmento con consentimiento) y un aviso de que la plantilla de marketing de WhatsApp tiene un costo por mensaje enviado, con el costo estimado total = destinatarias × costo por mensaje vigente (<a href="#r-3">R-3</a>).</li>
           <li>Cada mensaje incluye un enlace para reservar con el descuento aplicado y una forma de dejar de recibir ofertas (<a href="#cu-19">CU-19</a>).</li>
           <li>Las reservas con el descuento se registran con origen “campaña”.</li>
           <li>La campaña se envía una sola vez; no se reenvía a quien ya la recibió.</li>
@@ -877,7 +911,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <p><span class="k">Dado</span> 200 clientas, de las cuales 120 tienen consentimiento</p>
           <p><span class="k">Y</span> una campaña “20% en semipermanente hasta el 24/12”</p>
           <p><span class="k">Cuando</span> la administradora elige “todas” y confirma el envío</p>
-          <p><span class="k">Entonces</span> antes de confirmar vio “120 destinatarias”</p>
+          <p><span class="k">Entonces</span> antes de confirmar vio “120 destinatarias” y el aviso “La plantilla de marketing tiene costo por mensaje: 120 mensajes” con el costo estimado total</p>
           <p><span class="k">Y</span> solo esas 120 reciben el mensaje</p>
           <p><span class="k">Y</span> las 80 sin consentimiento no reciben nada</p>
         </div>
@@ -911,10 +945,10 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       <article id="cu-17">
         <h3>CU-17: Ver métricas básicas</h3>
         <p>Como administradora quiero ver turnos, asistencia y recompra para saber si mis clientas vuelven.</p>
-        <p><strong>Prioridad:</strong> Should · <strong>Fase:</strong> <a href="#fase-1">Fase 1</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
+        <p><strong>Prioridad:</strong> Must (decisión del CPO, ver <a href="#priorizacion">Priorización</a>) · <strong>Fase:</strong> <a href="#fase-1">Fase 1</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
         <p><strong>Reglas de negocio:</strong></p>
         <ul>
-          <li>Para un período elegido (por defecto, los últimos 30 días): cantidad de turnos (reservados, cancelados, asistidos, ausentes), % de asistencia y % de recompra a 60 días, según las definiciones de <a href="#objetivos">Objetivo y métricas</a>.</li>
+          <li>Para un período elegido (por defecto, los últimos 30 días): cantidad de turnos (reservados, cancelados, asistidos, ausentes), % de asistencia y % de recompra a 60 días según la definición de <a href="#m-recompra"><code>#m-recompra</code></a> (la marca de recompra se confirma al crear la reserva; las canceladas no cuentan, las ausencias sí).</li>
           <li>Se cuenta el origen de las reservas (clienta, recepción, recordatorio, “te toca volver”, campaña) para medir después; el desglose completo está fuera del MVP.</li>
           <li>Con historial importado, se puede comparar con la línea de base.</li>
           <li>Solo la administradora ve las métricas de su negocio.</li>
@@ -926,11 +960,12 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <p><span class="k">Cuando</span> la administradora elige noviembre</p>
           <p><span class="k">Entonces</span> ve 100 turnos y 90% de asistencia</p>
         </div>
-        <div class="gwt" id="cu-17-ca-2">
+                <div class="gwt" id="cu-17-ca-2">
           <p><strong>CA-2: recompra a 60 días</strong></p>
-          <p><span class="k">Dado</span> de 50 clientas con turno asistido en el período, 20 reservaron otro turno dentro de los 60 días siguientes</p>
-          <p><span class="k">Cuando</span> la administradora ve la recompra</p>
-          <p><span class="k">Entonces</span> ve 40%</p>
+          <p><span class="k">Dado</span> 50 clientas con al menos un turno atendido en noviembre</p>
+          <p><span class="k">Y</span> 20 de ellas crean una nueva reserva dentro de los 60 días siguientes a ese turno, 3 crean una reserva y la cancelan, y 2 crean una reserva que después queda “ausente”</p>
+          <p><span class="k">Cuando</span> la administradora ve la recompra de noviembre</p>
+          <p><span class="k">Entonces</span> ve 44% (22 de 50): cuentan las 20 reservas y las 2 con ausencia; las 3 canceladas no cuentan</p>
         </div>
         <div class="gwt" id="cu-17-ca-3">
           <p><strong>CA-3: sin datos</strong></p>
@@ -1008,7 +1043,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <li>Cada spa conecta su propia cuenta de Mercado Pago y cobra directo; la comisión de la plataforma se factura por fuera durante el POC (decisión <a href="#d-1">D-1</a>).</li>
           <li>Sin cuenta conectada, el negocio no puede publicar packs a la venta.</li>
           <li>La administradora puede desconectar la cuenta; los packs dejan de estar a la venta y los ya vendidos siguen vigentes.</li>
-          <li>La facturación ante ARCA está pendiente (<a href="#p-1">P-1</a>).</li>
+          <li>Facturación (respondida por el Architect, <a href="#p-1">P-1</a>): cada spa factura sus ventas (packs y servicios) por fuera de la app; la plataforma le factura su servicio a cada spa. La integración de la factura electrónica de ARCA queda fuera del MVP (<a href="fuera-del-mvp.html#fm-22">FM-22</a>): la app no emite comprobantes.</li>
         </ul>
         <p><strong>Criterios de aceptación:</strong></p>
         <div class="gwt" id="cu-20-ca-1">
@@ -1029,7 +1064,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <p><span class="k">Cuando</span> la administradora intenta publicar un pack</p>
           <p><span class="k">Entonces</span> ve que primero tiene que conectar Mercado Pago</p>
         </div>
-        <p><strong>Fuera de alcance:</strong> cobro centralizado por la plataforma y liquidación a los spas; facturación ante ARCA (<a href="fuera-del-mvp.html#fm-22">fuera del MVP</a>).</p>
+        <p><strong>Fuera de alcance:</strong> cobro centralizado por la plataforma y liquidación a los spas; integración de la factura electrónica de ARCA (<a href="fuera-del-mvp.html#fm-22">fuera del MVP</a>).</p>
       </article>
       <article id="cu-21">
         <h3>CU-21: Definir packs prepagos</h3>
@@ -1108,7 +1143,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <ul>
           <li>La clienta ve su pack: servicios, cantidad disponible en el período actual, usos, vigencia.</li>
           <li>Al reservar un servicio incluido, puede usar el pack: el turno se muestra como “incluido en el pack” y no tiene precio a pagar en el local por ese servicio.</li>
-          <li>El uso se descuenta al reservar; si cancela el turno, el uso se devuelve. Si queda “ausente”, el uso se consume (supuesto <a href="#s-6">S-6</a>, a validar con los spas en el diseño).</li>
+          <li>El uso se descuenta al reservar. Valor por defecto, pendiente de decisión comercial de Fidel Cossio (<a href="#p-3">P-3</a>): si queda “ausente”, el uso se consume; si la clienta cancela dentro del plazo de la política del negocio, el uso se devuelve.</li>
           <li>El período se reinicia según la cantidad por período (por ejemplo, mensual); lo no usado en un período no se acumula.</li>
           <li>Fuera de la vigencia, el pack no se puede usar.</li>
         </ul>
@@ -1127,17 +1162,38 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <p><span class="k">Entonces</span> ve que no le quedan servicios del pack en enero y puede reservar pagando en el local</p>
         </div>
         <div class="gwt" id="cu-23-ca-3">
-          <p><strong>CA-3: cancelar devuelve el uso</strong></p>
-          <p><span class="k">Dado</span> un turno de enero reservado con el pack</p>
-          <p><span class="k">Cuando</span> la clienta lo cancela</p>
+          <p><strong>CA-3: cancelar en término devuelve el uso</strong></p>
+          <p><span class="k">Dado</span> un turno de enero reservado con el pack y un negocio cuya política permite cancelar hasta 24 h antes</p>
+          <p><span class="k">Cuando</span> la clienta lo cancela 2 días antes del turno</p>
           <p><span class="k">Entonces</span> vuelve a tener 1 semipermanente disponible en enero</p>
+        </div>
+        <div class="gwt" id="cu-23-ca-4">
+          <p><strong>CA-4: la ausencia consume el uso</strong></p>
+          <p><span class="k">Dado</span> un turno del 15/01/2027 reservado con el pack y la clienta con 0 semipermanentes disponibles en enero</p>
+          <p><span class="k">Cuando</span> el turno se marca “ausente”</p>
+          <p><span class="k">Entonces</span> el uso queda consumido y sigue con 0 disponibles en enero</p>
+          <p><span class="k">Y</span> “mi pack” muestra ese uso como “ausente”</p>
+        </div>
+        <div class="gwt" id="cu-23-ca-5">
+          <p><strong>CA-5: fuera de la vigencia no se puede usar</strong></p>
+          <p><span class="k">Dado</span> una clienta con un pack con vigencia hasta el 27/03/2027</p>
+          <p><span class="k">Cuando</span> intenta reservar con el pack un turno para el 02/04/2027</p>
+          <p><span class="k">Entonces</span> ve que el pack no cubre esa fecha porque vence el 27/03/2027</p>
+          <p><span class="k">Y</span> puede reservar pagando en el local</p>
+        </div>
+        <div class="gwt" id="cu-23-ca-6">
+          <p><strong>CA-6: lo no usado no se acumula</strong></p>
+          <p><span class="k">Dado</span> una clienta con 1 semipermanente por mes que no usó el de enero</p>
+          <p><span class="k">Cuando</span> el 01/02/2027 abre “mi pack”</p>
+          <p><span class="k">Entonces</span> ve 1 semipermanente disponible en febrero, no 2</p>
+          <p><span class="k">Y</span> el uso de enero figura como vencido</p>
         </div>
         <p><strong>Fuera de alcance:</strong> acumulación de usos entre períodos; transferir el pack a otra persona.</p>
       </article>
       <article id="cu-24">
         <h3>CU-24: Ver suscriptoras activas</h3>
         <p>Como administradora quiero ver cuántas suscriptoras tengo para saber cuánto compromiso de recompra generé.</p>
-        <p><strong>Prioridad:</strong> Should · <strong>Fase:</strong> <a href="#fase-2">Fase 2</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
+        <p><strong>Prioridad:</strong> Must (decisión del CPO, ver <a href="#priorizacion">Priorización</a>) · <strong>Fase:</strong> <a href="#fase-2">Fase 2</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
         <p><strong>Reglas de negocio:</strong></p>
         <ul>
           <li>Suscriptora = clienta con al menos un pack vigente con pago aprobado.</li>
@@ -1160,37 +1216,68 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       </article>
       <article id="cu-25">
         <h3>CU-25: Arrepentirme o dar de baja el pack</h3>
-        <p>Como clienta quiero un botón visible para arrepentirme de la compra o dar de baja mi pack, como exige la normativa.</p>
+        <p>Como clienta quiero un acceso visible para arrepentirme de la compra del pack o darlo de baja, como exige la normativa de defensa del consumidor.</p>
         <p><strong>Prioridad:</strong> Must · <strong>Fase:</strong> <a href="#fase-2">Fase 2</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
-        <p class="note">Nota: requisito legal. La forma exacta de aplicarlo a un pago único se valida con el Architect (<a href="#p-2">P-2</a>).</p>
+        <p class="note">Requisito legal. Son dos derechos distintos: el <strong>arrepentimiento</strong> (revocar la compra) lo regula la <strong>Res. 424/2020</strong> (“botón de arrepentimiento”); la <strong>baja</strong> de servicios la regula la <strong>Res. 316/2018</strong>. Solo sigue abierto cómo se reintegra un pack que ya tiene usos: lo valida la asesoría legal y lo decide Fidel Cossio (<a href="#p-2">P-2</a>).</p>
         <p><strong>Reglas de negocio:</strong></p>
         <ul>
-          <li>Hay un botón de arrepentimiento o baja visible y de acceso directo en “mi pack” y en la confirmación de compra (Res. 316/2018).</li>
-          <li>Al usarlo, la clienta recibe un comprobante de la solicitud con fecha y un código.</li>
-          <li>El negocio ve la solicitud y gestiona la devolución en Mercado Pago (el spa es quien cobró, decisión <a href="#d-1">D-1</a>).</li>
-          <li>Cómo aplica la norma a un pago único (plazos, devolución total o proporcional a los usos) está pendiente de validar con el Architect (<a href="#p-2">P-2</a>). Hasta entonces, el requisito mínimo es el botón visible, el comprobante y la notificación al negocio.</li>
+          <li><strong>Arrepentimiento (Res. 424/2020):</strong> la clienta puede revocar la compra dentro de los 10 días corridos desde que se aprobó el pago, sin dar motivos, desde un acceso visible y directo (“Botón de arrepentimiento”) en la confirmación de compra y en “mi pack”.</li>
+          <li>Al revocar, la clienta recibe un comprobante con fecha y código de la solicitud; el pack queda “arrepentimiento solicitado” y no se puede usar para nuevas reservas.</li>
+          <li>El spa hace el reintegro desde su cuenta de Mercado Pago (el spa es quien cobró, decisión <a href="#d-1">D-1</a>); la administradora ve la solicitud y la marca como reintegrada. La app no ejecuta el reintegro.</li>
+          <li>Desde el día 11 corrido ya no se puede revocar la compra; queda disponible la baja.</li>
+          <li><strong>Baja (Res. 316/2018):</strong> la clienta puede pedir la baja del pack desde un acceso visible en “mi pack”, por el mismo medio por el que lo contrató, y recibe un comprobante con fecha y código.</li>
+          <li><strong>Pendiente (<a href="#p-2">P-2</a>):</strong> si el pack ya tiene usos (arrepentimiento con uso parcial o baja), el monto del reintegro lo valida la asesoría legal y lo decide Fidel Cossio. Se cruza con la regla de ausencias y cancelaciones del pack (<a href="#p-3">P-3</a>). Hasta esa decisión, la app registra la solicitud y los usos, y el spa resuelve el monto.</li>
         </ul>
         <p><strong>Criterios de aceptación:</strong></p>
         <div class="gwt" id="cu-25-ca-1">
-          <p><strong>CA-1: solicitud de arrepentimiento</strong></p>
-          <p><span class="k">Dado</span> una clienta que compró un pack hace 3 días</p>
-          <p><span class="k">Cuando</span> toca “arrepentirme” y confirma</p>
+          <p><strong>CA-1: solicitud de arrepentimiento dentro del plazo</strong></p>
+          <p><span class="k">Dado</span> una clienta que compró un pack sin usos hace 3 días</p>
+          <p><span class="k">Cuando</span> toca “Botón de arrepentimiento” y confirma</p>
           <p><span class="k">Entonces</span> ve un comprobante con fecha y código de solicitud</p>
-          <p><span class="k">Y</span> la administradora ve la solicitud pendiente de gestión</p>
-          <p><span class="k">Y</span> el pack queda marcado “baja solicitada”</p>
+          <p><span class="k">Y</span> la administradora ve la solicitud pendiente de reintegro en Mercado Pago</p>
+          <p><span class="k">Y</span> el pack queda “arrepentimiento solicitado” y no se puede usar para nuevas reservas</p>
         </div>
         <div class="gwt" id="cu-25-ca-2">
-          <p><strong>CA-2: botón visible</strong></p>
+          <p><strong>CA-2: acceso visible en “mi pack”</strong></p>
           <p><span class="k">Dado</span> una clienta con un pack activo</p>
           <p><span class="k">Cuando</span> abre “mi pack”</p>
-          <p><span class="k">Entonces</span> ve el botón de arrepentimiento o baja sin entrar a otros menús</p>
+          <p><span class="k">Entonces</span> ve el acceso de arrepentimiento (si está dentro de los 10 días) y el de baja, sin entrar a otros menús</p>
         </div>
-        <p><strong>Fuera de alcance:</strong> devolución automática por la app; cálculo automático de devoluciones proporcionales.</p>
+        <div class="gwt" id="cu-25-ca-3">
+          <p><strong>CA-3: botón visible en la confirmación de compra</strong></p>
+          <p><span class="k">Dado</span> una clienta cuyo pago del pack fue aprobado</p>
+          <p><span class="k">Cuando</span> ve la pantalla de confirmación de compra</p>
+          <p><span class="k">Entonces</span> ve el “Botón de arrepentimiento” sin desplazarse a otros menús</p>
+          <p><span class="k">Y</span> ve el texto “Podés arrepentirte de esta compra hasta el” seguido de la fecha del día 10 corrido</p>
+        </div>
+                <div class="gwt" id="cu-25-ca-4">
+          <p><strong>CA-4: día 10 corrido, todavía puede revocar</strong></p>
+          <p><span class="k">Dado</span> una clienta cuyo pago del pack se aprobó el 28/12/2026</p>
+          <p><span class="k">Cuando</span> el 07/01/2027 (día 10 corrido) toca “Botón de arrepentimiento” y confirma</p>
+          <p><span class="k">Entonces</span> la revocación se registra y ve el comprobante con fecha y código</p>
+          <p><span class="k">Y</span> la solicitud llega al spa para el reintegro en Mercado Pago</p>
+        </div>
+        <div class="gwt" id="cu-25-ca-5">
+          <p><strong>CA-5: día 11 corrido, ya no puede revocar</strong></p>
+          <p><span class="k">Dado</span> una clienta cuyo pago del pack se aprobó el 28/12/2026</p>
+          <p><span class="k">Cuando</span> el 08/01/2027 (día 11 corrido) abre “mi pack”</p>
+          <p><span class="k">Entonces</span> no ve el “Botón de arrepentimiento” y ve que el plazo venció el 07/01/2027</p>
+          <p><span class="k">Y</span> ve el acceso para dar de baja el pack</p>
+        </div>
+        <div class="gwt" id="cu-25-ca-6">
+          <p><strong>CA-6: solicitud de baja</strong></p>
+          <p><span class="k">Dado</span> una clienta con un pack activo comprado hace 2 meses</p>
+          <p><span class="k">Cuando</span> toca “Dar de baja” en “mi pack” y confirma</p>
+          <p><span class="k">Entonces</span> ve un comprobante de baja con fecha y código</p>
+          <p><span class="k">Y</span> la administradora ve la solicitud de baja con los usos consumidos</p>
+          <p><span class="k">Y</span> el pack queda “baja solicitada” y no se puede usar para nuevas reservas</p>
+        </div>
+        <p><strong>Fuera de alcance:</strong> reintegro automático desde la app; cálculo automático del reintegro con usos (pendiente de <a href="#p-2">P-2</a>).</p>
       </article>
       <article id="cu-26">
         <h3>CU-26: Elegir profesional solo para suscriptoras (por tier)</h3>
         <p>Como administradora quiero ofrecer “elegir profesional” como beneficio para suscriptoras para dar valor extra al pack.</p>
-        <p><strong>Prioridad:</strong> Could · <strong>Fase:</strong> <a href="#fase-2">Fase 2</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
+        <p><strong>Prioridad:</strong> Should (decisión del CPO, ver <a href="#priorizacion">Priorización</a>) · <strong>Fase:</strong> <a href="#fase-2">Fase 2</a> · <strong>Issue:</strong> pendiente (se crea después del diseño y la factibilidad)</p>
         <p><strong>Reglas de negocio:</strong></p>
         <ul>
           <li>El negocio puede configurar “elegir profesional” en tres modos: para todas, desactivado o solo para suscriptoras de ciertos tiers (decisión <a href="#d-6">D-6</a>).</li>
@@ -1212,6 +1299,20 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <p><span class="k">Cuando</span> reserva un servicio</p>
           <p><span class="k">Entonces</span> no ve la opción de elegir profesional</p>
           <p><span class="k">Y</span> ve que es un beneficio del pack “Anual”</p>
+        </div>
+        <div class="gwt" id="cu-26-ca-3">
+          <p><strong>CA-3: configuración de la administradora (tres modos)</strong></p>
+          <p><span class="k">Dado</span> una administradora que configura “elegir profesional” en el modo &lt;modo&gt;</p>
+          <p><span class="k">Cuando</span> una clienta con pack “Anual” y otra sin pack reservan un servicio</p>
+          <p><span class="k">Entonces</span> &lt;resultado&gt;</p>
+          <table>
+            <thead><tr><th scope="col">Modo</th><th scope="col">Clienta con pack “Anual”</th><th scope="col">Clienta sin pack</th></tr></thead>
+            <tbody>
+              <tr><td>Para todas</td><td>Puede elegir profesional</td><td>Puede elegir profesional</td></tr>
+              <tr><td>Desactivado</td><td>No ve la opción; se le asigna profesional</td><td>No ve la opción; se le asigna profesional</td></tr>
+              <tr><td>Solo para suscriptoras (tier “Anual”)</td><td>Puede elegir profesional</td><td>No ve la opción y ve que es un beneficio del pack “Anual”</td></tr>
+            </tbody>
+          </table>
         </div>
         <p><strong>Fuera de alcance:</strong> preferencia de horarios y reserva prioritaria (<a href="fuera-del-mvp.html#fm-6">fuera del MVP</a>).</p>
       </article>
@@ -1236,13 +1337,14 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
 
     <section id="estimaciones">
       <h2>Calendario y estimaciones</h2>
-      <p class="note">Todas las estimaciones son <strong>gruesas</strong> y provienen del Architect. Se revisan después de la factibilidad.</p>
+      <p class="note">Todas las estimaciones son <strong>gruesas</strong> y provienen del Architect (estimación vigente: Fase 2 del 7/12 al 14/12/2026 con ~65% de certidumbre; reemplaza la versión anterior “antes del 26/12, certidumbre alta”). Se revisan después de la factibilidad.</p>
       <table>
         <thead><tr><th scope="col">Etapa</th><th scope="col">Duración estimada</th><th scope="col">Fecha aproximada</th><th scope="col">Certidumbre</th></tr></thead>
         <tbody>
           <tr><td>PRD y diseño</td><td>1 a 2 semanas</td><td>Desde el 19/10/2026</td><td>—</td></tr>
-          <tr><td>Fase 1 “Navidad”: construcción</td><td>4 a 5 semanas</td><td>Salida aprox. 30/11 al 7/12/2026</td><td>~70%</td></tr>
-          <tr><td>Fase 2 “Año Nuevo”</td><td>Aprox. 1 semana después de la Fase 1</td><td>Antes del 26/12/2026</td><td>Alta</td></tr>
+          <tr><td>Fase 1 “Navidad”: construcción</td><td>4 a 5 semanas desde el 2/11/2026</td><td>Salida del 30/11 al 7/12/2026</td><td>~70%</td></tr>
+          <tr><td>Fase 2 “Año Nuevo”</td><td>Aprox. 1 semana después de la Fase 1</td><td>Salida del 7/12 al 14/12/2026</td><td>~65%</td></tr>
+          <tr><td>Cobro recurrente de la suscripción (<a href="fuera-del-mvp.html#fm-5">fuera del MVP</a>)</td><td>—</td><td>Enero de 2027</td><td>—</td></tr>
           <tr><td>Hito WhatsApp Business aprobado</td><td>De días a 2 o 3 semanas (depende de Fidel Cossio y Meta)</td><td>Límite: 10/11/2026 (si no, plan B)</td><td>—</td></tr>
         </tbody>
       </table>
@@ -1261,7 +1363,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
           <tr id="r-5"><td>R-5</td><td>Push en iOS solo con PWA instalada e iOS 16.4 o posterior.</td><td>Parte de las clientas no recibe push.</td><td>WhatsApp sigue siendo el canal principal; push complementa (<a href="#cu-18">CU-18</a>).</td><td>PO / CDO</td></tr>
           <tr id="r-6"><td>R-6</td><td>Complejidad de la reserva en serie con disponibilidad por empresa y profesional.</td><td>Riesgo sobre la fecha de la Fase 1.</td><td>Priorizar <a href="#cu-2">CU-2</a> y <a href="#cu-9">CU-9</a>; recortar Should si hace falta.</td><td>Architect</td></tr>
           <tr id="r-7"><td>R-7</td><td>Datos sucios en los CSV de los spas.</td><td>Clientas duplicadas, números inválidos, consentimiento mal cargado.</td><td>Validación y resumen antes de importar (<a href="#cu-15">CU-15</a>), asistida por Fidel Cossio.</td><td>Operador</td></tr>
-          <tr id="r-8"><td>R-8</td><td>Mercado Pago: alta y conexión de las cuentas de los spas; facturación ante ARCA sin definir.</td><td>Sin cuenta conectada no se venden packs; riesgo fiscal.</td><td>Pedir a los spas que tengan su cuenta lista antes de la Fase 2; ARCA en <a href="#p-1">P-1</a>.</td><td>Fidel Cossio / Architect</td></tr>
+          <tr id="r-8"><td>R-8</td><td>Mercado Pago: alta y conexión de las cuentas de los spas. Facturación: cada spa factura sus ventas por fuera de la app y la plataforma factura su servicio a los spas (<a href="#p-1">P-1</a>, respondida).</td><td>Sin cuenta conectada no se venden packs. Si un spa no factura sus ventas de packs, el riesgo fiscal es suyo, no de la app.</td><td>Pedir a los spas que tengan su cuenta lista antes de la Fase 2 y recordarles que facturan sus ventas de packs por fuera de la app. Integración con ARCA en <a href="fuera-del-mvp.html#fm-22">FM-22</a>.</td><td>Fidel Cossio / Architect</td></tr>
           <tr id="r-9"><td>R-9</td><td>Sin línea de base de recompra ni asistencia.</td><td>No se puede afirmar mejora al principio.</td><td>Pedir el historial de 2 o 3 meses a los spas (opcional) y medir desde el día 1.</td><td>PO</td></tr>
           <tr id="r-10"><td>R-10</td><td>Diseño del CDO y factibilidad del Architect pendientes.</td><td>Sin ellos no se crean issues ni empieza la construcción.</td><td>Ver <a href="#proximos-pasos">Próximos pasos</a>.</td><td>CPO</td></tr>
         </tbody>
@@ -1277,7 +1379,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <li id="s-3"><strong>S-3:</strong> las clientas usan WhatsApp y aceptan registrarse con su número.</li>
         <li id="s-4"><strong>S-4:</strong> la mayoría de las reservas son de un solo profesional por turno; la serie con profesionales distintos es menos frecuente pero se soporta.</li>
         <li id="s-5"><strong>S-5:</strong> las clientas compran packs en ARS con los medios de pago de Mercado Pago.</li>
-        <li id="s-6"><strong>S-6:</strong> en un pack, un turno marcado “ausente” consume el uso del período (como una penalidad simple); un turno cancelado lo devuelve.</li>
+        <li id="s-6"><strong>S-6:</strong> <span class="badge obsoleto">obsoleto</span> Ya no es un supuesto del PO: pasó a decisión comercial de Fidel Cossio en <a href="#p-3">P-3</a>.</li>
       </ul>
     </section>
 
@@ -1289,7 +1391,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <tbody>
           <tr id="d-1"><td>D-1</td><td>Cada spa conecta su propia cuenta de Mercado Pago y cobra directo; la comisión de la plataforma se factura por fuera durante el POC.</td><td>19/10/2026, confirmado por Fidel Cossio</td><td>La plataforma no maneja dinero de terceros; las devoluciones las gestiona el spa. El cobro centralizado queda descartado para el MVP.</td><td><a href="#cu-20">CU-20</a>, <a href="#cu-22">CU-22</a>, <a href="#cu-25">CU-25</a></td></tr>
           <tr id="d-2"><td>D-2</td><td>Las campañas se mandan solo a quien dio consentimiento: se pide al reservar y viene en una columna del CSV que completa el spa.</td><td>19/10/2026, confirmado por Fidel Cossio</td><td>Menor alcance de la campaña de Navidad a cambio de proteger el número de WhatsApp (<a href="#r-2">R-2</a>).</td><td><a href="#cu-15">CU-15</a>, <a href="#cu-16">CU-16</a>, <a href="#cu-19">CU-19</a>, <a href="#cu-11">CU-11</a></td></tr>
-          <tr id="d-3"><td>D-3</td><td>Recordatorios configurables por el negocio, por defecto 24 h y 2 h antes.</td><td>19/10/2026, confirmado por Fidel Cossio</td><td>Reemplaza la mención inicial de “30 y 10 minutos”.</td><td><a href="#cu-13">CU-13</a></td></tr>
+          <tr id="d-3"><td>D-3</td><td>Recordatorios configurables por el negocio, por defecto 24 h y 2 h antes.</td><td>19/10/2026, confirmado por Fidel Cossio en el hilo de discovery</td><td>Fuente: en el hilo de discovery (19/10/2026) Fidel Cossio escribió “Faltando los 30 y faltando 10 minutos”; después confirmó que sea configurable por el negocio, con 24 h y 2 h por defecto. La configuración permite también valores como 30 y 10 minutos.</td><td><a href="#cu-13">CU-13</a></td></tr>
           <tr id="d-4"><td>D-4</td><td>Los recursos (sillones, gabinetes) quedan fuera del MVP.</td><td>19/10/2026, confirmado por Fidel Cossio</td><td>La disponibilidad depende solo de empresa y profesional. Ver <a href="fuera-del-mvp.html#fm-10">fuera del MVP</a>.</td><td><a href="#cu-2">CU-2</a>, <a href="#cu-7">CU-7</a>, <a href="#cu-9">CU-9</a></td></tr>
           <tr id="d-5"><td>D-5</td><td>El MVP sale sin app nativa, solo con PWA y WhatsApp.</td><td>19/10/2026, confirmado por Fidel Cossio</td><td>Push limitado en iOS (<a href="#r-5">R-5</a>). Ver <a href="fuera-del-mvp.html#fm-8">fuera del MVP</a>.</td><td><a href="#cu-18">CU-18</a></td></tr>
           <tr id="d-6"><td>D-6</td><td>El negocio puede ofrecer “elegir profesional” como beneficio solo para suscriptoras, por tier.</td><td>19/10/2026, confirmado por Fidel Cossio</td><td>Beneficio simple sin reserva prioritaria.</td><td><a href="#cu-3">CU-3</a>, <a href="#cu-21">CU-21</a>, <a href="#cu-26">CU-26</a></td></tr>
@@ -1302,8 +1404,11 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       <table>
         <thead><tr><th scope="col">ID</th><th scope="col">Pregunta</th><th scope="col">Dueño</th><th scope="col">Afecta a</th><th scope="col">Estado</th></tr></thead>
         <tbody>
-          <tr id="p-1"><td>P-1</td><td>Facturación ante ARCA: quién factura los packs y servicios (el spa con su cuenta) y la comisión de la plataforma; qué necesita el producto, si algo, en el MVP.</td><td>Architect (consulta del CPO); decide Fidel Cossio</td><td><a href="#cu-20">CU-20</a>, <a href="#cu-22">CU-22</a>, <a href="fuera-del-mvp.html#fm-22">fm-22</a></td><td>abierta</td></tr>
-          <tr id="p-2"><td>P-2</td><td>Cómo aplica el botón de arrepentimiento o baja (Res. 316/2018) a un pack con pago único: plazo, devolución total o proporcional a los usos, y quién la ejecuta.</td><td>Architect (consulta del CPO); decide Fidel Cossio</td><td><a href="#cu-25">CU-25</a></td><td>abierta</td></tr>
+          <tr id="p-1"><td>P-1</td><td>Facturación ante ARCA: quién factura los packs y servicios y la comisión de la plataforma; qué necesita el producto en el MVP.<br><strong>Respuesta del Architect:</strong> cada spa factura sus ventas (packs y servicios) por fuera de la app; la plataforma les factura su servicio a los spas; la integración de la factura electrónica de ARCA queda fuera del MVP (<a href="fuera-del-mvp.html#fm-22">FM-22</a>).</td><td>Architect (respondió a la consulta del CPO)</td><td><a href="#cu-20">CU-20</a>, <a href="#cu-22">CU-22</a>, <a href="#r-8">R-8</a>, <a href="fuera-del-mvp.html#fm-22">FM-22</a></td><td>respondida</td></tr>
+          <tr id="p-2"><td>P-2</td><td>Arrepentimiento y baja del pack.<br><strong>Respondido:</strong> el arrepentimiento lo regula la Res. 424/2020 (acceso visible para revocar dentro de los 10 días corridos; el spa reintegra desde Mercado Pago) y la baja, la Res. 316/2018 (ver <a href="#cu-25">CU-25</a>).<br><strong>Sigue abierto:</strong> el reintegro de un pack con usos (arrepentimiento con uso parcial o baja): ¿total, proporcional a los usos o con otro criterio? Se cruza con <a href="#p-3">P-3</a>.</td><td>Asesoría legal (valida); decide Fidel Cossio</td><td><a href="#cu-25">CU-25</a></td><td>parcialmente respondida</td></tr>
+          <tr id="p-3"><td>P-3</td><td>Decisión comercial (antes supuesto <a href="#s-6">S-6</a>): ¿qué pasa con el uso del pack cuando la clienta falta o cancela?<br><strong>Recomendación del CPO, valor por defecto hasta que Fidel decida:</strong> “la ausencia consume el uso; la cancelación dentro del plazo de la política del negocio lo devuelve”.<br>Se cruza con el uso parcial del arrepentimiento y la baja (<a href="#p-2">P-2</a>, asesoría legal): define qué cuenta como “uso” al calcular un reintegro.</td><td>Fidel Cossio (decisión comercial); recomienda el CPO</td><td><a href="#cu-23">CU-23</a>, <a href="#cu-25">CU-25</a></td><td>abierta (rige el valor por defecto)</td></tr>
+          <tr id="p-4"><td>P-4</td><td>Clientas sin turno (walk-in): ¿los spas necesitan registrar atenciones sin reserva previa en el MVP? Fidel Cossio no respondió esta pregunta en el hilo de discovery. Afecta la métrica de recompra (un walk-in no genera turno atendido ni recompra registrada).</td><td>Fidel Cossio</td><td><a href="fuera-del-mvp.html#fm-18">FM-18</a>, <a href="#m-recompra">m-recompra</a>, <a href="#m-asistencia">m-asistencia</a></td><td>abierta</td></tr>
+          <tr id="p-5"><td>P-5</td><td>Aprobación escrita del <a href="#goal-mvp">Goal del MVP</a> propuesto por el CPO y, tras 4 semanas de línea de base, del objetivo numérico de recompra a 60 días.</td><td>Fidel Cossio</td><td><a href="#goal-mvp">Goal del MVP</a>, <a href="#m-recompra">m-recompra</a></td><td>abierta</td></tr>
         </tbody>
       </table>
     </section>
@@ -1313,7 +1418,8 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       <ol>
         <li>Revisión de este PRD por el PO Reviewer y PR abierto por el CPO.</li>
         <li><strong>Diseño del CDO</strong>: flujos y pantallas de los casos Must de la Fase 1, luego Fase 2.</li>
-        <li><strong>Factibilidad del Architect</strong>: confirmar estimaciones, umbrales de <a href="#rnf-escala">RNF-2</a> y responder <a href="#p-1">P-1</a> y <a href="#p-2">P-2</a>.</li>
+        <li><strong>Factibilidad del Architect</strong>: confirmar estimaciones, umbrales de <a href="#rnf-escala">RNF-2</a> y confirmar la estimación de la Fase 2 (7/12 al 14/12, ~65%).</li>
+        <li>Asesoría legal: validar el reintegro de packs con usos (<a href="#p-2">P-2</a>). Fidel Cossio: decidir <a href="#p-2">P-2</a>, <a href="#p-3">P-3</a> y <a href="#p-4">P-4</a> y aprobar por escrito el goal (<a href="#p-5">P-5</a>).</li>
         <li>Fidel Cossio inicia ya el trámite de WhatsApp Business (límite 10/11/2026) y la aprobación de la plantilla de Navidad.</li>
         <li>Pedir a los 3 spas el CSV de clientas con consentimiento y, opcionalmente, el historial de 2 o 3 meses.</li>
         <li><strong>Crear los issues</strong> en el repo de código, uno por caso de uso, recién con el diseño y la factibilidad aprobados, enlazando a las anclas <code>#cu-N</code>.</li>
@@ -1323,9 +1429,10 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
     <section id="glosario">
       <h2>Glosario</h2>
       <ul>
-        <li><strong>Negocio:</strong> empresa cliente de la plataforma (en el POC, un spa de uñas).</li>
+        <li><strong>Negocio:</strong> empresa que contrata la plataforma (en el POC, un spa de uñas).</li>
         <li><strong>Servicios en serie:</strong> varios servicios en un mismo turno, uno detrás del otro.</li>
-        <li><strong>Recompra:</strong> una clienta con un turno asistido que vuelve a reservar dentro de los 60 días.</li>
+        <li><strong>Recompra (a 60 días):</strong> definición única en <a href="#m-recompra"><code>#m-recompra</code></a>: % de clientas con al menos un turno atendido en el período que crean una nueva reserva dentro de los 60 días siguientes a ese turno; las reservas canceladas no cuentan, las ausencias sí. La marca de recompra se confirma al crear la reserva.</li>
+        <li><strong>Arrepentimiento:</strong> revocación de la compra dentro de los 10 días corridos (Res. 424/2020). <strong>Baja:</strong> fin del servicio contratado (Res. 316/2018).</li>
         <li><strong>Te toca volver:</strong> aviso que se envía cuando pasó el intervalo configurado para un servicio desde el último turno asistido.</li>
         <li><strong>Pack prepago:</strong> conjunto de servicios por período (3 o 12 meses) pagado de una vez. En el MVP es la forma de “suscripción”.</li>
         <li><strong>Suscriptora:</strong> clienta con al menos un pack vigente con pago aprobado.</li>
@@ -1340,6 +1447,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <li><time datetime="2026-10-19">2026-10-19</time>: Fidel Cossio elige el Roadmap B (acotado) y pide el PRD primero.</li>
         <li><time datetime="2026-10-19">2026-10-19</time>: Fidel Cossio confirma por escrito las decisiones <a href="#d-1">D-1</a> a <a href="#d-6">D-6</a> recomendadas por el CPO.</li>
         <li><time datetime="2026-10-19">2026-10-19</time>: primera versión del PRD (borrador).</li>
+        <li><time datetime="2026-10-19">2026-10-19</time>: ronda 1 de correcciones del PO Reviewer: fecha vigente de la Fase 2 (7/12 al 14/12, ~65%); arrepentimiento (Res. 424/2020) y baja (Res. 316/2018); <a href="#p-1">P-1</a> respondida (ARCA fuera del MVP); definición única de recompra; <a href="#goal-mvp">Goal del MVP</a> propuesto; prioridades del CPO (<a href="#cu-17">CU-17</a> y <a href="#cu-24">CU-24</a> a Must, <a href="#cu-26">CU-26</a> a Should); <a href="#s-6">S-6</a> pasa a <a href="#p-3">P-3</a>; walk-in en <a href="#p-4">P-4</a>. Estado: en revisión.</li>
       </ul>
     </section>
   </main>

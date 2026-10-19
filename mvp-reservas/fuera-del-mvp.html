@@ -75,7 +75,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
     <p><a href="../index.html">Documentación de producto</a> › MVP de reservas</p>
     <h1>Fuera del MVP de reservas: iniciativas para PRDs posteriores</h1>
     <ul class="meta">
-      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
+      <li><strong>Estado:</strong> <span class="badge en-revision">en revisión</span></li>
       <li><strong>Dueño:</strong> PO (MVP de reservas)</li>
       <li><strong>Decide:</strong> Fidel Cossio</li>
       <li><strong>Relacionado:</strong> <a href="prd-mvp.html#fuera-de-alcance">PRD del MVP (Roadmap B)</a></li>
@@ -94,7 +94,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
             <li><a href="#fm-3">FM-3: Métricas completas</a></li>
             <li><a href="#fm-4">FM-4: Marca completa</a></li>
             <li><a href="#fm-5">FM-5: Suscripción con cobro recurrente</a></li>
-            <li><a href="#fm-6">FM-6: Beneficios por plan con preferencia de horarios</a></li>
+            <li><a href="#fm-6">FM-6: Beneficios por plan con preferencia de horarios y reserva prioritaria</a></li>
             <li><a href="#fm-7">FM-7: Lista de espera básica</a></li>
         </ol>
       </li>
@@ -105,12 +105,12 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
             <li><a href="#fm-10">FM-10: Servicios simultáneos y recursos limitados</a></li>
             <li><a href="#fm-11">FM-11: Señas y penalidades automáticas</a></li>
             <li><a href="#fm-12">FM-12: Cobro online o seña de reservas puntuales</a></li>
-            <li><a href="#fm-13">FM-13: Gift cards, packs, promociones y cupones</a></li>
+            <li><a href="#fm-13">FM-13: Gift cards, packs no periódicos, promociones y cupones</a></li>
             <li><a href="#fm-14">FM-14: Programa de puntos</a></li>
             <li><a href="#fm-15">FM-15: Reseñas y calificaciones</a></li>
             <li><a href="#fm-16">FM-16: Historial de la clienta</a></li>
             <li><a href="#fm-17">FM-17: Lista de espera inteligente</a></li>
-            <li><a href="#fm-18">FM-18: Clientes sin turno (walk-in)</a></li>
+            <li><a href="#fm-18">FM-18: Clientas sin turno (walk-in)</a></li>
             <li><a href="#fm-19">FM-19: Un número de WhatsApp por spa</a></li>
             <li><a href="#fm-20">FM-20: Migración asistida</a></li>
             <li><a href="#fm-21">FM-21: Adaptación a otros rubros</a></li>
@@ -279,7 +279,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         </table>
       </article>
       <article id="fm-13">
-        <h3>FM-13: Gift cards, packs, promociones y cupones</h3>
+        <h3>FM-13: Gift cards, packs no periódicos, promociones y cupones</h3>
         <table>
           <tbody>
             <tr><th scope="row">Descripción</th><td>Gift cards regalables, packs de servicios no periódicos, promociones y cupones de descuento.</td></tr>
@@ -339,14 +339,14 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         </table>
       </article>
       <article id="fm-18">
-        <h3>FM-18: Clientes sin turno (walk-in)</h3>
+        <h3>FM-18: Clientas sin turno (walk-in)</h3>
         <table>
           <tbody>
             <tr><th scope="row">Descripción</th><td>Registrar atenciones sin reserva previa.</td></tr>
             <tr><th scope="row">Valor y problema que resuelve</th><td>Métricas completas y agenda real del día.</td></tr>
-            <tr><th scope="row">Por qué quedó afuera</th><td>Fidel Cossio no respondió todavía si lo necesita.</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Fidel Cossio no respondió esta pregunta en el hilo de discovery; está en decisiones pendientes del PRD (<a href="prd-mvp.html#p-4">P-4</a>, dueño Fidel Cossio).</td></tr>
             <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Afecta métricas de asistencia y recompra.</td></tr>
-            <tr><th scope="row">Fase sugerida o disparador</th><td>Respuesta de Fidel Cossio o pedido de un spa del POC.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Respuesta de Fidel Cossio a <a href="prd-mvp.html#p-4">P-4</a> o pedido de un spa del POC.</td></tr>
           </tbody>
         </table>
       </article>
@@ -390,11 +390,11 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
         <h3>FM-22: Facturación ante ARCA</h3>
         <table>
           <tbody>
-            <tr><th scope="row">Descripción</th><td>Emisión de comprobantes de packs, servicios y comisión de la plataforma.</td></tr>
+            <tr><th scope="row">Descripción</th><td>Integración de la factura electrónica de ARCA: que la app emita los comprobantes de las ventas de cada spa (packs y servicios) y, eventualmente, los de la plataforma a los spas.</td></tr>
             <tr><th scope="row">Valor y problema que resuelve</th><td>Cumplimiento fiscal del negocio y de la plataforma.</td></tr>
-            <tr><th scope="row">Por qué quedó afuera</th><td>Por definir (<a href="prd-mvp.html#p-1">P-1</a>); durante el POC la comisión se factura por fuera (<a href="prd-mvp.html#d-1">D-1</a>).</td></tr>
+            <tr><th scope="row">Por qué quedó afuera</th><td>Respuesta del Architect (<a href="prd-mvp.html#p-1">P-1</a>, respondida): cada spa factura sus ventas por fuera de la app y la plataforma les factura su servicio a los spas, así que el MVP no necesita emitir comprobantes. La integración con ARCA agrega trámites y condiciones fiscales por spa que no entran en la fecha de las fiestas.</td></tr>
             <tr><th scope="row">Dependencias y riesgos conocidos</th><td>Integración con ARCA, condición fiscal de cada spa.</td></tr>
-            <tr><th scope="row">Fase sugerida o disparador</th><td>Respuesta del Architect a <a href="prd-mvp.html#p-1">P-1</a>; antes de cobrar en escala.</td></tr>
+            <tr><th scope="row">Fase sugerida o disparador</th><td>Cuando los spas pidan facturar desde la app (por volumen de packs o al sumar cobro online o recurrente, <a href="#fm-5">FM-5</a>, <a href="#fm-12">FM-12</a>), o antes de escalar a decenas de negocios.</td></tr>
           </tbody>
         </table>
       </article>
@@ -416,6 +416,7 @@ footer.doc { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--bo
       <h2>Historial</h2>
       <ul>
         <li><time datetime="2026-10-19">2026-10-19</time>: primera versión, con el recorte del Roadmap B decidido por Fidel Cossio.</li>
+        <li><time datetime="2026-10-19">2026-10-19</time>: ronda 1 de correcciones: FM-22 con la respuesta del Architect (ARCA fuera del MVP) y nuevo disparador; FM-18 enlaza <a href="prd-mvp.html#p-4">P-4</a>; títulos de FM-6 y FM-13 alineados.</li>
       </ul>
     </section>
   </main>
