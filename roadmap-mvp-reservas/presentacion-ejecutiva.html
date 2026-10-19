@@ -110,6 +110,10 @@ body.deck { background: #e9ecef; }
 .tag.a { color: var(--a); background: var(--a-soft); }
 .tag.b { color: var(--b); background: var(--b-soft); }
 .tag.rec { color: #fff; background: var(--b); border-color: var(--b); }
+.tag.ok { color: var(--b); background: var(--b-soft); }
+.tag.open { color: var(--a); background: var(--a-soft); }
+.slide .level { font-size: 1.25cqw; }
+.cover .decided .tag { font-size: 1.5cqw; padding: .3cqw 1.1cqw; }
 .meter { display: flex; align-items: center; gap: .8cqw; font-size: 1.25cqw; }
 .meter .track { flex: 0 0 12cqw; height: 1cqw; background: #dfe3e8; border-radius: 999px; overflow: hidden; }
 .meter .fill { height: 100%; background: var(--brand); }
@@ -186,14 +190,17 @@ body.present .slide.current { display: block; }
 
 <section class="slide cover" id="portada" aria-labelledby="portada-t" data-n="1">
   <div class="slide-inner">
-    <p class="kicker">Presentación a socios · Para decidir</p>
+    <p class="kicker">Presentación a socios · Decisión tomada</p>
     <h1 id="portada-t">Reservas de turnos con foco en recompra:<br>dos caminos para salir en las fiestas</h1>
     <p class="lead">MVP para spas de uñas (luego peluquerías, barberías y peluquerías caninas). Dos roadmaps posibles, sus fechas, su certidumbre y lo que tenemos que decidir esta semana.</p>
+    <p class="decided"><span class="tag rec">Decidido: Roadmap B (19/10/2026, Fidel Cossio)</span></p>
     <ul class="meta">
+      <li><strong>Dueño:</strong> Fidel Cossio</li>
       <li><strong>Presenta:</strong> Fidel Cossio</li>
       <li><strong>Preparó:</strong> equipo de producto (PO), con estimaciones del Architect</li>
       <li><strong>Fecha:</strong> <time datetime="2026-10-19">lunes 19/10/2026</time></li>
-      <li><strong>Estado:</strong> <span class="badge borrador">borrador</span></li>
+      <li><strong>Última revisión:</strong> <time datetime="2026-10-19">19/10/2026</time></li>
+      <li><strong>Estado:</strong> <span class="badge aprobado">aprobado</span> (decidido)</li>
     </ul>
     <p class="small" style="color:#9fb3c8">Navegación: flechas o barra espaciadora para avanzar, tecla P para modo presentación, Ctrl+P para PDF (un slide por página).</p>
   </div>
@@ -320,7 +327,7 @@ body.present .slide.current { display: block; }
       <div style="display:flex;flex-direction:column;gap:1.1cqw">
         <div class="card">
           <p><strong>Fecha estimada:</strong> 5 a 8 semanas de construcción → entre ~30/11 y ~28/12.</p>
-          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:50%"></span></span><span>Llegar a principios de diciembre: ~50% (media-baja)</span></div>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:50%"></span></span><span>Llegar a principios de diciembre: ~50%</span></div>
         </div>
         <div class="card a">
           <h3>Fase 2 · Año Nuevo</h3>
@@ -330,7 +337,7 @@ body.present .slide.current { display: block; }
             <li>Lista de espera básica; cantidad de suscriptoras para la administradora.</li>
           </ul>
           <p style="margin-top:.6cqw"><strong>Fecha:</strong> 2 a 3 semanas después de la Fase 1. Lo probable: mediados o fines de enero.</p>
-          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:40%"></span></span><span>Llegar antes del 26/12: ~40% (baja-media)</span></div>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:40%"></span></span><span>Llegar antes del 26/12: ~40%</span></div>
         </div>
       </div>
     </div>
@@ -341,7 +348,7 @@ body.present .slide.current { display: block; }
 </section>
 <section class="slide " id="roadmap-b" aria-labelledby="roadmap-b-t" data-n="6">
   <div class="slide-inner">
-    <p class="kicker"><span class="tag b">Roadmap B</span> <span class="tag rec">Recomendado</span> Fase 1 recortada y pack prepago</p>
+    <p class="kicker"><span class="tag b">Roadmap B</span> <span class="tag rec">Elegido el 19/10/2026</span> Fase 1 recortada y pack prepago</p>
     <h2 id="roadmap-b-t">Roadmap B: lo esencial para Navidad, suscripción prepaga antes de fin de año</h2>
     <div class="cols" style="grid-template-columns: 1.35fr 1fr">
       <div class="card b">
@@ -360,7 +367,7 @@ body.present .slide.current { display: block; }
       <div style="display:flex;flex-direction:column;gap:1.1cqw">
         <div class="card">
           <p><strong>Fecha estimada:</strong> 4 a 5 semanas de construcción → fines de noviembre o principios de diciembre (~30/11 a ~7/12).</p>
-          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:70%"></span></span><span>Certidumbre: ~70% (media)</span></div>
+          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:70%"></span></span><span>Certidumbre: ~70%</span></div>
         </div>
         <div class="card b">
           <h3>Fase 2 · Año Nuevo</h3>
@@ -369,7 +376,7 @@ body.present .slide.current { display: block; }
             <li>Mantiene el gancho &laquo;este año voy todos los meses&raquo;.</li>
           </ul>
           <p style="margin-top:.6cqw"><strong>Fecha:</strong> ~1 semana después de la Fase 1 → mediados de diciembre, antes del 26/12.</p>
-          <div class="meter"><span class="track" aria-hidden="true"><span class="fill" style="display:block;width:65%"></span></span><span>Certidumbre: ~65% (media-alta)</span></div>
+          <p class="level"><strong>Certidumbre:</strong> ~65%</p>
           <p class="small" style="margin-top:.4cqw">El cobro recurrente mensual pasa a enero.</p>
         </div>
       </div>
@@ -383,12 +390,12 @@ body.present .slide.current { display: block; }
     <p class="kicker">Comparación</p>
     <h2 id="comparacion-t">A y B lado a lado</h2>
     <table>
-      <thead><tr><th scope="col" style="width:16%"></th><th scope="col" style="width:42%"><span class="tag a">Roadmap A</span> Alcance completo</th><th scope="col"><span class="tag b">Roadmap B</span> <span class="tag rec">Recomendado</span> Recortado + prepago</th></tr></thead>
+      <thead><tr><th scope="col" style="width:16%"></th><th scope="col" style="width:42%"><span class="tag a">Roadmap A</span> Alcance completo</th><th scope="col"><span class="tag b">Roadmap B</span> <span class="tag rec">Elegido</span> Recortado + prepago</th></tr></thead>
       <tbody>
         <tr><th scope="row">Alcance Fase 1</th><td>Completo: reprogramación real, varias campañas y segmentos, métricas y marca completas.</td><td>Esencial: los mismos perfiles y recordatorios, con cuatro recortes (reprogramar, campañas, métricas, marca).</td></tr>
         <tr><th scope="row">Fase 1 lista</th><td>~30/11 a ~28/12 (5 a 8 semanas)</td><td>~30/11 a ~7/12 (4 a 5 semanas)</td></tr>
         <tr><th scope="row">Suscripción</th><td>Mensual con cobro recurrente; probable mediados o fines de enero.</td><td>Pack prepago 3 o 12 meses, un solo pago; mediados de diciembre.</td></tr>
-        <tr><th scope="row">Certidumbre</th><td>Fase 1 a principios de dic.: ~50%. Fase 2 antes del 26/12: ~40%.</td><td>Fase 1: ~70%. Fase 2 antes del 26/12: ~65% (media-alta).</td></tr>
+        <tr><th scope="row">Certidumbre</th><td>Fase 1 a principios de dic.: ~50%. Fase 2 antes del 26/12: ~40%.</td><td>Fase 1: ~70%. Fase 2 antes del 26/12: ~65%.</td></tr>
         <tr><th scope="row">Riesgo principal</th><td>Llegar tarde a la campaña de Navidad y perder la ventana de &laquo;promesa de Año Nuevo&raquo;.</td><td>Ofrecer menos herramientas de campaña y de reportes en la primera temporada.</td></tr>
         <tr><th scope="row">Qué se pierde</th><td>Margen de tiempo para probar con los spas antes de las fiestas.</td><td>Reprogramación en un paso, campañas variadas, métricas detalladas, marca completa y cobro mensual automático (pasan a enero).</td></tr>
         <tr><th scope="row">Para Navidad y Año Nuevo</th><td>Posible, con riesgo alto de no llegar.</td><td>Campaña de Navidad y pack &laquo;promesa de Año Nuevo&raquo; a la venta antes del 26/12.</td></tr>
@@ -411,7 +418,7 @@ body.present .slide.current { display: block; }
       <span class="lbl">Verificación Meta (WhatsApp)</span>
       <div class="lane"><span class="bar meta" style="left:0%;width:20.95%">Iniciar ya · límite 10/11</span></div>
       <span class="lbl"><span class="tag a">A</span> Fase 1</span>
-      <div class="lane"><span class="bar a" style="left:13.33%;width:26.67%">Construcción</span><span class="bar range a" style="left:40%;width:26.67%">Entrega: 30/11 a 28/12</span></div>
+      <div class="lane"><span class="bar a" style="left:6.67%;width:33.33%">Construcción 5–8 sem. (desde ~26/10)</span><span class="bar range a" style="left:40%;width:26.67%">Entrega: 30/11 a 28/12</span></div>
       <span class="lbl"><span class="tag a">A</span> Fase 2</span>
       <div class="lane"><span class="bar range a" style="left:53.33%;width:45.67%">+2–3 semanas · probable mediados o fines de enero</span></div>
       <span class="lbl"><span class="tag b">B</span> Fase 1</span>
@@ -432,7 +439,7 @@ body.present .slide.current { display: block; }
       <span><i style="background:#57606a"></i>Diseño y PRD</span>
       <span><i style="background:#6f42c1"></i>Trámite externo</span>
       <span><i style="background:#1a7f37"></i>Trabajo planificado</span>
-      <span><i style="background:#cdebd5;border:1px dashed #6e7781"></i>Ventana de entrega estimada</span>
+      <span><i style="background:#cdebd5;border:1px dashed #6e7781"></i>Ventana de entrega estimada (tramo de incertidumbre)</span>
       <span><i style="background:rgba(140,47,57,.15)"></i>20–26/12: pruebas con poca gente disponible</span>
     </div>
   </div>
@@ -463,7 +470,7 @@ body.present .slide.current { display: block; }
         <div class="card risk">
           <h3>4. Consentimiento para campañas</h3>
           <p>Las ofertas por WhatsApp tienen costo por mensaje y requieren permiso. Si se envían a clientas importadas sin permiso, los bloqueos pueden dar de baja el canal entero, recordatorios incluidos.</p>
-          <p><strong>Propuesta:</strong> pedir permiso al reservar y una columna &laquo;dio permiso&raquo; en el CSV.</p>
+          <p><strong>Confirmado:</strong> pedir permiso al reservar y una columna &laquo;dio permiso&raquo; en el CSV.</p>
         </div>
         <div class="card">
           <h3>5. Push en iPhone</h3>
@@ -471,7 +478,7 @@ body.present .slide.current { display: block; }
         </div>
         <div class="card">
           <h3>6. Pagos y legales</h3>
-          <p>Definir quién recibe la plata (slide 11). Las suscripciones online necesitan un &laquo;botón de baja&raquo; visible (Res. 316/2018). Facturación ante ARCA: <em>por definir</em>.</p>
+          <p><strong>Confirmado:</strong> cada spa cobra con su propia cuenta de Mercado Pago (slide 11). Las suscripciones online necesitan un &laquo;botón de baja&raquo; visible (Res. 316/2018). Facturación ante ARCA: <em>por definir</em>.</p>
         </div>
       </div>
     </div>
@@ -513,18 +520,18 @@ body.present .slide.current { display: block; }
 </section>
 <section class="slide " id="decisiones" aria-labelledby="decisiones-t" data-n="11">
   <div class="slide-inner">
-    <p class="kicker">Lo que necesitamos de los socios</p>
+    <p class="kicker">Decisiones de los socios · 19/10/2026</p>
     <h2 id="decisiones-t">Cuatro decisiones para arrancar</h2>
     <table>
-      <thead><tr><th scope="col" style="width:4%">#</th><th scope="col" style="width:24%">Decisión</th><th scope="col" style="width:36%">Recomendación</th><th scope="col">Qué implica</th></tr></thead>
+      <thead><tr><th scope="col" style="width:4%">#</th><th scope="col" style="width:24%">Decisión</th><th scope="col" style="width:36%">Recomendación y estado</th><th scope="col">Qué implica</th></tr></thead>
       <tbody>
-        <tr id="decision-1"><td>1</td><th scope="row">Roadmap A o B</th><td><span class="tag rec">B</span> Fase 1 recortada y pack prepago.</td><td>~70% de certidumbre para la Fase 1 y ~65% (media-alta) para tener la suscripción a la venta antes del 26/12. Lo recortado pasa a enero.</td></tr>
-        <tr id="decision-2"><td>2</td><th scope="row">Quién recibe los pagos</th><td>Cada spa conecta su cuenta de Mercado Pago y cobra directo.</td><td>Menos trámites. La comisión de la plataforma se factura por fuera durante el piloto. Alternativa: la plataforma cobra todo y le paga a cada spa (más trámites y obligaciones de facturación).</td></tr>
-        <tr id="decision-3"><td>3</td><th scope="row">Consentimiento para campañas</th><td>Pedir permiso al reservar más columna &laquo;dio permiso&raquo; en el CSV.</td><td>Protege el canal de WhatsApp (y los recordatorios). Menos alcance para la campaña de Navidad.</td></tr>
+        <tr id="decision-1"><td>1</td><th scope="row">Roadmap A o B</th><td><span class="tag rec">Decidido: Roadmap B (19/10/2026, Fidel Cossio)</span> Fase 1 recortada y pack prepago.</td><td>~70% de certidumbre para la Fase 1 y ~65% para tener la suscripción a la venta antes del 26/12. Lo recortado pasa a enero.</td></tr>
+        <tr id="decision-2"><td>2</td><th scope="row">Quién recibe los pagos</th><td><span class="tag ok">Confirmado</span> Cada spa conecta su propia cuenta de Mercado Pago y cobra directo.</td><td>Menos trámites. La comisión de la plataforma se factura por fuera durante el piloto (POC).</td></tr>
+        <tr id="decision-3"><td>3</td><th scope="row">Consentimiento para campañas</th><td><span class="tag ok">Confirmado</span> Pedir permiso al reservar (opt-in) más columna &laquo;dio permiso&raquo; en el CSV.</td><td>Protege el canal de WhatsApp (y los recordatorios). Menos alcance para la campaña de Navidad.</td></tr>
         <tr id="decision-4"><td>4</td><th scope="row">Verificación de Meta y número dedicado</th><td>Iniciarla ya, esta semana.</td><td>Es el trámite más largo del plan. Si no está aprobada el 10/11, se activa el plan B (email, push y SMS).</td></tr>
       </tbody>
     </table>
-    <div class="callout"><p><strong>Recomendación del CPO y del Architect:</strong> Roadmap B. Llega a Navidad con lo que genera recompra (recordatorios, &laquo;te toca volver&raquo;, campaña de Navidad) y vende la &laquo;promesa de Año Nuevo&raquo; a tiempo.</p></div>
+    <div class="callout"><p><strong>Decidido el 19/10/2026 por Fidel Cossio:</strong> Roadmap B, como recomendaron el CPO y el Architect. Llega a Navidad con lo que genera recompra (recordatorios, &laquo;te toca volver&raquo;, campaña de Navidad) y vende la &laquo;promesa de Año Nuevo&raquo; a tiempo.</p></div>
   </div>
   <p class="slide-foot">MVP de reservas con recompra · Estimaciones gruesas del Architect, a refinar con PRD y diseño</p>
   <p class="slide-num">11 / 12</p>
@@ -532,17 +539,18 @@ body.present .slide.current { display: block; }
 <section class="slide " id="preguntas-abiertas" aria-labelledby="preguntas-abiertas-t" data-n="12">
   <div class="slide-inner">
     <p class="kicker">Preguntas abiertas y próximos pasos</p>
-    <h2 id="preguntas-abiertas-t">Lo que falta confirmar</h2>
+    <h2 id="preguntas-abiertas-t">Lo confirmado y lo que falta confirmar</h2>
     <div class="cols">
       <div>
         <h3>Preguntas para Fidel</h3>
         <table>
-          <thead><tr><th scope="col">Pregunta</th><th scope="col">Propuesta</th></tr></thead>
+          <thead><tr><th scope="col">Pregunta</th><th scope="col">Respuesta</th></tr></thead>
           <tbody>
-            <tr id="pregunta-1"><td>Los recordatorios, ¿son a 30 y 10 minutos antes?</td><td>Configurables por el spa; por defecto 24 h y 2 h antes.</td></tr>
-            <tr id="pregunta-2"><td>¿Algún spa amigo necesita controlar sillones o gabinetes en el MVP?</td><td>Hoy está fuera del MVP; confirmar con los 3 spas.</td></tr>
-            <tr id="pregunta-3"><td>¿Confirmamos que se sale sin app nativa?</td><td>Sí: WhatsApp más app web instalable.</td></tr>
-            <tr id="pregunta-4"><td>¿Los 3 spas comparten su historial de 2 o 3 meses?</td><td>Sí, para tener línea de base de recompra.</td></tr>
+            <tr id="pregunta-1"><td>Los recordatorios, ¿son a 30 y 10 minutos antes?</td><td><span class="tag ok">Confirmado</span> Configurables por el spa; por defecto 24 h y 2 h antes.</td></tr>
+            <tr id="pregunta-2"><td>¿Algún spa amigo necesita controlar sillones o gabinetes en el MVP?</td><td><span class="tag ok">Confirmado</span> Sin control de recursos en el MVP.</td></tr>
+            <tr id="pregunta-3"><td>¿Confirmamos que se sale sin app nativa?</td><td><span class="tag ok">Confirmado</span> Sin app nativa: WhatsApp más app web instalable.</td></tr>
+            <tr id="pregunta-4"><td>¿Los 3 spas comparten su historial de 2 o 3 meses?</td><td><span class="tag open">Abierta</span> Propuesta: sí, para tener línea de base de recompra.</td></tr>
+            <tr id="pregunta-5"><td>¿Elegir profesional es para todas o un beneficio?</td><td><span class="tag ok">Confirmado</span> Beneficio por tier de suscripción.</td></tr>
           </tbody>
         </table>
       </div>
